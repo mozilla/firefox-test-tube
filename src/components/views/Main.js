@@ -1,12 +1,15 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import Home from './Home';
+import HomeContainer from '../containers/HomeContainer';
+import ExperimentContainer from '../containers/ExperimentContainer';
+
 
 export default () => (
     <main>
         <Switch>
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" component={HomeContainer} />
+            <Route path="/experiment/:experimentName" component={ExperimentContainer} />
         </Switch>
     </main>
 );
