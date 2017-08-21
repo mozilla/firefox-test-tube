@@ -15,7 +15,10 @@ const ExperimentContainer = props => {
         return <Error message={experimentFetch.reason.message} />;
     } else if (experimentFetch.fulfilled) {
         return (
-            <Experiment experiment={experimentFetch.value} />
+            <Experiment
+                name={experimentFetch.value.name}
+                metrics={experimentFetch.value.metrics}
+            />
         );
     }
 
