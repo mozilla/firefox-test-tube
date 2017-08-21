@@ -8,7 +8,7 @@
 
 .metric-name {
     grid-area: top-left;
-    text-align: center;
+    text-align: left;
 }
 
 .metric-description {
@@ -17,5 +17,5 @@
 
 canvas {
     grid-area: bottom-left;
-    justify-self: center;
+    justify-self: start;
 }
