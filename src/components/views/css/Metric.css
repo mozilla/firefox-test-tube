@@ -1,3 +1,21 @@
+.metric {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "top-left top-right"
+        "bottom-left bottom-right";
+}
+
 .metric-name {
+    grid-area: top-left;
     text-align: center;
+}
+
+.metric-description {
+    grid-area: bottom-right;
+}
+
+canvas {
+    grid-area: bottom-left;
+    justify-self: center;
 }

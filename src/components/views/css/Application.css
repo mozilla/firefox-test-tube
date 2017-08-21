@@ -7,4 +7,6 @@ body {
   display: grid;
   grid-row-gap: 20px;
   padding: 20px;
+  width: 1200px;
+  margin: 0 auto;
 }
