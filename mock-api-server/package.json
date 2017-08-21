@@ -1,0 +1,10 @@
+{
+  "name": "api-server",
+  "private": true,
+  "scripts": {
+      "start": "json-server --watch api.json --port 3001"
+  },
+  "dependencies": {
+    "json-server": "^0.12.0"
+  }
+}
