@@ -27,8 +27,7 @@ Line chart:
   "n": 32082,
   "type": "line",
   "units": {
-    "x": "GPUs",
-    "y": "%"
+    "x": "GPUs"
   },
   "populations": [
     {

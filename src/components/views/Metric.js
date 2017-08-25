@@ -21,7 +21,7 @@ export default props => {
                     responsive: false,
                     tooltips: {
                         callbacks: {
-                            label: (tt, data) => `${data.datasets[tt.datasetIndex].label}: (${tt.xLabel.toLocaleString('en-US')} ${props.xUnit}, ${tt.yLabel}${props.yUnit})`,
+                            label: (tt, data) => `${data.datasets[tt.datasetIndex].label}: (${tt.xLabel.toLocaleString('en-US')} ${props.xUnit}, ${tt.yLabel}%)`,
                         },
                     },
                     scales: {
