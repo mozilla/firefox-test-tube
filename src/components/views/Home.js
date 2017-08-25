@@ -6,7 +6,7 @@ import './css/Home.css';
 
 export default props => {
     return (
-        <article id="experiments">
+        <article id="home">
             <nav>
                 <ul>
                     {props.experiments.map((experiment, index) => {

@@ -7,6 +7,17 @@
         {
             "id": 1,
             "name": "Experiment 1",
+            "description": "Sed eget ex suscipit, tincidunt est aliquet, consectetur dolor. Proin eget malesuada ligula. Donec sed diam vel tellus ultrices lobortis vel ac neque. Fusce imperdiet, lectus vitae finibus bibendum, urna massa imperdiet erat, lobortis semper augue mauris non tellus. Proin at porttitor enim, nec rhoncus risus. Ut odio lorem, consequat ac aliquet a, scelerisque a felis. Suspendisse mattis bibendum quam quis feugiat. Aenean a feugiat nunc, quis pulvinar mi. Duis dapibus egestas lorem nec ultrices.",
+            "contacts": [
+                {
+                    "name": "John Karahalis",
+                    "email": "john@example.com"
+                },
+                {
+                    "name": "Rob Hudson",
+                    "email": "robh@example.com"
+                }
+            ],
             "populations": {
                 "control": {
                     "total_pings": 100,
@@ -23,11 +34,22 @@
                 "Mac",
                 "Linux"
             ],
-            "metrics": [ 1, 2, 3, 4, 5 ]
+            "metrics": [1, 2, 3, 4, 5]
         },
         {
             "id": 2,
             "name": "Experiment 2",
+            "description": "Nunc nec blandit sem. Duis viverra bibendum turpis vitae elementum. Fusce sit amet erat ut nulla ullamcorper luctus vitae id elit. Fusce ut diam elementum, rutrum erat et, mattis odio. Donec sit amet dolor tempus, auctor odio eget, accumsan quam. Sed a fringilla ipsum. Praesent pharetra suscipit tellus, eu lacinia tellus finibus vel. Ut dictum tristique nulla, vel fringilla leo. Quisque eleifend ex leo, at semper felis eleifend et. Nulla feugiat aliquam neque, vel ullamcorper tellus sodales ut. Sed quam erat, sollicitudin et venenatis ac, egestas non lectus. Cras vel nisl eu tortor tristique posuere viverra eget lectus. Nam fringilla hendrerit volutpat. Nam malesuada magna ac lectus interdum lobortis. Donec maximus congue dui, a rhoncus metus congue non.",
+            "contacts": [
+                {
+                    "name": "Rob Miller",
+                    "email": "robm@example.com"
+                },
+                {
+                    "name": "Davor Spasovski",
+                    "email": "davor@example.com"
+                }
+            ],
             "populations": {
                 "control": {
                     "total_pings": 1100,

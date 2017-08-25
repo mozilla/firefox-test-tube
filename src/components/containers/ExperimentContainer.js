@@ -17,6 +17,8 @@ const ExperimentContainer = props => {
         return (
             <Experiment
                 name={experimentFetch.value.name}
+                description={experimentFetch.value.description}
+                contacts={experimentFetch.value.contacts}
                 metrics={experimentFetch.value.metrics}
             />
         );

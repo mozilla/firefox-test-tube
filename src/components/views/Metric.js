@@ -8,7 +8,7 @@ import './css/Metric.css';
 export default props => {
     return (
         <div className="metric">
-            <h3 className="metric-name">{props.name}</h3>
+            <h4 className="metric-name">{props.name}</h4>
             <p className="metric-description">{props.description}</p>
             <ScatterChart
                 data={props.data}
