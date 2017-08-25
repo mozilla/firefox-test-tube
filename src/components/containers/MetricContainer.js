@@ -56,6 +56,7 @@ const MetricContainer = props => {
             <Metric
                 name={metricFetch.value.name}
                 description={metricFetch.value.description}
+                n={metricFetch.value.n}
                 data={formatData(metricFetch.value.populations)}
                 xUnit={metricFetch.value.units.x}
             />

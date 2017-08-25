@@ -7,9 +7,16 @@ import './css/Metric.css';
 
 export default props => {
     return (
-        <div className="metric">
+        <section className="metric">
             <h4 className="metric-name">{props.name}</h4>
-            <p className="metric-description">{props.description}</p>
+            <section id="metric-details">
+                <h5>Details</h5>
+                <dl>
+                  <dt>n</dt>
+                  <dd>{props.n.toLocaleString('en-US')}</dd>
+                </dl>
+                <p className="metric-description">{props.description}</p>
+            </section>
             <ScatterChart
                 data={props.data}
                 height={350}
@@ -39,6 +46,6 @@ export default props => {
                     },
                 }}
             />
-        </div>
+        </section>
     );
 };

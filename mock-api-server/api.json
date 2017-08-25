@@ -85,6 +85,7 @@
             "units": {
                 "x": "GPUs"
             },
+            "n": 32082,
             "populations": [
                 {
                     "name": "control",
@@ -125,6 +126,7 @@
             "units": {
                 "x": "CPUs"
             },
+            "n": 23701,
             "populations": [
                 {
                     "name": "control",
@@ -164,6 +166,7 @@
             "units": {
                 "x": "Bookmarks"
             },
+            "n": 20833,
             "populations": [
                 {
                     "name": "control",
@@ -203,6 +206,7 @@
             "units": {
                 "x": "Themes"
             },
+            "n": 70328,
             "populations": [
                 {
                     "name": "control",
@@ -243,6 +247,7 @@
             "units": {
                 "x": "Extensions"
             },
+            "n": 82049,
             "populations": [
                 {
                     "name": "control",
@@ -283,6 +288,7 @@
             "units": {
                 "x": "Profiles"
             },
+            "n": 48201,
             "populations": [
                 {
                     "name": "control",
@@ -323,6 +329,7 @@
             "units": {
                 "x": "Crashes"
             },
+            "n": 48201,
             "populations": [
                 {
                     "name": "control",
@@ -363,6 +370,7 @@
             "units": {
                 "x": "Days"
             },
+            "n": 38412,
             "populations": [
                 {
                     "name": "control",
@@ -403,6 +411,7 @@
             "units": {
                 "x": "Hard drives"
             },
+            "n": 92301,
             "populations": [
                 {
                     "name": "control",
@@ -443,6 +452,7 @@
             "units": {
                 "x": "Screens"
             },
+            "n": 37291,
             "populations": [
                 {
                     "name": "control",

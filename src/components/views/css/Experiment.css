@@ -24,8 +24,7 @@
     grid-gap: 50px; /* Same as #experiment-content */
 }
 
-/* Intentionally hide some headings. They have semantic value and value to
-   screen-readers, but they aren't really needed visually. */
+/* Intentionally hidden. Add value semantically, but not visually. */
 #experiment-details h3,
 #experiment-metrics h3 {
     display: none;
