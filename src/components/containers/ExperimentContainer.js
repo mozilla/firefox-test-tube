@@ -20,6 +20,7 @@ const ExperimentContainer = props => {
                 description={experimentFetch.value.description}
                 contacts={experimentFetch.value.contacts}
                 metrics={experimentFetch.value.metrics}
+                populations={experimentFetch.value.populations}
             />
         );
     }

@@ -25,21 +25,3 @@ canvas {
 #metric-details h5 {
     display: none;
 }
-
-#metric-details dt,
-#metric-details dd {
-    display: inline
-}
-
-#metric-details dt {
-    font-weight: bold;
-}
-
-#metric-details dt::after {
-    content: ':';
-    margin-right: 1ch;
-}
-
-#metric-details dd {
-    margin-left: 0;
-}

@@ -18,3 +18,21 @@ h1, h2, h3, h4, h5, h6 {
 p {
     line-height: 1.3;
 }
+
+dd, dt {
+    display: inline;
+}
+
+dt {
+    font-weight: bold;
+    clear: left;
+}
+
+dt::after {
+    content: ':';
+    margin-right: 1ch;
+}
+
+dd {
+    margin-left: 0;
+}

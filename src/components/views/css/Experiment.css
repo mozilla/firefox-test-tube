@@ -7,6 +7,21 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 50px; /* Same as .metric */
+    grid-template-areas:
+        "top top"
+        "bottom-left bottom-right";
+}
+
+#experiment-description {
+    grid-area: top;
+}
+
+#experiment-counts {
+    grid-area: bottom-left;
+}
+
+#experiment-contacts {
+    grid-area: bottom-right;
 }
 
 #experiment-contacts ul {
@@ -28,4 +43,14 @@
 #experiment-details h3,
 #experiment-metrics h3 {
     display: none;
+}
+
+#experiment-counts h5 {
+    margin-bottom: 0;
+}
+
+#experiment-counts dl {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    font-size: .75em;
 }
