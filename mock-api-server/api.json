@@ -16,6 +16,10 @@
                 {
                     "name": "Rob Hudson",
                     "email": "robh@example.com"
+                },
+                {
+                    "name": "Allen Short",
+                    "email": "allen@example.com"
                 }
             ],
             "populations": {
@@ -48,6 +52,10 @@
                 {
                     "name": "Davor Spasovski",
                     "email": "davor@example.com"
+                },
+                {
+                    "name": "Jannis Leidel",
+                    "email": "jannis@example.com"
                 }
             ],
             "populations": {

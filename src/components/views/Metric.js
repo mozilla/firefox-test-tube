@@ -12,8 +12,8 @@ export default props => {
             <p className="metric-description">{props.description}</p>
             <ScatterChart
                 data={props.data}
-                height={250}
-                width={350}
+                height={350}
+                width={500}
                 options={{
                     maintainAspectRatio: false,
                     responsive: false,

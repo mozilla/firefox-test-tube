@@ -1,6 +1,7 @@
 .metric {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-column-gap: 50px; /* Same as #experiment-details */
     grid-template-areas:
         "top-left top-right"
         "bottom-left bottom-right";
