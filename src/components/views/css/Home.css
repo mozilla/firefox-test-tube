@@ -1,3 +1,8 @@
+#home {
+    display: grid;
+    grid-row-gap: 20px;
+}
+
 #home ul {
     display: grid;
     grid-gap: 20px;

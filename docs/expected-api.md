@@ -6,11 +6,18 @@ Test Tube expects the following API endpoints. Example output is provided.
 [
   {
     "id": 1,
-    "name": "Example experiment 1"
+    "name": "Example experiment 1",
+    "completed": true
   },
   {
     "id": 2,
-    "name": "Example experiment 2"
+    "name": "Example experiment 2",
+    "completed": false
+  }
+  {
+    "id": 3,
+    "name": "Example experiment 3",
+    "completed": false
   }
 ]
 ```
