@@ -17,6 +17,6 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
 
-    "start-api": "node mock-api/server"
+    "start-api": "json-server --watch --port 3001 --routes mock-api/routes.json mock-api/api.json"
   }
 }
