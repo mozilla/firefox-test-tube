@@ -28,29 +28,29 @@ Test Tube expects the following API endpoints. Example output is provided.
 {
   "id": 1,
   "name": "Example experiment 1",
-  "description": "Sed eget ex suscipit, tincidunt est aliquet, consectetur dolor. Proin eget malesuada ligula. Donec sed diam vel tellus ultrices lobortis vel ac neque. Fusce imperdiet, lectus vitae finibus bibendum, urna massa imperdiet erat, lobortis semper augue mauris non tellus. Proin at porttitor enim, nec rhoncus risus. Ut odio lorem, consequat ac aliquet a, scelerisque a felis. Suspendisse mattis bibendum quam quis feugiat. Aenean a feugiat nunc, quis pulvinar mi. Duis dapibus egestas lorem nec ultrices.",
+  "description": "In nec elementum orci, a rhoncus leo. Integer aliquam rutrum orci non aliquet. Donec quis diam mauris. Aliquam eget aliquet mauris. Donec euismod aliquet dui in gravida. Pellentesque in malesuada nisi. Suspendisse condimentum lacus nec velit tempor vestibulum. Maecenas ullamcorper erat diam, eu vehicula lacus elementum non.",
   "contacts": [
     {
-      "name": "John Karahalis",
-      "email": "john@example.com"
+      "name": "Rob Miller",
+      "email": "robm@example.com"
     },
     {
-      "name": "Rob Hudson",
-      "email": "robh@example.com"
+      "name": "Davor Spasovski",
+      "email": "davor@example.com"
     },
     {
-      "name": "Allen Short",
-      "email": "allen@example.com"
+      "name": "Jannis Leidel",
+      "email": "jannis@example.com"
     }
   ],
   "populations": {
     "control": {
-      "total_pings": 100,
-      "total_clients": 200
+      "total_clients": 9292,
+      "total_pings": 23012
     },
     "group B": {
-      "total_pings": 300,
-      "total_clients": 500
+      "total_clients": 8234,
+      "total_pings": 21320
     }
   },
   "subgroups": [
@@ -61,10 +61,10 @@ Test Tube expects the following API endpoints. Example output is provided.
   ],
   "metrics": [
     1,
-    2,
     3,
-    4,
-    5
+    5,
+    7,
+    9
   ]
 }
 ```

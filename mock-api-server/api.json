@@ -37,12 +37,12 @@
             ],
             "populations": {
                 "control": {
-                    "total_pings": 9292,
-                    "total_clients": 23012
+                    "total_clients": 9292,
+                    "total_pings": 23012
                 },
                 "group B": {
-                    "total_pings": 8234,
-                    "total_clients": 21320
+                    "total_clients": 8234,
+                    "total_pings": 21320
                 }
             },
             "subgroups": [
@@ -73,12 +73,12 @@
             ],
             "populations": {
                 "control": {
-                    "total_pings": 100,
-                    "total_clients": 200
+                    "total_clients": 2356,
+                    "total_pings": 23632
                 },
                 "group B": {
-                    "total_pings": 300,
-                    "total_clients": 500
+                    "total_clients": 3534,
+                    "total_pings": 14132
                 }
             },
             "subgroups": [
@@ -109,12 +109,12 @@
             ],
             "populations": {
                 "control": {
-                    "total_pings": 1100,
-                    "total_clients": 1200
+                    "total_clients": 4623,
+                    "total_pings": 32361
                 },
                 "group B": {
-                    "total_pings": 800,
-                    "total_clients": 900
+                    "total_clients": 6357,
+                    "total_pings": 30462
                 }
             },
             "subgroups": [
@@ -145,12 +145,12 @@
             ],
             "populations": {
                 "control": {
-                    "total_pings": 1100,
-                    "total_clients": 1200
+                    "total_pings": 2467,
+                    "total_clients": 26262
                 },
                 "group B": {
-                    "total_pings": 800,
-                    "total_clients": 900
+                    "total_pings": 6241,
+                    "total_clients": 32362
                 }
             },
             "subgroups": [
