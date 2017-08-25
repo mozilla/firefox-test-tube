@@ -58,7 +58,6 @@ const MetricContainer = props => {
                 description={metricFetch.value.description}
                 data={formatData(metricFetch.value.populations)}
                 xUnit={metricFetch.value.units.x}
-                yUnit={metricFetch.value.units.y}
             />
         );
     }

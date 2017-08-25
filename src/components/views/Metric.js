@@ -20,7 +20,9 @@ export default props => {
                     scales: {
                         yAxes: [{
                             ticks: {
-                                callback: label => label + props.yUnit,
+                                callback: label => label + '%',
+                                min: 0,
+                                max: 100,
                             },
                         }],
                         xAxes: [{
