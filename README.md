@@ -1,1 +1,1 @@
-NEV is an experimental re-implementation of Experiments Viewer
+NEV is an experimental refactor of Experiments Viewer
