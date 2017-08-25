@@ -1,12 +1,12 @@
 {
     "experiments-root": [
-        { "id": 1, "name": "Experiment 1" },
-        { "id": 2, "name": "Experiment 2" }
+        { "id": 1, "name": "Example experiment 1" },
+        { "id": 2, "name": "Example experiment 2" }
     ],
     "experiments": [
         {
             "id": 1,
-            "name": "Experiment 1",
+            "name": "Example experiment 1",
             "description": "Sed eget ex suscipit, tincidunt est aliquet, consectetur dolor. Proin eget malesuada ligula. Donec sed diam vel tellus ultrices lobortis vel ac neque. Fusce imperdiet, lectus vitae finibus bibendum, urna massa imperdiet erat, lobortis semper augue mauris non tellus. Proin at porttitor enim, nec rhoncus risus. Ut odio lorem, consequat ac aliquet a, scelerisque a felis. Suspendisse mattis bibendum quam quis feugiat. Aenean a feugiat nunc, quis pulvinar mi. Duis dapibus egestas lorem nec ultrices.",
             "contacts": [
                 {
@@ -42,7 +42,7 @@
         },
         {
             "id": 2,
-            "name": "Experiment 2",
+            "name": "Example experiment 2",
             "description": "Nunc nec blandit sem. Duis viverra bibendum turpis vitae elementum. Fusce sit amet erat ut nulla ullamcorper luctus vitae id elit. Fusce ut diam elementum, rutrum erat et, mattis odio. Donec sit amet dolor tempus, auctor odio eget, accumsan quam. Sed a fringilla ipsum. Praesent pharetra suscipit tellus, eu lacinia tellus finibus vel. Ut dictum tristique nulla, vel fringilla leo. Quisque eleifend ex leo, at semper felis eleifend et. Nulla feugiat aliquam neque, vel ullamcorper tellus sodales ut. Sed quam erat, sollicitudin et venenatis ac, egestas non lectus. Cras vel nisl eu tortor tristique posuere viverra eget lectus. Nam fringilla hendrerit volutpat. Nam malesuada magna ac lectus interdum lobortis. Donec maximus congue dui, a rhoncus metus congue non.",
             "contacts": [
                 {
@@ -80,7 +80,7 @@
     "metrics": [
         {
             "id": 1,
-            "name": "Metric 1",
+            "name": "Example metric 1",
             "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eget semper eros, ac tempus neque. Ut ipsum turpis, commodo sed nisi at, sollicitudin placerat augue. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer tristique euismod elit et varius. Donec ut pretium ligula, a commodo diam. Vivamus auctor auctor ligula, eget volutpat nisi lobortis ac. Donec sit amet venenatis nisi. Sed gravida purus nulla, at ullamcorper ligula ullamcorper non. Mauris venenatis quam non arcu pharetra, ut aliquam nibh sodales. Nullam tincidunt viverra lacinia. Suspendisse quis egestas mi, sit amet dignissim purus. Curabitur auctor leo eu dictum tincidunt. Proin vestibulum molestie dolor a gravida.",
             "n": 32082,
             "type": "line",
@@ -122,7 +122,7 @@
         },
         {
             "id": 2,
-            "name": "Metric 2",
+            "name": "Example metric 2",
             "description": "Ut lacus nunc, cursus vitae leo et, dignissim rhoncus augue. Quisque feugiat molestie justo sit amet vestibulum. Phasellus urna velit, condimentum nec tortor vel, imperdiet commodo ligula. Etiam maximus erat non lacus aliquet porta. Phasellus eget luctus enim. Fusce ultrices tellus ut ultrices pretium. Ut ultricies ex hendrerit leo posuere laoreet. Aliquam erat volutpat. Aenean condimentum fringilla massa, a ultricies ex accumsan et. Integer bibendum lorem vel semper pulvinar. Vivamus id nisl ullamcorper massa ullamcorper suscipit vestibulum in tellus. Etiam elementum purus sit amet viverra sodales. Integer lacinia nisi at efficitur blandit. In imperdiet vehicula mauris, vitae pharetra urna porta sit amet. Morbi ut rhoncus augue, ac dictum enim.",
             "n": 23701,
             "type": "bar",
@@ -159,7 +159,7 @@
         },
         {
             "id": 3,
-            "name": "Metric 3",
+            "name": "Example metric 3",
             "description": "Pellentesque luctus mattis nibh vel rhoncus. Mauris maximus elit nec mauris tristique, vitae elementum orci vulputate. Sed in commodo justo. Nam laoreet velit sed leo fringilla, sed viverra lacus pretium. Ut at elit lacus. In blandit egestas consequat. Mauris velit ante, laoreet sit amet pulvinar vitae, volutpat vel purus. Duis accumsan, sapien eget cursus convallis, nisl enim pharetra nisi, at congue elit diam vel libero. Ut cursus ultricies eros in tristique. Mauris massa purus, pretium nec porta iaculis, mollis id ante. Curabitur finibus lectus sed leo sagittis, at scelerisque magna tincidunt. Proin efficitur, nulla at aliquam convallis, justo tortor scelerisque erat, eget porttitor orci sapien vitae purus. Phasellus consequat et arcu ac ultrices. Maecenas gravida quis sapien ac varius. Cras eu pulvinar dui. Aenean et ultrices lectus, in dictum metus.",
             "n": 20833,
             "type": "line",
@@ -200,7 +200,7 @@
         },
         {
             "id": 4,
-            "name": "Metric 4",
+            "name": "Example metric 4",
             "description": "Fusce massa ante, condimentum vel nisi non, sagittis sagittis mi. Nam tempor hendrerit lectus aliquam congue. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla interdum ut risus ac condimentum. Proin in metus erat. Proin ut purus tempus, tristique purus et, porta dui. Vestibulum fermentum molestie pretium. Fusce ac vestibulum quam. Vivamus sed sem sapien. Nullam dictum velit ac nisl posuere, ut sollicitudin nulla efficitur. Nunc non purus ligula. Fusce id commodo nunc.",
             "n": 70328,
             "type": "line",
@@ -242,7 +242,7 @@
         },
         {
             "id": 5,
-            "name": "Metric 5",
+            "name": "Example metric 5",
             "description": "Quisque risus ipsum, hendrerit quis sem at, malesuada volutpat nulla. Sed pellentesque consectetur justo, fringilla egestas ipsum. Maecenas ultrices at velit ac vestibulum. Curabitur mi dui, ornare nec lobortis nec, sodales suscipit mi. In a molestie leo. Integer sed erat interdum, porttitor purus eu, tempus purus. Cras congue, risus nec consectetur bibendum, mi nibh pretium metus, id fermentum elit libero et mi. Sed suscipit risus ipsum, eu placerat diam sagittis eu. Vivamus ut nisi et massa auctor blandit. Etiam et urna consectetur, sodales justo ut, viverra lorem. Ut tempus ex ac vulputate vulputate. Nam convallis tortor dolor, laoreet volutpat ante fermentum et.",
             "n": 82049,
             "type": "line",
@@ -284,7 +284,7 @@
         },
         {
             "id": 6,
-            "name": "Metric 6",
+            "name": "Example metric 6",
             "description": "Maecenas accumsan vitae mi in malesuada. Proin tincidunt arcu a dictum dapibus. Curabitur ut nulla massa. Morbi et velit mattis, blandit libero vitae, consequat velit. Ut a congue libero. Proin lectus metus, molestie vel ultrices id, sodales ut ex. Ut hendrerit tortor et nunc ullamcorper lacinia. Vivamus aliquet justo quis arcu porttitor suscipit.",
             "n": 48201,
             "type": "line",
@@ -326,7 +326,7 @@
         },
         {
             "id": 7,
-            "name": "Metric 7",
+            "name": "Example metric 7",
             "description": "Aenean ornare et erat placerat elementum. Morbi ut erat ac leo feugiat fermentum sit amet eu sapien. Nulla fermentum tincidunt pharetra. Sed sodales mi nec finibus pretium. Etiam facilisis pharetra interdum. Quisque arcu libero, ornare id lorem ut, bibendum tempor massa. Morbi interdum arcu eu massa pulvinar consectetur.",
             "n": 48201,
             "type": "line",
@@ -368,7 +368,7 @@
         },
         {
             "id": 8,
-            "name": "Metric 8",
+            "name": "Example metric 8",
             "description": "Maecenas aliquet sagittis consequat. Fusce eget est luctus velit viverra suscipit. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam turpis lacus, vehicula eu molestie non, ornare interdum libero. Nullam mauris erat, semper id orci in, iaculis fermentum libero. Suspendisse fermentum, enim et imperdiet scelerisque, nisi turpis aliquet erat, at gravida mauris leo at augue. Ut eu nunc eros. Morbi felis purus, viverra ac aliquet ac, vulputate non enim. Suspendisse vel facilisis ipsum.",
             "n": 38412,
             "type": "line",
@@ -410,7 +410,7 @@
         },
         {
             "id": 9,
-            "name": "Metric 9",
+            "name": "Example metric 9",
             "description": "Vestibulum nec velit facilisis, ornare sapien pulvinar, fringilla nulla. Morbi sit amet tellus eros. Sed blandit elementum ante, nec aliquam leo convallis id. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc in arcu eget massa varius laoreet. Praesent a nunc sit amet augue dignissim ullamcorper quis ut arcu. Vivamus sollicitudin laoreet malesuada. Donec congue velit nec vestibulum hendrerit.",
             "n": 92301,
             "type": "line",
@@ -452,7 +452,7 @@
         },
         {
             "id": 10,
-            "name": "Metric 10",
+            "name": "Example metric 10",
             "description": "Vestibulum maximus, mi id volutpat lobortis, lorem risus iaculis dolor, eget ultrices elit arcu eu mauris. Nam blandit semper venenatis. Aliquam faucibus velit at eros pulvinar pellentesque. Aliquam erat volutpat. Nulla quam neque, consectetur in erat id, tempor facilisis turpis. Fusce cursus maximus velit, in accumsan felis iaculis et. Pellentesque iaculis facilisis lacinia. Integer non orci mollis, aliquam ligula ac, varius elit. Praesent sapien erat, imperdiet ac massa in, dictum tincidunt purus. In hac habitasse platea dictumst. Nulla facilisi.",
             "n": 37291,
             "type": "line",
