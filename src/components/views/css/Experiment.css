@@ -49,8 +49,13 @@
     margin-bottom: 0;
 }
 
+#experiment-counts h4 {
+    margin-bottom: 1rem;
+}
+
 #experiment-counts dl {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     font-size: .75em;
+    margin: 1rem 0; /* Same as #experiment-counts h4 margin-bottom */
 }
