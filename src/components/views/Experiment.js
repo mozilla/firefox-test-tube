@@ -16,7 +16,7 @@ function getCountDL(populations, accessor) {
             total += count;
 
             termsAndDescriptions.push(<dt key={i}>{populationName}</dt>);
-            termsAndDescriptions.push(<dd key={i + 1}>{count}</dd>);
+            termsAndDescriptions.push(<dd key={i + 1}>{count.toLocaleString('en-US')}</dd>);
 
         }
 
@@ -24,7 +24,7 @@ function getCountDL(populations, accessor) {
     }
 
     termsAndDescriptions.push(<dt key={i + 1}>Total</dt>);
-    termsAndDescriptions.push(<dd key={i + 2}>{total}</dd>);
+    termsAndDescriptions.push(<dd key={i + 2}>{total.toLocaleString('en-US')}</dd>);
 
     return <dl>{termsAndDescriptions}</dl>;
 }
