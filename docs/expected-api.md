@@ -21,6 +21,21 @@ NEV expects the following API endpoints. Example output is provided.
 {
   "id": 1,
   "name": "Experiment 1",
+  "description": "Sed eget ex suscipit, tincidunt est aliquet, consectetur dolor. Proin eget malesuada ligula. Donec sed diam vel tellus ultrices lobortis vel ac neque. Fusce imperdiet, lectus vitae finibus bibendum, urna massa imperdiet erat, lobortis semper augue mauris non tellus. Proin at porttitor enim, nec rhoncus risus. Ut odio lorem, consequat ac aliquet a, scelerisque a felis. Suspendisse mattis bibendum quam quis feugiat. Aenean a feugiat nunc, quis pulvinar mi. Duis dapibus egestas lorem nec ultrices.",
+  "contacts": [
+    {
+      "name": "John Karahalis",
+      "email": "john@example.com"
+    },
+    {
+      "name": "Rob Hudson",
+      "email": "robh@example.com"
+    },
+    {
+      "name": "Allen Short",
+      "email": "allen@example.com"
+    }
+  ],
   "populations": {
     "control": {
       "total_pings": 100,
@@ -55,8 +70,7 @@ NEV expects the following API endpoints. Example output is provided.
   "name": "Metric 1",
   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eget semper eros, ac tempus neque. Ut ipsum turpis, commodo sed nisi at, sollicitudin placerat augue. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer tristique euismod elit et varius. Donec ut pretium ligula, a commodo diam. Vivamus auctor auctor ligula, eget volutpat nisi lobortis ac. Donec sit amet venenatis nisi. Sed gravida purus nulla, at ullamcorper ligula ullamcorper non. Mauris venenatis quam non arcu pharetra, ut aliquam nibh sodales. Nullam tincidunt viverra lacinia. Suspendisse quis egestas mi, sit amet dignissim purus. Curabitur auctor leo eu dictum tincidunt. Proin vestibulum molestie dolor a gravida.",
   "units": {
-    "x": "GPUs",
-    "y": "%"
+    "x": "GPUs"
   },
   "populations": [
     {
