@@ -20,8 +20,8 @@ export default props => {
                         <h4>Contacts</h4>
                         <p>Contact the following with any questions about this report:</p>
                         <ul>
-                            {props.contacts.map(contact => (
-                                <li><a href={`mailto:${contact.email}`}>{contact.name}</a></li>
+                            {props.contacts.map((contact, index) => (
+                                <li key={index}><a href={`mailto:${contact.email}`}>{contact.name}</a></li>
                             ))}
                         </ul>
                     </section>

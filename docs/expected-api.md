@@ -17,14 +17,18 @@ NEV expects the following API endpoints. Example output is provided.
 
 ## /experiments/[experiment-id]
 
+Line chart:
+
 ```
 {
   "id": 1,
   "name": "Metric 1",
   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eget semper eros, ac tempus neque. Ut ipsum turpis, commodo sed nisi at, sollicitudin placerat augue. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer tristique euismod elit et varius. Donec ut pretium ligula, a commodo diam. Vivamus auctor auctor ligula, eget volutpat nisi lobortis ac. Donec sit amet venenatis nisi. Sed gravida purus nulla, at ullamcorper ligula ullamcorper non. Mauris venenatis quam non arcu pharetra, ut aliquam nibh sodales. Nullam tincidunt viverra lacinia. Suspendisse quis egestas mi, sit amet dignissim purus. Curabitur auctor leo eu dictum tincidunt. Proin vestibulum molestie dolor a gravida.",
   "n": 32082,
+  "type": "line",
   "units": {
-    "x": "GPUs"
+    "x": "GPUs",
+    "y": "%"
   },
   "populations": [
     {
@@ -115,6 +119,48 @@ NEV expects the following API endpoints. Example output is provided.
           "x": 4891,
           "y": 99.031
         }
+      ]
+    }
+  ]
+}
+```
+
+Bar chart:
+
+```
+{
+  "id": 2,
+  "name": "Metric 2",
+  "description": "Ut lacus nunc, cursus vitae leo et, dignissim rhoncus augue. Quisque feugiat molestie justo sit amet vestibulum. Phasellus urna velit, condimentum nec tortor vel, imperdiet commodo ligula. Etiam maximus erat non lacus aliquet porta. Phasellus eget luctus enim. Fusce ultrices tellus ut ultrices pretium. Ut ultricies ex hendrerit leo posuere laoreet. Aliquam erat volutpat. Aenean condimentum fringilla massa, a ultricies ex accumsan et. Integer bibendum lorem vel semper pulvinar. Vivamus id nisl ullamcorper massa ullamcorper suscipit vestibulum in tellus. Etiam elementum purus sit amet viverra sodales. Integer lacinia nisi at efficitur blandit. In imperdiet vehicula mauris, vitae pharetra urna porta sit amet. Morbi ut rhoncus augue, ac dictum enim.",
+  "n": 23701,
+  "type": "bar",
+  "categories": [
+    "News",
+    "Sports",
+    "Social media",
+    "Other"
+  ],
+  "units": {
+    "x": "Website category",
+    "y": "Visits"
+  },
+  "populations": [
+    {
+      "name": "control",
+      "data": [
+        2305,
+        3252,
+        1355,
+        4213
+      ]
+    },
+    {
+      "name": "group B",
+      "data": [
+        1351,
+        2356,
+        3252,
+        2351
       ]
     }
   ]
