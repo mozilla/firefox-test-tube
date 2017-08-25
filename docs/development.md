@@ -1,17 +1,17 @@
 # Install dependencies
 
-1. Install npm
-2. From the root of the repository, run `npm install`
+1. Install yarn
+2. From the root of the repository, run `yarn`
 
 # Run
 
 ## Application
 
-From the repository root, run `yarn start`
+Run `yarn start`
 
 ## Mock API server
 
-From the *mock-api-server* directory, run `npm start`
+Run `yarn start-api`
 
 # Add a dependency
 
