@@ -1,4 +1,5 @@
-Test Tube expects the following API endpoints. Example output is provided.
+Firefox Test Tube expects the following API endpoints. Example output is
+provided.
 
 ## /experiments/
 
