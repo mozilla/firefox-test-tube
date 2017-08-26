@@ -11,7 +11,9 @@ Run `yarn start`
 
 ## Mock API server
 
-Run `yarn start-api`
+1. Download [test-tube-mock-api](https://github.com/openjck/test-tube-mock-api)
+   locally
+2. Follow the instructions in the README to start the mock API
 
 # Add a dependency
 
