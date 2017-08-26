@@ -21,18 +21,18 @@
             "id": 1,
             "name": "Example experiment 1",
             "description": "In nec elementum orci, a rhoncus leo. Integer aliquam rutrum orci non aliquet. Donec quis diam mauris. Aliquam eget aliquet mauris. Donec euismod aliquet dui in gravida. Pellentesque in malesuada nisi. Suspendisse condimentum lacus nec velit tempor vestibulum. Maecenas ullamcorper erat diam, eu vehicula lacus elementum non.",
-            "contacts": [
+            "authors": [
                 {
                     "name": "Rob Miller",
-                    "email": "robm@example.com"
+                    "email": "rmiller@mozilla.com"
                 },
                 {
                     "name": "Davor Spasovski",
-                    "email": "davor@example.com"
+                    "email": "dspasovski@mozilla.com"
                 },
                 {
                     "name": "Jannis Leidel",
-                    "email": "jannis@example.com"
+                    "email": "jleidel@mozilla.com"
                 }
             ],
             "populations": {
@@ -57,18 +57,18 @@
             "id": 2,
             "name": "Example experiment 2",
             "description": "Sed eget ex suscipit, tincidunt est aliquet, consectetur dolor. Proin eget malesuada ligula. Donec sed diam vel tellus ultrices lobortis vel ac neque. Fusce imperdiet, lectus vitae finibus bibendum, urna massa imperdiet erat, lobortis semper augue mauris non tellus. Proin at porttitor enim, nec rhoncus risus. Ut odio lorem, consequat ac aliquet a, scelerisque a felis. Suspendisse mattis bibendum quam quis feugiat. Aenean a feugiat nunc, quis pulvinar mi. Duis dapibus egestas lorem nec ultrices.",
-            "contacts": [
+            "authors": [
                 {
                     "name": "John Karahalis",
-                    "email": "john@example.com"
+                    "email": "jkarahalis@mozilla.com"
                 },
                 {
                     "name": "Rob Hudson",
-                    "email": "robh@example.com"
+                    "email": "chudson@mozilla.com"
                 },
                 {
                     "name": "Allen Short",
-                    "email": "allen@example.com"
+                    "email": "ashort@mozilla.com"
                 }
             ],
             "populations": {
@@ -93,18 +93,18 @@
             "id": 3,
             "name": "Example experiment 3",
             "description": "Nunc nec blandit sem. Duis viverra bibendum turpis vitae elementum. Fusce sit amet erat ut nulla ullamcorper luctus vitae id elit. Fusce ut diam elementum, rutrum erat et, mattis odio. Donec sit amet dolor tempus, auctor odio eget, accumsan quam. Sed a fringilla ipsum. Praesent pharetra suscipit tellus, eu lacinia tellus finibus vel. Ut dictum tristique nulla, vel fringilla leo. Quisque eleifend ex leo, at semper felis eleifend et. Nulla feugiat aliquam neque, vel ullamcorper tellus sodales ut. Sed quam erat, sollicitudin et venenatis ac, egestas non lectus. Cras vel nisl eu tortor tristique posuere viverra eget lectus. Nam fringilla hendrerit volutpat. Nam malesuada magna ac lectus interdum lobortis. Donec maximus congue dui, a rhoncus metus congue non.",
-            "contacts": [
+            "authors": [
                 {
                     "name": "Rob Miller",
-                    "email": "robm@example.com"
+                    "email": "rmiller@mozilla.com"
                 },
                 {
                     "name": "Davor Spasovski",
-                    "email": "davor@example.com"
+                    "email": "dspasovski@mozilla.com"
                 },
                 {
                     "name": "Jannis Leidel",
-                    "email": "jannis@example.com"
+                    "email": "jleidel@mozilla.com"
                 }
             ],
             "populations": {

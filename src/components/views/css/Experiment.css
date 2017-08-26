@@ -20,11 +20,11 @@
     grid-area: bottom-left;
 }
 
-#experiment-contacts {
+#experiment-authors {
     grid-area: bottom-right;
 }
 
-#experiment-contacts ul {
+#experiment-authors ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -32,6 +32,15 @@
     display: grid;
     grid-gap: 20px;
     grid-template-columns: repeat(3, 1fr);
+}
+
+#experiment-authors a {
+    display: inline-grid;
+    grid-row-gap: 10px;
+    justify-items: center;
+
+    text-decoration: none;
+    color: #000;
 }
 
 #experiment-metrics {

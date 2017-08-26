@@ -29,7 +29,7 @@ Test Tube expects the following API endpoints. Example output is provided.
   "id": 1,
   "name": "Example experiment 1",
   "description": "In nec elementum orci, a rhoncus leo. Integer aliquam rutrum orci non aliquet. Donec quis diam mauris. Aliquam eget aliquet mauris. Donec euismod aliquet dui in gravida. Pellentesque in malesuada nisi. Suspendisse condimentum lacus nec velit tempor vestibulum. Maecenas ullamcorper erat diam, eu vehicula lacus elementum non.",
-  "contacts": [
+  "authors": [
     {
       "name": "Rob Miller",
       "email": "robm@example.com"

@@ -1,4 +1,5 @@
 import React from 'react';
+import gravatar from 'gravatar';
 
 import MetricContainer from '../containers/MetricContainer';
 
@@ -29,6 +30,13 @@ function getCountDL(populations, accessor) {
     return <dl>{termsAndDescriptions}</dl>;
 }
 
+function getGravatarURL(email) {
+    return gravatar.url(email, {
+        rating: 'g',
+        default: 'mm',
+    });
+}
+
 export default props => {
     return (
         <article id="experiment">
@@ -51,12 +59,16 @@ export default props => {
                             {getCountDL(props.populations, 'total_pings')}
                         </section>
                     </section>
-                    <section id="experiment-contacts">
-                        <h4>Contacts</h4>
-                        <p>Contact the following with any questions about this report:</p>
+                    <section id="experiment-authors">
+                        <h4>Authors</h4>
                         <ul>
-                            {props.contacts.map((contact, index) => (
-                                <li key={index}><a href={`mailto:${contact.email}`}>{contact.name}</a></li>
+                            {props.authors.map((contact, index) => (
+                                <li key={index}>
+                                    <a href={`mailto:${contact.email}`}>
+                                        <img src={getGravatarURL(contact.email)} alt={contact.name} />
+                                        <span>{contact.name}</span>
+                                    </a>
+                                </li>
                             ))}
                         </ul>
                     </section>
