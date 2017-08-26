@@ -1,0 +1,581 @@
+{
+    "experiments-root": [
+        {
+            "id": 1,
+            "name": "Example experiment 1",
+            "completed": true
+        },
+        {
+            "id": 2,
+            "name": "Example experiment 2",
+            "completed": false
+        },
+        {
+            "id": 3,
+            "name": "Example experiment 3",
+            "completed": false
+        }
+    ],
+    "experiments": [
+        {
+            "id": 1,
+            "name": "Example experiment 1",
+            "description": "In nec elementum orci, a rhoncus leo. Integer aliquam rutrum orci non aliquet. Donec quis diam mauris. Aliquam eget aliquet mauris. Donec euismod aliquet dui in gravida. Pellentesque in malesuada nisi. Suspendisse condimentum lacus nec velit tempor vestibulum. Maecenas ullamcorper erat diam, eu vehicula lacus elementum non.",
+            "authors": [
+                {
+                    "name": "Rob Miller",
+                    "email": "rmiller@mozilla.com"
+                },
+                {
+                    "name": "Davor Spasovski",
+                    "email": "dspasovski@mozilla.com"
+                },
+                {
+                    "name": "Jannis Leidel",
+                    "email": "jleidel@mozilla.com"
+                }
+            ],
+            "populations": {
+                "control": {
+                    "total_clients": 9292,
+                    "total_pings": 23012
+                },
+                "group B": {
+                    "total_clients": 8234,
+                    "total_pings": 21320
+                }
+            },
+            "subgroups": [
+                "All",
+                "Windows",
+                "Mac",
+                "Linux"
+            ],
+            "metrics": [1, 3, 5, 7, 9]
+        },
+        {
+            "id": 2,
+            "name": "Example experiment 2",
+            "description": "Sed eget ex suscipit, tincidunt est aliquet, consectetur dolor. Proin eget malesuada ligula. Donec sed diam vel tellus ultrices lobortis vel ac neque. Fusce imperdiet, lectus vitae finibus bibendum, urna massa imperdiet erat, lobortis semper augue mauris non tellus. Proin at porttitor enim, nec rhoncus risus. Ut odio lorem, consequat ac aliquet a, scelerisque a felis. Suspendisse mattis bibendum quam quis feugiat. Aenean a feugiat nunc, quis pulvinar mi. Duis dapibus egestas lorem nec ultrices.",
+            "authors": [
+                {
+                    "name": "John Karahalis",
+                    "email": "jkarahalis@mozilla.com"
+                },
+                {
+                    "name": "Rob Hudson",
+                    "email": "chudson@mozilla.com"
+                },
+                {
+                    "name": "Allen Short",
+                    "email": "ashort@mozilla.com"
+                }
+            ],
+            "populations": {
+                "control": {
+                    "total_clients": 2356,
+                    "total_pings": 23632
+                },
+                "group B": {
+                    "total_clients": 3534,
+                    "total_pings": 14132
+                }
+            },
+            "subgroups": [
+                "All",
+                "Windows",
+                "Mac",
+                "Linux"
+            ],
+            "metrics": [1, 2, 3, 4, 5]
+        },
+        {
+            "id": 3,
+            "name": "Example experiment 3",
+            "description": "Nunc nec blandit sem. Duis viverra bibendum turpis vitae elementum. Fusce sit amet erat ut nulla ullamcorper luctus vitae id elit. Fusce ut diam elementum, rutrum erat et, mattis odio. Donec sit amet dolor tempus, auctor odio eget, accumsan quam. Sed a fringilla ipsum. Praesent pharetra suscipit tellus, eu lacinia tellus finibus vel. Ut dictum tristique nulla, vel fringilla leo. Quisque eleifend ex leo, at semper felis eleifend et. Nulla feugiat aliquam neque, vel ullamcorper tellus sodales ut. Sed quam erat, sollicitudin et venenatis ac, egestas non lectus. Cras vel nisl eu tortor tristique posuere viverra eget lectus. Nam fringilla hendrerit volutpat. Nam malesuada magna ac lectus interdum lobortis. Donec maximus congue dui, a rhoncus metus congue non.",
+            "authors": [
+                {
+                    "name": "Rob Miller",
+                    "email": "rmiller@mozilla.com"
+                },
+                {
+                    "name": "Davor Spasovski",
+                    "email": "dspasovski@mozilla.com"
+                },
+                {
+                    "name": "Jannis Leidel",
+                    "email": "jleidel@mozilla.com"
+                }
+            ],
+            "populations": {
+                "control": {
+                    "total_clients": 4623,
+                    "total_pings": 32361
+                },
+                "group B": {
+                    "total_clients": 6357,
+                    "total_pings": 30462
+                }
+            },
+            "subgroups": [
+                "All",
+                "Windows",
+                "Mac",
+                "Linux"
+            ],
+            "metrics": [3, 4, 5, 6, 7]
+        },
+        {
+            "id": 3,
+            "name": "Example experiment 3",
+            "description": "Nulla laoreet ex dui, nec viverra nibh ultricies eu. Donec pellentesque quis orci id laoreet. Nulla vitae lectus hendrerit sem volutpat semper. Nam sodales felis non magna porta, quis volutpat mi ultricies. Morbi a nisi eleifend risus tempus auctor. Maecenas aliquam rhoncus nibh in volutpat. Praesent a mi maximus, gravida risus sed, egestas odio. Aenean non ultricies orci. Ut eu porta odio, vitae posuere augue. Cras orci lorem, commodo non nulla ac, pulvinar tristique nisi. Fusce purus ex, pulvinar id augue vel, rhoncus fringilla est. Cras sit amet tellus at felis volutpat accumsan eget auctor ante. Aenean tincidunt lacus sed est ultricies, ultrices rutrum arcu aliquet. Aenean sit amet lobortis lorem, ut blandit sem. Nulla facilisi.",
+            "contacts": [
+                {
+                    "name": "Rob Miller",
+                    "email": "robm@example.com"
+                },
+                {
+                    "name": "Davor Spasovski",
+                    "email": "davor@example.com"
+                },
+                {
+                    "name": "Jannis Leidel",
+                    "email": "jannis@example.com"
+                }
+            ],
+            "populations": {
+                "control": {
+                    "total_pings": 2467,
+                    "total_clients": 26262
+                },
+                "group B": {
+                    "total_pings": 6241,
+                    "total_clients": 32362
+                }
+            },
+            "subgroups": [
+                "All",
+                "Windows",
+                "Mac",
+                "Linux"
+            ],
+            "metrics": [3, 4, 5, 6, 7]
+        }
+    ],
+    "metrics": [
+        {
+            "id": 1,
+            "name": "Example metric 1",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eget semper eros, ac tempus neque. Ut ipsum turpis, commodo sed nisi at, sollicitudin placerat augue. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer tristique euismod elit et varius. Donec ut pretium ligula, a commodo diam. Vivamus auctor auctor ligula, eget volutpat nisi lobortis ac. Donec sit amet venenatis nisi. Sed gravida purus nulla, at ullamcorper ligula ullamcorper non. Mauris venenatis quam non arcu pharetra, ut aliquam nibh sodales. Nullam tincidunt viverra lacinia. Suspendisse quis egestas mi, sit amet dignissim purus. Curabitur auctor leo eu dictum tincidunt. Proin vestibulum molestie dolor a gravida.",
+            "n": 32082,
+            "type": "line",
+            "units": {
+                "x": "GPUs"
+            },
+            "populations": [
+                {
+                    "name": "control",
+                    "data": [
+                        { "x": 2184, "y": 56.695 },
+                        { "x": 6231, "y": 88.274 },
+                        { "x": 2417, "y": 2.077 },
+                        { "x": 3930, "y": 50.712 },
+                        { "x": 2635, "y": 42.419 },
+                        { "x": 8561, "y": 59.392 },
+                        { "x": 3461, "y": 73.33 },
+                        { "x": 9129, "y": 76.774 },
+                        { "x": 7065, "y": 91.684 },
+                        { "x": 5105, "y": 91.899 }
+                    ]
+                },
+                {
+                    "name": "group B",
+                    "data": [
+                        { "x": 945, "y": 93.539 },
+                        { "x": 7232, "y": 18.947 },
+                        { "x": 4518, "y": 88.949 },
+                        { "x": 5702, "y": 31.734 },
+                        { "x": 7911, "y": 47.293 },
+                        { "x": 2909, "y": 38.256 },
+                        { "x": 4944, "y": 66.288 },
+                        { "x": 3806, "y": 13.844 },
+                        { "x": 4072, "y": 96.82 },
+                        { "x": 4891, "y": 99.031 }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Example metric 2",
+            "description": "Ut lacus nunc, cursus vitae leo et, dignissim rhoncus augue. Quisque feugiat molestie justo sit amet vestibulum. Phasellus urna velit, condimentum nec tortor vel, imperdiet commodo ligula. Etiam maximus erat non lacus aliquet porta. Phasellus eget luctus enim. Fusce ultrices tellus ut ultrices pretium. Ut ultricies ex hendrerit leo posuere laoreet. Aliquam erat volutpat. Aenean condimentum fringilla massa, a ultricies ex accumsan et. Integer bibendum lorem vel semper pulvinar. Vivamus id nisl ullamcorper massa ullamcorper suscipit vestibulum in tellus. Etiam elementum purus sit amet viverra sodales. Integer lacinia nisi at efficitur blandit. In imperdiet vehicula mauris, vitae pharetra urna porta sit amet. Morbi ut rhoncus augue, ac dictum enim.",
+            "n": 23701,
+            "type": "bar",
+            "categories": [
+                "News",
+                "Sports",
+                "Social media",
+                "Other"
+            ],
+            "units": {
+                "x": "Website category",
+                "y": "Visits"
+            },
+            "populations": [
+                {
+                    "name": "control",
+                    "data": [
+                        2305,
+                        3252,
+                        1355,
+                        4213
+                    ]
+                },
+                {
+                    "name": "group B",
+                    "data": [
+                        1351,
+                        2356,
+                        3252,
+                        2351
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Example metric 3",
+            "description": "Pellentesque luctus mattis nibh vel rhoncus. Mauris maximus elit nec mauris tristique, vitae elementum orci vulputate. Sed in commodo justo. Nam laoreet velit sed leo fringilla, sed viverra lacus pretium. Ut at elit lacus. In blandit egestas consequat. Mauris velit ante, laoreet sit amet pulvinar vitae, volutpat vel purus. Duis accumsan, sapien eget cursus convallis, nisl enim pharetra nisi, at congue elit diam vel libero. Ut cursus ultricies eros in tristique. Mauris massa purus, pretium nec porta iaculis, mollis id ante. Curabitur finibus lectus sed leo sagittis, at scelerisque magna tincidunt. Proin efficitur, nulla at aliquam convallis, justo tortor scelerisque erat, eget porttitor orci sapien vitae purus. Phasellus consequat et arcu ac ultrices. Maecenas gravida quis sapien ac varius. Cras eu pulvinar dui. Aenean et ultrices lectus, in dictum metus.",
+            "n": 20833,
+            "type": "line",
+            "units": {
+                "x": "Bookmarks"
+            },
+            "populations": [
+                {
+                    "name": "control",
+                    "data": [
+                        { "x": 9104, "y": 8.291 },
+                        { "x": 575, "y": 62.033 },
+                        { "x": 1884, "y": 98.819 },
+                        { "x": 922, "y": 69.033 },
+                        { "x": 1148, "y": 5.259 },
+                        { "x": 59, "y": 73.737 },
+                        { "x": 7733, "y": 42.357 },
+                        { "x": 7883, "y": 8.746 },
+                        { "x": 4625, "y": 78.278 }
+                    ]
+                },
+                {
+                    "name": "group B",
+                    "data": [
+                        { "x": 2527, "y": 71.627 },
+                        { "x": 9932, "y": 3.427 },
+                        { "x": 4421, "y": 89.394 },
+                        { "x": 3239, "y": 35.362 },
+                        { "x": 6038, "y": 34.698 },
+                        { "x": 2770, "y": 85.309 },
+                        { "x": 7534, "y": 5.504 },
+                        { "x": 1783, "y": 78.915 },
+                        { "x": 6914, "y": 27.442 },
+                        { "x": 252, "y": 55.549 }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "name": "Example metric 4",
+            "description": "Fusce massa ante, condimentum vel nisi non, sagittis sagittis mi. Nam tempor hendrerit lectus aliquam congue. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla interdum ut risus ac condimentum. Proin in metus erat. Proin ut purus tempus, tristique purus et, porta dui. Vestibulum fermentum molestie pretium. Fusce ac vestibulum quam. Vivamus sed sem sapien. Nullam dictum velit ac nisl posuere, ut sollicitudin nulla efficitur. Nunc non purus ligula. Fusce id commodo nunc.",
+            "n": 70328,
+            "type": "line",
+            "units": {
+                "x": "Themes"
+            },
+            "populations": [
+                {
+                    "name": "control",
+                    "data": [
+                        { "x": 6264, "y": 51.878 },
+                        { "x": 8932, "y": 93.458 },
+                        { "x": 4272, "y": 94.69 },
+                        { "x": 1080, "y": 91.547 },
+                        { "x": 5076, "y": 82.851 },
+                        { "x": 7910, "y": 83.484 },
+                        { "x": 1158, "y": 68.515 },
+                        { "x": 5479, "y": 81.108 },
+                        { "x": 2577, "y": 35.141 },
+                        { "x": 857, "y": 58.852 }
+                    ]
+                },
+                {
+                    "name": "group B",
+                    "data": [
+                        { "x": 7312, "y": 54.502 },
+                        { "x": 444, "y": 65.285 },
+                        { "x": 1525, "y": 62.128 },
+                        { "x": 1508, "y": 63.224 },
+                        { "x": 221, "y": 31.325 },
+                        { "x": 4710, "y": 57.711 },
+                        { "x": 4308, "y": 45.747 },
+                        { "x": 2985, "y": 64.531 },
+                        { "x": 9922, "y": 29.93 },
+                        { "x": 7617, "y": 21.729 }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "name": "Example metric 5",
+            "description": "Quisque risus ipsum, hendrerit quis sem at, malesuada volutpat nulla. Sed pellentesque consectetur justo, fringilla egestas ipsum. Maecenas ultrices at velit ac vestibulum. Curabitur mi dui, ornare nec lobortis nec, sodales suscipit mi. In a molestie leo. Integer sed erat interdum, porttitor purus eu, tempus purus. Cras congue, risus nec consectetur bibendum, mi nibh pretium metus, id fermentum elit libero et mi. Sed suscipit risus ipsum, eu placerat diam sagittis eu. Vivamus ut nisi et massa auctor blandit. Etiam et urna consectetur, sodales justo ut, viverra lorem. Ut tempus ex ac vulputate vulputate. Nam convallis tortor dolor, laoreet volutpat ante fermentum et.",
+            "n": 82049,
+            "type": "line",
+            "units": {
+                "x": "Extensions"
+            },
+            "populations": [
+                {
+                    "name": "control",
+                    "data": [
+                        { "x": 6100, "y": 43.58 },
+                        { "x": 8355, "y": 83.601 },
+                        { "x": 6499, "y": 70.688 },
+                        { "x": 1208, "y": 66.252 },
+                        { "x": 7711, "y": 29.708 },
+                        { "x": 9721, "y": 96.392 },
+                        { "x": 8477, "y": 51.151 },
+                        { "x": 359, "y": 4.508 },
+                        { "x": 4297, "y": 2.506 },
+                        { "x": 5745, "y": 83.198 }
+                    ]
+                },
+                {
+                    "name": "group B",
+                    "data": [
+                        { "x": 7387, "y": 64.171 },
+                        { "x": 2843, "y": 57.323 },
+                        { "x": 7400, "y": 60.152 },
+                        { "x": 8143, "y": 37.631 },
+                        { "x": 8557, "y": 93.976 },
+                        { "x": 7566, "y": 30.132 },
+                        { "x": 9758, "y": 8.406 },
+                        { "x": 9780, "y": 48.157 },
+                        { "x": 3313, "y": 15.713 },
+                        { "x": 9297, "y": 48.133 }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "name": "Example metric 6",
+            "description": "Maecenas accumsan vitae mi in malesuada. Proin tincidunt arcu a dictum dapibus. Curabitur ut nulla massa. Morbi et velit mattis, blandit libero vitae, consequat velit. Ut a congue libero. Proin lectus metus, molestie vel ultrices id, sodales ut ex. Ut hendrerit tortor et nunc ullamcorper lacinia. Vivamus aliquet justo quis arcu porttitor suscipit.",
+            "n": 48201,
+            "type": "line",
+            "units": {
+                "x": "Profiles"
+            },
+            "populations": [
+                {
+                    "name": "control",
+                    "data": [
+                        { "x": 5749, "y": 59.962 },
+                        { "x": 6419, "y": 77.915 },
+                        { "x": 8591, "y": 76.495 },
+                        { "x": 1443, "y": 97.932 },
+                        { "x": 9572, "y": 35.662 },
+                        { "x": 3008, "y": 79.36 },
+                        { "x": 7904, "y": 37.847 },
+                        { "x": 4034, "y": 21.148 },
+                        { "x": 9329, "y": 44.217 },
+                        { "x": 5641, "y": 22.541 }
+                    ]
+                },
+                {
+                    "name": "group B",
+                    "data": [
+                        { "x": 6608, "y": 31.011 },
+                        { "x": 2995, "y": 29.075 },
+                        { "x": 5570, "y": 38.544 },
+                        { "x": 2094, "y": 59.292 },
+                        { "x": 2164, "y": 55.052 },
+                        { "x": 5568, "y": 40.526 },
+                        { "x": 8316, "y": 26.05 },
+                        { "x": 4911, "y": 20.2 },
+                        { "x": 3154, "y": 96.126 },
+                        { "x": 8811, "y": 68.713 }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "name": "Example metric 7",
+            "description": "Aenean ornare et erat placerat elementum. Morbi ut erat ac leo feugiat fermentum sit amet eu sapien. Nulla fermentum tincidunt pharetra. Sed sodales mi nec finibus pretium. Etiam facilisis pharetra interdum. Quisque arcu libero, ornare id lorem ut, bibendum tempor massa. Morbi interdum arcu eu massa pulvinar consectetur.",
+            "n": 48201,
+            "type": "line",
+            "units": {
+                "x": "Crashes"
+            },
+            "populations": [
+                {
+                    "name": "control",
+                    "data": [
+                        { "x": 1333, "y": 70.377 },
+                        { "x": 7851, "y": 63.63 },
+                        { "x": 5474, "y": 66.632 },
+                        { "x": 8513, "y": 35.778 },
+                        { "x": 4939, "y": 27.188 },
+                        { "x": 1227, "y": 11.467 },
+                        { "x": 9045, "y": 70.18 },
+                        { "x": 7464, "y": 14.84 },
+                        { "x": 7601, "y": 13.678 },
+                        { "x": 4652, "y": 13.716 }
+                    ]
+                },
+                {
+                    "name": "group B",
+                    "data": [
+                        { "x": 5818, "y": 9.857 },
+                        { "x": 872, "y": 27.353 },
+                        { "x": 7205, "y": 17.016 },
+                        { "x": 4853, "y": 66.415 },
+                        { "x": 5672, "y": 40.604 },
+                        { "x": 5960, "y": 1.717 },
+                        { "x": 1097, "y": 8.146 },
+                        { "x": 8391, "y": 58.423 },
+                        { "x": 9841, "y": 87.588 },
+                        { "x": 8922, "y": 85.272 }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "name": "Example metric 8",
+            "description": "Maecenas aliquet sagittis consequat. Fusce eget est luctus velit viverra suscipit. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam turpis lacus, vehicula eu molestie non, ornare interdum libero. Nullam mauris erat, semper id orci in, iaculis fermentum libero. Suspendisse fermentum, enim et imperdiet scelerisque, nisi turpis aliquet erat, at gravida mauris leo at augue. Ut eu nunc eros. Morbi felis purus, viverra ac aliquet ac, vulputate non enim. Suspendisse vel facilisis ipsum.",
+            "n": 38412,
+            "type": "line",
+            "units": {
+                "x": "Days"
+            },
+            "populations": [
+                {
+                    "name": "control",
+                    "data": [
+                        { "x": 4033, "y": 65.128 },
+                        { "x": 5511, "y": 38.608 },
+                        { "x": 959, "y": 61.872 },
+                        { "x": 1734, "y": 60.019 },
+                        { "x": 5639, "y": 85.01 },
+                        { "x": 4430, "y": 7.508 },
+                        { "x": 6110, "y": 26.115 },
+                        { "x": 2395, "y": 32.463 },
+                        { "x": 2976, "y": 80.369 },
+                        { "x": 5955, "y": 25.547 }
+                    ]
+                },
+                {
+                    "name": "group B",
+                    "data": [
+                        { "x": 4656, "y": 96.592 },
+                        { "x": 2231, "y": 37.688 },
+                        { "x": 7858, "y": 49.286 },
+                        { "x": 4035, "y": 44.851 },
+                        { "x": 7899, "y": 22.094 },
+                        { "x": 469, "y": 97.274 },
+                        { "x": 2052, "y": 9.447 },
+                        { "x": 2593, "y": 41.783 },
+                        { "x": 751, "y": 67.303 },
+                        { "x": 4528, "y": 24.941 }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "name": "Example metric 9",
+            "description": "Vestibulum nec velit facilisis, ornare sapien pulvinar, fringilla nulla. Morbi sit amet tellus eros. Sed blandit elementum ante, nec aliquam leo convallis id. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc in arcu eget massa varius laoreet. Praesent a nunc sit amet augue dignissim ullamcorper quis ut arcu. Vivamus sollicitudin laoreet malesuada. Donec congue velit nec vestibulum hendrerit.",
+            "n": 92301,
+            "type": "line",
+            "units": {
+                "x": "Hard drives"
+            },
+            "populations": [
+                {
+                    "name": "control",
+                    "data": [
+                        { "x": 9055, "y": 20.668 },
+                        { "x": 5957, "y": 93.59 },
+                        { "x": 3820, "y": 35.664 },
+                        { "x": 5354, "y": 72.288 },
+                        { "x": 7291, "y": 40.706 },
+                        { "x": 8148, "y": 81.479 },
+                        { "x": 786, "y": 54.733 },
+                        { "x": 6416, "y": 53.64 },
+                        { "x": 6273, "y": 82.303 },
+                        { "x": 4094, "y": 61.744 }
+                    ]
+                },
+                {
+                    "name": "group B",
+                    "data": [
+                        { "x": 3818, "y": 26.253 },
+                        { "x": 1815, "y": 48.29 },
+                        { "x": 619, "y": 12.986 },
+                        { "x": 394, "y": 42.686 },
+                        { "x": 104, "y": 81.513 },
+                        { "x": 9967, "y": 65.263 },
+                        { "x": 5251, "y": 75.949 },
+                        { "x": 9856, "y": 18.83 },
+                        { "x": 5686, "y": 34.077 },
+                        { "x": 6077, "y": 81.957 }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "name": "Example metric 10",
+            "description": "Vestibulum maximus, mi id volutpat lobortis, lorem risus iaculis dolor, eget ultrices elit arcu eu mauris. Nam blandit semper venenatis. Aliquam faucibus velit at eros pulvinar pellentesque. Aliquam erat volutpat. Nulla quam neque, consectetur in erat id, tempor facilisis turpis. Fusce cursus maximus velit, in accumsan felis iaculis et. Pellentesque iaculis facilisis lacinia. Integer non orci mollis, aliquam ligula ac, varius elit. Praesent sapien erat, imperdiet ac massa in, dictum tincidunt purus. In hac habitasse platea dictumst. Nulla facilisi.",
+            "n": 37291,
+            "type": "line",
+            "units": {
+                "x": "Screens"
+            },
+            "populations": [
+                {
+                    "name": "control",
+                    "data": [
+                        { "x": 9736, "y": 63.367 },
+                        { "x": 7817, "y": 71.913 },
+                        { "x": 850, "y": 37.563 },
+                        { "x": 3948, "y": 87.82 },
+                        { "x": 9452, "y": 32.499 },
+                        { "x": 5850, "y": 40.802 },
+                        { "x": 5097, "y": 36.587 },
+                        { "x": 9572, "y": 88.929 },
+                        { "x": 9361, "y": 54.168 },
+                        { "x": 9676, "y": 13.815 }
+                    ]
+                },
+                {
+                    "name": "group B",
+                    "data": [
+                        { "x": 5344, "y": 33.643 },
+                        { "x": 7027, "y": 80.652 },
+                        { "x": 6462, "y": 33.234 },
+                        { "x": 2422, "y": 41.788 },
+                        { "x": 2352, "y": 36.891 },
+                        { "x": 8582, "y": 13.193 },
+                        { "x": 3038, "y": 59.255 },
+                        { "x": 2925, "y": 93.184 },
+                        { "x": 2318, "y": 2.165 },
+                        { "x": 5806, "y": 81.033 }
+                    ]
+                }
+            ]
+        }
+    ]
+}
