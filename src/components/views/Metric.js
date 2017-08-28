@@ -24,6 +24,12 @@ export default props => {
                             label: (tt, data) => `${data.datasets[tt.datasetIndex].label}: (${tt.xLabel.toLocaleString('en-US')} ${props.xUnit}, ${tt.yLabel}%)`,
                         },
                     },
+                    elements: {
+                        line: {
+                            // Don't curve the line between data points
+                            tension: 0,
+                        },
+                    },
                     scales: {
                         yAxes: [{
                             ticks: {
