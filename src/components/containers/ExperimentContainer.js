@@ -25,7 +25,7 @@ const ExperimentContainer = props => {
         );
     }
 
-    return null;
+    return <Error message="Error fetching experiment" />;
 }
 
 export default connect(props => {

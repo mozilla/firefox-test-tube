@@ -101,7 +101,9 @@ class MetricContainer extends React.Component {
             );
         }
 
-        return null;
+        return (
+            <Error showPageTitle={false} message="Error fetching metric" />
+        );
     }
 }
 
