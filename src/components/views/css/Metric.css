@@ -18,10 +18,32 @@ canvas {
 }
 
 #metric-details {
+    display: grid;
     grid-area: bottom-right;
+    grid-auto-columns: 1fr;
+    grid-auto-rows: min-content;
+    grid-gap: 20px;
+    grid-template-areas:
+        "top-left top-midleft top-midright top-right"
+        "bottom bottom bottom bottom";
 }
 
 /* Intentionally hidden. Adds value semantically, but not visually. */
 #metric-details h5 {
     display: none;
+}
+
+#metric-details dl {
+    grid-area: top-left;
+    margin: 0;
+}
+
+.get-json {
+    color: #000;
+    grid-area: top-midleft;
+}
+
+.metric-description {
+    grid-area: bottom;
+    margin: 0;
 }

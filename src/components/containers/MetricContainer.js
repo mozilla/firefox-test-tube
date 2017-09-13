@@ -96,6 +96,7 @@ class MetricContainer extends React.Component {
                     data={formatData(metricFetch.value)}
                     xUnit={metricFetch.value.units.x}
                     yUnit={metricFetch.value.units.y}
+                    chartDataURL={metricFetch.meta.request.url}
                 />
             );
         }

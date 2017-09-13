@@ -96,6 +96,7 @@ export default props => {
                   <dt>n</dt>
                   <dd>{props.n.toLocaleString('en-US')}</dd>
                 </dl>
+                <a className="get-json" href={props.chartDataURL}>Get JSON</a>
                 <p className="metric-description">{props.description}</p>
             </section>
             {chart}
