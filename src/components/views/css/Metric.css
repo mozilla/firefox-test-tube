@@ -21,7 +21,7 @@ canvas {
     display: grid;
     grid-area: bottom-right;
     grid-auto-columns: 1fr;
-    grid-auto-rows: min-content;
+    grid-auto-rows: max-content;
     grid-gap: 20px;
     grid-template-areas:
         "top-left top-midleft top-midright top-right"
