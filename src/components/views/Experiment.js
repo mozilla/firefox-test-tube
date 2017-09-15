@@ -32,8 +32,9 @@ function getCountDL(populations, accessor) {
 
 function getGravatarURL(email) {
     return gravatar.url(email, {
-        rating: 'g',
         default: 'mm',
+        rating: 'g',
+        size: '100',
     });
 }
 

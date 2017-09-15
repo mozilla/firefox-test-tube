@@ -32,7 +32,15 @@
 
     display: grid;
     grid-gap: 20px;
-    grid-template-columns: repeat(4, auto);
+
+    /* https://bitsofco.de/how-the-minmax-function-works/amp/#usingtheminmaxfunctionresponsivedesignwithoutmediaqueries */
+    grid-template-columns: repeat(auto-fit, 100px); /* 100px = width of image */
+
+    justify-content: space-between;
+}
+
+#experiment-authors span {
+    text-align: center;
 }
 
 #experiment-authors a {
