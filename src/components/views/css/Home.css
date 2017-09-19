@@ -14,16 +14,16 @@
 
 #home li {
     border: 1px solid #000;
+    padding: 20px;
+
+    display: grid;
+    align-items: center;
+    justify-items: center;
 }
 
 #home li a {
     color: #000;
-    height: 80px;
-    margin: 0 auto;
+    line-height: 1.5;
+    text-align: center;
     text-decoration: none;
-    width: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
