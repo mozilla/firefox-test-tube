@@ -19,6 +19,7 @@ export default props => {
                 options={{
                     maintainAspectRatio: false,
                     responsive: false,
+                    showLines: true,
                     tooltips: {
                         callbacks: {
                             label: (tt, data) => `${data.datasets[tt.datasetIndex].label}: (${tt.xLabel.toLocaleString('en-US')} ${props.xUnit}, ${tt.yLabel}%)`,
