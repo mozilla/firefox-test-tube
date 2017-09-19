@@ -14,16 +14,19 @@
 
 #home li {
     border: 1px solid #000;
-    padding: 20px;
-
-    display: grid;
-    align-items: center;
-    justify-items: center;
+    display: grid; /* Grid stretches items vertically and horizontally by default */
 }
 
 #home li a {
     color: #000;
     line-height: 1.5;
+    padding: 20px;
     text-align: center;
     text-decoration: none;
+
+    /* If one experiment title is very long, this will ensure that others are
+       centered vertically. The entire button will be clickable as well because,
+       again, grid stretches this a element veritcally. */
+    display: grid;
+    align-items: center;
 }
