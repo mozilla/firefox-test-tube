@@ -7,27 +7,36 @@ import './css/Experiment.css';
 
 
 function getCountDL(populations, accessor) {
-    const termsAndDescriptions = [];
+    const termGroups = [];
     let total = 0;
-    let i = 0;
+
     for (const populationName in populations) {
         if (populations.hasOwnProperty(populationName)) {
 
             const count = populations[populationName][accessor];
             total += count;
 
-            termsAndDescriptions.push(<dt key={i}>{populationName}</dt>);
-            termsAndDescriptions.push(<dd key={i + 1}>{count.toLocaleString('en-US')}</dd>);
+            // Apparently wrapping a <dt> and <dd> pair in a <div> is valid. And
+            // it helps with styling.
+            // https://github.com/whatwg/html/pull/1945
+            termGroups.push(
+                <div key={populationName}>
+                    <dt>{populationName}</dt>
+                    <dd>{count.toLocaleString('en-US')}</dd>
+                </div>
+            );
 
         }
-
-        i += 2;
     }
 
-    termsAndDescriptions.push(<dt key={i + 1}>Total</dt>);
-    termsAndDescriptions.push(<dd key={i + 2}>{total.toLocaleString('en-US')}</dd>);
+    termGroups.push(
+        <div key='total'>
+            <dt>Total</dt>
+            <dd>{total.toLocaleString('en-US')}</dd>
+        </div>
+    );
 
-    return <dl>{termsAndDescriptions}</dl>;
+    return <dl>{termGroups}</dl>;
 }
 
 function getGravatarURL(email) {

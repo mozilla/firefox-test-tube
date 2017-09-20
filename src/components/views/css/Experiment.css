@@ -73,7 +73,9 @@
 
 #experiment-counts dl {
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
+    grid-gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
+
     font-size: .75em;
     margin: 1rem 0; /* Same as #experiment-counts h4 margin-bottom */
 }
