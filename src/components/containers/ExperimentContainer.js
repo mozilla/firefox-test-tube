@@ -16,11 +16,13 @@ const ExperimentContainer = props => {
     } else if (experimentFetch.fulfilled) {
         return (
             <Experiment
+                experimentId={experimentFetch.value.id}
                 name={experimentFetch.value.name}
                 description={experimentFetch.value.description}
                 authors={experimentFetch.value.authors}
                 metrics={experimentFetch.value.metrics}
                 populations={experimentFetch.value.populations}
+                selectedMetricId={Number(props.match.params.selectedMetricId)}
             />
         );
     }

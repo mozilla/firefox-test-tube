@@ -89,6 +89,8 @@ class MetricContainer extends React.Component {
 
             return (
                 <Metric
+                    experimentId={this.props.experimentId}
+                    metricId={metricFetch.value.id}
                     name={metricFetch.value.name}
                     description={metricFetch.value.description}
                     n={metricFetch.value.n}
@@ -97,6 +99,9 @@ class MetricContainer extends React.Component {
                     xUnit={metricFetch.value.units.x}
                     yUnit={metricFetch.value.units.y}
                     chartDataURL={metricFetch.meta.request.url}
+
+                    // Force to "false" if undefined
+                    asOverlay={this.props.asOverlay === true}
                 />
             );
         }

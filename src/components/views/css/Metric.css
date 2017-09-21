@@ -3,12 +3,26 @@
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 50px; /* Same as #experiment-details */
     grid-template-areas:
-        "top-left top-right"
+        "top top"
         "bottom-left bottom-right";
 }
 
+.name-and-fullscreen-button {
+    grid-area: top;
+
+    display: flex;
+}
+
+.fullscreen-button {
+    color: #000;
+    text-decoration: none;
+
+    /* Make the hitbox bigger than the icon itself */
+    padding: 10px 10px 10px 10px;
+    margin: -10px -10px 10px 0;
+}
+
 .metric-name {
-    grid-area: top-left;
     text-align: left;
 }
 
@@ -46,4 +60,36 @@ canvas {
 .metric-description {
     grid-area: bottom;
     margin: 0;
+}
+
+#metric-overlay {
+    position: fixed;
+    top: 5%;
+    right: 5%;
+    bottom: 5%;
+    left: 5%;
+
+    background-color: #fff;
+    box-shadow: 0 0 30px #666;
+    padding: 20px;
+    z-index: 1;
+
+    /* Without this, chart.js won't fit itself inside the padding. */
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+#title-and-close-button {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.close-button {
+    /* Make the hitbox bigger than the icon itself */
+    padding: 20px;
+    margin: -20px;
+
+    justify-self: end;
+    color: #000;
+    text-decoration: none;
 }

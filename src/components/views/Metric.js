@@ -1,25 +1,30 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 import { Scatter as ScatterChart, Bar as BarChart } from 'react-chartjs-2';
+import { Icon } from 'react-fa';
 
 import './css/Metric.css';
 
 
 export default props => {
-    const width = 500;
-    const height = 350;
+    const chartWidth = props.asOverlay ? null : 500;
+    const chartHeight = props.asOverlay ? null : 350;
+    const chartAnimationDuration = props.asOverlay ? 0 : 1000;
 
     let chart = null;
     if (props.type === 'line') {
         chart = (
             <ScatterChart
                 data={props.data}
-                width={width}
-                height={height}
+                width={chartWidth}
+                height={chartHeight}
                 options={{
                     maintainAspectRatio: false,
-                    responsive: false,
+                    responsive: props.asOverlay,
                     showLines: true,
+                    animation: {
+                        duration: chartAnimationDuration,
+                    },
                     tooltips: {
                         callbacks: {
                             label: (tt, data) => `${data.datasets[tt.datasetIndex].label}: (${tt.xLabel.toLocaleString('en-US')} ${props.xUnit}, ${tt.yLabel}%)`,
@@ -56,11 +61,14 @@ export default props => {
         chart = (
             <BarChart
                 data={props.data}
-                width={width}
-                height={height}
+                width={chartWidth}
+                height={chartHeight}
                 options={{
                     maintainAspectRatio: false,
-                    responsive: false,
+                    responsive: props.asOverlay,
+                    animation: {
+                        duration: chartAnimationDuration,
+                    },
                     tooltips: {
                         callbacks: {
                             label: (tt, data) => `${data.datasets[tt.datasetIndex].label}: ${tt.yLabel.toLocaleString('en-US')}`
@@ -88,19 +96,36 @@ export default props => {
         );
     }
 
-    return (
-        <section className="metric">
-            <h4 className="metric-name">{props.name}</h4>
-            <section id="metric-details">
-                <h5>Details</h5>
-                <dl>
-                  <dt>n</dt>
-                  <dd>{props.n.toLocaleString('en-US')}</dd>
-                </dl>
-                <a className="get-json" href={props.chartDataURL}>Get JSON</a>
-                <p className="metric-description">{props.description}</p>
+    if (props.asOverlay) {
+        return (
+            <section id="metric-overlay">
+                <div id="title-and-close-button">
+                    <h2>{props.name}</h2>
+                    <Link className="close-button" to={`/experiment/${props.experimentId}/`}><Icon name="times" /></Link>
+                </div>
+
+                {/* Without this, chart.js won't fit itself inside the padding */}
+                <div>{chart}</div>
             </section>
-            {chart}
-        </section>
-    );
+        );
+    } else {
+        return (
+            <section className="metric">
+                <div className="name-and-fullscreen-button">
+                    <h4 className="metric-name">{props.name}</h4>
+                    <Link className="fullscreen-button" to={`chart/${props.metricId}/`}><Icon name="arrows-alt" /></Link>
+                </div>
+                <section id="metric-details">
+                    <h5>Details</h5>
+                    <dl>
+                      <dt>n</dt>
+                      <dd>{props.n.toLocaleString('en-US')}</dd>
+                    </dl>
+                    <a className="get-json" href={props.chartDataURL}>Get JSON</a>
+                    <p className="metric-description">{props.description}</p>
+                </section>
+                {chart}
+            </section>
+        );
+    }
 };
