@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Scatter as ScatterChart, Bar as BarChart } from 'react-chartjs-2';
 import { Icon } from 'react-fa';
 
+import Overlay from './Overlay';
+
 import './css/Metric.css';
 
 
@@ -98,15 +100,9 @@ export default props => {
 
     if (props.asOverlay) {
         return (
-            <section id="metric-overlay">
-                <div id="title-and-close-button">
-                    <h2>{props.name}</h2>
-                    <Link className="close-button" to={`/experiment/${props.experimentId}/`}><Icon name="times" /></Link>
-                </div>
-
-                {/* Without this, chart.js won't fit itself inside the padding */}
-                <div>{chart}</div>
-            </section>
+            <Overlay title={props.name} closeTo={`/experiment/${props.experimentId}/`}>
+                {chart}
+            </Overlay>
         );
     } else {
         return (

@@ -1,0 +1,31 @@
+#overlay {
+    position: fixed;
+    top: 5%;
+    right: 5%;
+    bottom: 5%;
+    left: 5%;
+
+    background-color: #fff;
+    box-shadow: 0 0 30px #666;
+    padding: 20px;
+    z-index: 1;
+
+    /* Without this, chart.js won't fit itself inside the padding. */
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+#overlay-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#overlay-header a {
+    /* Make the hitbox bigger than the icon itself */
+    padding: 20px;
+    margin: -20px;
+
+    justify-self: end;
+    color: #000;
+    text-decoration: none;
+}
