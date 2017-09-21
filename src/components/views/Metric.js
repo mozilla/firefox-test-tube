@@ -11,7 +11,6 @@ import './css/Metric.css';
 export default props => {
     const chartWidth = props.asOverlay ? null : 500;
     const chartHeight = props.asOverlay ? null : 350;
-    const chartAnimationDuration = props.asOverlay ? 0 : 1000;
 
     let chart = null;
     if (props.type === 'line') {
@@ -24,9 +23,6 @@ export default props => {
                     maintainAspectRatio: false,
                     responsive: props.asOverlay,
                     showLines: true,
-                    animation: {
-                        duration: chartAnimationDuration,
-                    },
                     tooltips: {
                         callbacks: {
                             label: (tt, data) => `${data.datasets[tt.datasetIndex].label}: (${tt.xLabel.toLocaleString('en-US')} ${props.xUnit}, ${tt.yLabel}%)`,
@@ -68,9 +64,6 @@ export default props => {
                 options={{
                     maintainAspectRatio: false,
                     responsive: props.asOverlay,
-                    animation: {
-                        duration: chartAnimationDuration,
-                    },
                     tooltips: {
                         callbacks: {
                             label: (tt, data) => `${data.datasets[tt.datasetIndex].label}: ${tt.yLabel.toLocaleString('en-US')}`
