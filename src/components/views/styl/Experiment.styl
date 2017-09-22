@@ -1,12 +1,16 @@
+@import 'includes/variables';
+
+$grid-row-gap = 50px;
+
 #experiment-content {
     display: grid;
-    grid-gap: 50px;
+    grid-row-gap: $grid-row-gap;
 }
 
 #experiment-details {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-column-gap: 50px; /* Same as .metric */
+    grid-column-gap: $grid-column-gap-on-experiment-page;
     grid-row-gap: 10px;
     grid-template-areas:
         "top top"\
@@ -23,38 +27,38 @@
 
 #experiment-authors {
     grid-area: bottom-right;
-}
 
-#experiment-authors ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
 
-    display: grid;
-    grid-gap: 20px;
+        display: grid;
+        grid-gap: 20px;
 
-    /* https://bitsofco.de/how-the-minmax-function-works/amp/#usingtheminmaxfunctionresponsivedesignwithoutmediaqueries */
-    grid-template-columns: repeat(auto-fit, 100px); /* 100px = width of image */
+        /* https://bitsofco.de/how-the-minmax-function-works/amp/#usingtheminmaxfunctionresponsivedesignwithoutmediaqueries */
+        grid-template-columns: repeat(auto-fit, 100px); /* 100px = width of image */
 
-    justify-content: space-between;
-}
+        justify-content: space-between;
+    }
 
-#experiment-authors span {
-    text-align: center;
-}
+    span {
+        text-align: center;
+    }
 
-#experiment-authors a {
-    display: inline-grid;
-    grid-row-gap: 10px;
-    justify-items: center;
+    a {
+        display: inline-grid;
+        grid-row-gap: 10px;
+        justify-items: center;
 
-    text-decoration: none;
-    color: #000;
+        text-decoration: none;
+        color: #000;
+    }
 }
 
 #experiment-metrics {
     display: grid;
-    grid-gap: 50px; /* Same as #experiment-content */
+    grid-row-gap: $grid-row-gap;
 }
 
 /* Intentionally hidden. Add value semantically, but not visually. */
@@ -63,19 +67,23 @@
     display: none;
 }
 
-#experiment-counts h5 {
-    margin-bottom: 0;
-}
+#experiment-counts {
+    $vertical-spacing = 1rem;
 
-#experiment-counts h4 {
-    margin-bottom: 1rem;
-}
+    h4 {
+        margin-bottom: $vertical-spacing;
+    }
 
-#experiment-counts dl {
-    display: grid;
-    grid-gap: 20px;
-    grid-template-columns: repeat(4, 1fr);
+    h5 {
+        margin-bottom: 0;
+    }
 
-    font-size: .75em;
-    margin: 1rem 0; /* Same as #experiment-counts h4 margin-bottom */
+    dl {
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: repeat(4, 1fr);
+
+        font-size: .75em;
+        margin: $vertical-spacing 0;
+    }
 }

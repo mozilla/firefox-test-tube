@@ -10,7 +10,7 @@ export default props => (
         <section id="overlay" onClick={props.onOverlayClick}>
             <div id="overlay-header">
                 <h2>{props.title}</h2>
-                <Link to={props.closeTo}><Icon name="times" /></Link>
+                <Link id="overlay-close-button" to={props.closeTo}><Icon name="times" /></Link>
             </div>
             <div id="overlay-content">
                 {props.children}

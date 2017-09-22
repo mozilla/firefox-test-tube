@@ -1,3 +1,5 @@
+@import 'includes/variables';
+
 body {
   margin: 0;
   font-family: sans-serif;
@@ -5,7 +7,7 @@ body {
 
 #application {
   display: grid;
-  grid-row-gap: 20px;
+  grid-row-gap: $grid-row-gap-between-header-and-main;
   padding: 20px;
   width: 1200px;
   margin: 0 auto;
@@ -19,18 +21,18 @@ p {
     line-height: 1.3;
 }
 
-dd, dt {
+dt, dd {
     display: inline;
 }
 
 dt {
     font-weight: bold;
     clear: left;
-}
 
-dt::after {
-    content: ':';
-    margin-right: 1ch;
+    &::after {
+        content: ':';
+        margin-right: 1ch;
+    }
 }
 
 dd {

@@ -1,32 +1,34 @@
+@import 'includes/variables';
+
 #home {
     display: grid;
-    grid-row-gap: 20px;
-}
+    grid-row-gap: $grid-row-gap-between-header-and-main;
 
-#home ul {
-    display: grid;
-    grid-gap: 20px;
-    grid-template-columns: repeat(6, 1fr);
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
+    ul {
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: repeat(6, 1fr);
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
 
-#home li {
-    border: 1px solid #000;
-    display: grid; /* Grid stretches items vertically and horizontally by default */
-}
+    li {
+        border: 1px solid #000;
+        display: grid; /* Grid stretches items vertically and horizontally by default */
 
-#home li a {
-    color: #000;
-    line-height: 1.5;
-    padding: 20px;
-    text-align: center;
-    text-decoration: none;
+        a {
+            color: #000;
+            line-height: 1.5;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
 
-    /* If one experiment title is very long, this will ensure that others are
-       centered vertically. The entire button will be clickable as well because,
-       again, grid stretches this a element veritcally. */
-    display: grid;
-    align-items: center;
+            /* If one experiment title is very long, this will ensure that others are
+               centered vertically. The entire button will be clickable as well because,
+               again, grid stretches this a element veritcally. */
+            display: grid;
+            align-items: center;
+        }
+    }
 }

@@ -1,3 +1,5 @@
+@import 'includes/mixins';
+
 /* Create a transparent area "behind" the overlay that, along with some
    JavaScript, the user will be able to click to close the overlay. */
 #overlay-wrapper {
@@ -32,10 +34,9 @@
     grid-template-columns: 1fr 1fr;
 }
 
-#overlay-header a {
-    /* Make the hitbox bigger than the icon itself */
-    padding: 20px;
-    margin: -20px;
+#overlay-close-button {
+    grow-hitbox(20px);
+    fix-fa-link-height();
 
     justify-self: end;
     color: #000;

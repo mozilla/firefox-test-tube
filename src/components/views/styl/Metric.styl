@@ -1,7 +1,10 @@
+@import 'includes/variables';
+@import 'includes/mixins';
+
 .metric {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-column-gap: 50px; /* Same as #experiment-details */
+    grid-column-gap: $grid-column-gap-on-experiment-page;
     grid-template-areas:
         "top top"\
         "bottom-left bottom-right";
@@ -17,9 +20,11 @@
     color: #000;
     text-decoration: none;
 
-    /* Make the hitbox bigger than the icon itself */
-    padding: 10px 10px 10px 10px;
-    margin: -10px -10px 10px 0;
+    fix-fa-link-height();
+
+    grow-hitbox(10px);
+    position: relative;
+    left: 10px;
 }
 
 .metric-name {
@@ -40,16 +45,16 @@ canvas {
     grid-template-areas:
         "top-left top-midleft top-midright top-right"\
         "bottom bottom bottom bottom";
-}
 
-/* Intentionally hidden. Adds value semantically, but not visually. */
-#metric-details h5 {
-    display: none;
-}
+    /* Intentionally hidden. Adds value semantically, but not visually. */
+    h5 {
+        display: none;
+    }
 
-#metric-details dl {
-    grid-area: top-left;
-    margin: 0;
+    dl {
+        grid-area: top-left;
+        margin: 0;
+    }
 }
 
 .get-json {
