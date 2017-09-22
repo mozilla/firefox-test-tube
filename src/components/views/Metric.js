@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Scatter as ScatterChart, Bar as BarChart } from 'react-chartjs-2';
 import { Icon } from 'react-fa';
 
-import Overlay from './Overlay';
+import OverlayContainer from '../containers/OverlayContainer';
 
 import './css/Metric.css';
 
@@ -93,9 +93,9 @@ export default props => {
 
     if (props.asOverlay) {
         return (
-            <Overlay title={props.name} closeTo={`/experiment/${props.experimentId}/`}>
+            <OverlayContainer title={props.name} closeTo={`/experiment/${props.experimentId}/`}>
                 {chart}
-            </Overlay>
+            </OverlayContainer>
         );
     } else {
         return (
