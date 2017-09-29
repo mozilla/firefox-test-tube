@@ -1,3 +1,4 @@
+
 version: 2
 jobs:
   build:
@@ -12,22 +13,22 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-{{ checksum "yarn.lock" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: yarn
-
       # These steps are needed for any repository with a lockfile.
       # https://github.com/greenkeeperio/greenkeeper-lockfile
-      - run: yarn global add greenkeeper-lockfile
-      - run: greenkeeper-lockfile-update
-      - run: greenkeeper-lockfile-upload
+      - run: npm install --no-package-lock greenkeeper-lockfile
+      - run: node_modules/.bin/greenkeeper-lockfile-update
+      - run: node_modules/.bin/greenkeeper-lockfile-upload
+
+      - run: yarn
 
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
 
       # run tests!
       - run: yarn test
