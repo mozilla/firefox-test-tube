@@ -19,6 +19,10 @@ export default class extends React.Component {
         }, process.env.REACT_APP_SPINNER_WAIT);
     }
 
+    /**
+     * Ensure that setState is not called after the component is unmounted, as
+     * this will cause React to throw a warning.
+     */
     componentWillUnmount() {
         clearTimeout(this.loadingTimeout);
     }
