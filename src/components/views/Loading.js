@@ -14,9 +14,13 @@ export default class extends React.Component {
      * Only show the spinner after the given number of milliseconds.
      */
     componentDidMount() {
-        setTimeout(() => {
+        this.loadingTimeout = setTimeout(() => {
             this.setState({ showSpinner: true });
         }, process.env.REACT_APP_SPINNER_WAIT);
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.loadingTimeout);
     }
 
     render() {
