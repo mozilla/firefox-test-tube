@@ -16,13 +16,11 @@ const ExperimentContainer = props => {
     } else if (experimentFetch.fulfilled) {
         return (
             <Experiment
-                experimentId={experimentFetch.value.id}
                 name={experimentFetch.value.name}
                 description={experimentFetch.value.description}
                 authors={experimentFetch.value.authors}
                 metrics={experimentFetch.value.metrics}
                 populations={experimentFetch.value.populations}
-                selectedMetricId={Number(props.match.params.selectedMetricId)}
             />
         );
     }
@@ -31,9 +29,9 @@ const ExperimentContainer = props => {
 }
 
 export default connect(props => {
-    const experimentId = props.match.params.experimentId;
+    const id = props.match.params.experimentId;
 
     return {
-        experimentFetch: { url: `${process.env.REACT_APP_API_URL}/experiments/${experimentId}`, refreshInterval: Number(process.env.REACT_APP_REFRESH_INTERVAL) },
+        experimentFetch: { url: `${process.env.REACT_APP_API_URL}/experiments/${id}`, refreshInterval: Number(process.env.REACT_APP_REFRESH_INTERVAL) },
     };
 })(ExperimentContainer);

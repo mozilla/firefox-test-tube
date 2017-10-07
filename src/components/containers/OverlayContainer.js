@@ -7,19 +7,14 @@ import Overlay from '../views/Overlay';
 class OverlayContainer extends React.Component {
     constructor(props) {
         super(props);
-        this.onWrapperClick = this.onWrapperClick.bind(this);
-    }
-
-    onWrapperClick() {
-        this.props.history.push(this.props.closeTo);
+        this.onClick = this.onClick.bind(this);
     }
 
     /**
-     * A simple function that prevents onWrapperClick from being run. If this
-     * event is bound to the onClick function of a child, the onWrapperClick
-     * function won't run when the child is clicked.
+     * When the overlay is clicked, don't propagate that same onClick event to
+     * the wrapper parent.
      */
-    onOverlayClick(e) {
+    onClick(e) {
         e.stopPropagation();
     }
 
@@ -27,8 +22,8 @@ class OverlayContainer extends React.Component {
         return (
             <Overlay
                 {...this.props}
-                onWrapperClick={this.onWrapperClick}
-                onOverlayClick={this.onOverlayClick}
+                onClose={this.props.onClose}
+                onClick={this.onClick}
             />
         );
     }

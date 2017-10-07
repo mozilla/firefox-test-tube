@@ -1,16 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Icon } from 'react-fa';
 
 import './css/Overlay.css';
 
 
 export default props => (
-    <div id="overlay-wrapper" onClick={props.onWrapperClick}>
-        <section id="overlay" onClick={props.onOverlayClick}>
+    <div id="overlay-wrapper" onClick={props.onClose}>
+        <section id="overlay" onClick={props.onClick}>
             <div id="overlay-header">
                 <h2>{props.title}</h2>
-                <Link id="overlay-close-button" to={props.closeTo}><Icon name="times" /></Link>
+                <Icon id="overlay-close-button" name="times" onClick={props.onClose} />
             </div>
             <div id="overlay-content">
                 {props.children}

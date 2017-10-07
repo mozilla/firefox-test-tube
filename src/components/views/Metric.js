@@ -1,14 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Scatter as ScatterChart, Bar as BarChart } from 'react-chartjs-2';
 import { Icon } from 'react-fa';
 
 import OverlayContainer from '../containers/OverlayContainer';
+import URLManager from '../../lib/URLManager';
 
 import './css/Metric.css';
 
 
-export default props => {
+export default withRouter(props => {
+    const um = new URLManager(props.location, props.history);
+
     const chartWidth = props.asOverlay ? null : 500;
     const chartHeight = props.asOverlay ? null : 350;
 
@@ -93,7 +96,7 @@ export default props => {
 
     if (props.asOverlay) {
         return (
-            <OverlayContainer title={props.name} closeTo={`/experiment/${props.experimentId}/`}>
+            <OverlayContainer title={props.name} onClose={() => um.removeQueryParameter('chart')}>
                 {chart}
             </OverlayContainer>
         );
@@ -102,7 +105,7 @@ export default props => {
             <section className="metric">
                 <div className="name-and-fullscreen-button">
                     <h4 className="metric-name">{props.name}</h4>
-                    <Link className="fullscreen-button" to={`chart/${props.metricId}/`}><Icon name="arrows-alt" /></Link>
+                    <Icon className="fullscreen-button" name="arrows-alt" onClick={() => um.addQueryParameter('chart', props.id)} />
                 </div>
                 <section id="metric-details">
                     <h5>Details</h5>
@@ -117,4 +120,4 @@ export default props => {
             </section>
         );
     }
-};
+});

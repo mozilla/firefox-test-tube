@@ -27,7 +27,7 @@ class MetricContainer extends React.Component {
     }
 
     /**
-     * Format the /metric/[metricId] JSON for use with chart.js
+     * Format the /metric/[id] JSON for use with chart.js
      */
     _formatLineData(data) {
         const formattedData = {
@@ -89,8 +89,7 @@ class MetricContainer extends React.Component {
 
             return (
                 <Metric
-                    experimentId={this.props.experimentId}
-                    metricId={metricFetch.value.id}
+                    id={metricFetch.value.id}
                     name={metricFetch.value.name}
                     description={metricFetch.value.description}
                     n={metricFetch.value.n}
@@ -113,5 +112,5 @@ class MetricContainer extends React.Component {
 }
 
 export default connect(props => ({
-    metricFetch: { url: `${process.env.REACT_APP_API_URL}/metrics/${props.metricId}`, refreshInterval: Number(process.env.REACT_APP_REFRESH_INTERVAL) },
+    metricFetch: { url: `${process.env.REACT_APP_API_URL}/metrics/${props.id}`, refreshInterval: Number(process.env.REACT_APP_REFRESH_INTERVAL) },
 }))(MetricContainer);

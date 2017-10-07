@@ -1,7 +1,9 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import gravatar from 'gravatar';
 
 import MetricContainer from '../containers/MetricContainer';
+import URLManager from '../../lib/URLManager';
 
 import './css/Experiment.css';
 
@@ -47,13 +49,16 @@ function getGravatarURL(email) {
     });
 }
 
-export default props => {
+export default withRouter(props => {
+    const um = new URLManager(props.location, props.history);
+
+    const selectedMetricId = Number(um.getQueryParameter('chart'));
+
     let maybeMetricOverlay = null;
-    if (props.selectedMetricId && props.metrics.includes(props.selectedMetricId)) {
+    if (selectedMetricId !== undefined && props.metrics.includes(selectedMetricId)) {
         maybeMetricOverlay = (
           <MetricContainer
-              experimentId={props.experimentId}
-              metricId={props.selectedMetricId}
+              id={selectedMetricId}
               asOverlay={true}
           />
         );
@@ -97,8 +102,8 @@ export default props => {
                     </section>
                     <section id="experiment-metrics">
                         <h3>Metrics</h3>
-                        {props.metrics.map(metricId => (
-                            <MetricContainer key={metricId} metricId={metricId} />
+                        {props.metrics.map(id => (
+                            <MetricContainer key={id} id={id} />
                         ))}
                     </section>
                 </div>
@@ -106,4 +111,4 @@ export default props => {
             {maybeMetricOverlay}
         </div>
     );
-};
+});
