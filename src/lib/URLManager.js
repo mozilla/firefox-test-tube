@@ -12,7 +12,10 @@ export default class {
         return qp[key];
     }
 
-    addQueryParameter(key, value) {
+    /**
+     * Add a query parameter or set a vaue for an existing query parameter.
+     */
+    setQueryParameter(key, value) {
         const qp = queryString.parse(this.location.search);
         qp[key] = value;
         this.history.push(this.location.pathname + '?' + queryString.stringify(qp));
@@ -21,6 +24,6 @@ export default class {
     removeQueryParameter(key) {
         const qp = queryString.parse(this.location.search);
         delete qp[key];
-        this.history.push(this.location.pathname + queryString.stringify(qp));
+        this.history.push(this.location.pathname + '?' + queryString.stringify(qp));
     }
 }

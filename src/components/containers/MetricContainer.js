@@ -95,8 +95,8 @@ class MetricContainer extends React.Component {
                     n={metricFetch.value.n}
                     type={metricFetch.value.type}
                     data={formatData(metricFetch.value)}
-                    xUnit={metricFetch.value.units.x}
-                    yUnit={metricFetch.value.units.y}
+                    xUnit={metricFetch.value.units ? metricFetch.value.units.x : undefined}
+                    yUnit={metricFetch.value.units ? metricFetch.value.units.y : undefined}
                     chartDataURL={metricFetch.meta.request.url}
 
                     // Force to "false" if undefined

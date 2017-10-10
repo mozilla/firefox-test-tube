@@ -15,6 +15,9 @@ export default withRouter(props => {
     const chartWidth = props.asOverlay ? null : 500;
     const chartHeight = props.asOverlay ? null : 350;
 
+    const xUnit = props.xUnit ? props.xUnit : '';
+    const yUnit = props.yUnit ? props.yUnit : '';
+
     let chart = null;
     if (props.type === 'line') {
         chart = (
@@ -28,7 +31,7 @@ export default withRouter(props => {
                     showLines: true,
                     tooltips: {
                         callbacks: {
-                            label: (tt, data) => `${data.datasets[tt.datasetIndex].label}: (${tt.xLabel.toLocaleString('en-US')} ${props.xUnit}, ${tt.yLabel}%)`,
+                            label: (tt, data) => `${data.datasets[tt.datasetIndex].label}: (${tt.xLabel.toLocaleString('en-US')} ${xUnit}, ${tt.yLabel}%)`,
                         },
                     },
                     elements: {
@@ -48,7 +51,7 @@ export default withRouter(props => {
                         xAxes: [{
                             scaleLabel: {
                                 display: true,
-                                labelString: props.xUnit,
+                                labelString: xUnit,
                             },
                             ticks: {
                                 callback: label => label.toLocaleString('en-US'),
@@ -76,7 +79,7 @@ export default withRouter(props => {
                         xAxes: [{
                             scaleLabel: {
                                 display: true,
-                                labelString: props.xUnit,
+                                labelString: xUnit,
                             },
                         }],
                         yAxes: [{
@@ -85,7 +88,7 @@ export default withRouter(props => {
                             },
                             scaleLabel: {
                                 display: true,
-                                labelString: props.yUnit,
+                                labelString: yUnit,
                             },
                         }],
                     },
@@ -105,7 +108,7 @@ export default withRouter(props => {
             <section className="metric">
                 <div className="name-and-fullscreen-button">
                     <h4 className="metric-name">{props.name}</h4>
-                    <Icon className="fullscreen-button" name="arrows-alt" onClick={() => um.addQueryParameter('chart', props.id)} />
+                    <Icon className="fullscreen-button" name="arrows-alt" onClick={() => um.setQueryParameter('chart', props.id)} />
                 </div>
                 <section id="metric-details">
                     <h5>Details</h5>

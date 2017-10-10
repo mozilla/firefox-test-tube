@@ -1,0 +1,35 @@
+.react-paginate {
+    display: flex;
+
+    list-style-type: none;
+    margin: 0 auto;
+    padding: 20px;
+
+    a {
+        padding: 20px;
+        margin: 0 20px;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    .previous a {
+        margin-right: 0;
+
+        &::before {
+            content: '< ';
+        }
+    }
+
+    .next a {
+        margin-left: 0;
+
+        &::after {
+            content: ' >';
+        }
+    }
+
+    .active a {
+        text-decoration: none;
+        font-weight: bold;
+    }
+}
