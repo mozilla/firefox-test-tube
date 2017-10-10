@@ -5,6 +5,4 @@ Firefox Test Tube is an experimental version 2 of the
 
 ## Contributing
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/mozilla/firefox-test-tube.svg)](https://greenkeeper.io/)
-
 See the [development instructions](docs/development.md) to get started.
