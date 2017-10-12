@@ -13,7 +13,7 @@ export default class {
     }
 
     /**
-     * Add a query parameter or set a vaue for an existing query parameter.
+     * Add a query parameter or set a value for an existing query parameter.
      */
     setQueryParameter(key, value) {
         const qp = queryString.parse(this.location.search);
