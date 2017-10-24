@@ -15,7 +15,7 @@ const HomeContainer = props => {
         return <Error message={experimentsFetch.reason.message} />;
     } else if (experimentsFetch.fulfilled) {
         return (
-            <Home experiments={experimentsFetch.value} />
+            <Home experiments={experimentsFetch.value.experiments} />
         );
     }
 };
