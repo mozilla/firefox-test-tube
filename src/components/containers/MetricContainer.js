@@ -26,6 +26,14 @@ class MetricContainer extends React.Component {
         this._formatBarData = this._formatBarData.bind(this);
     }
 
+    _buildNValues(data) {
+        const ns = {};
+        data.populations.forEach(p => {
+            ns[p.name] = p.n;
+        });
+        return ns;
+    }
+
     /**
      * Format the /metric/[id] JSON for use with chart.js
      */
@@ -91,8 +99,8 @@ class MetricContainer extends React.Component {
                 <Metric
                     id={metricFetch.value.id}
                     name={metricFetch.value.name}
+                    nValues={this._buildNValues(metricFetch.value)}
                     description={metricFetch.value.description}
-                    n={metricFetch.value.n}
                     type={metricFetch.value.type}
                     data={formatData(metricFetch.value)}
                     xUnit={metricFetch.value.units ? metricFetch.value.units.x : undefined}

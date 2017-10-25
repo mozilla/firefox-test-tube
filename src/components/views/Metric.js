@@ -18,6 +18,25 @@ export default withRouter(props => {
     const xUnit = props.xUnit ? props.xUnit : '';
     const yUnit = props.yUnit ? props.yUnit : '';
 
+    function buildNValuesDL(nValues) {
+        let pairs = [];
+
+        for (let populationName in nValues) {
+            if (nValues.hasOwnProperty(populationName)) {
+
+                pairs.push(
+                    <div key={populationName}>
+                        <dt>{populationName}</dt>
+                        <dd>{nValues[populationName].toLocaleString('en-US')}</dd>
+                    </div>
+                );
+
+            }
+        }
+
+        return <dl>{pairs}</dl>;
+    }
+
     let chart = null;
     if (props.type === 'line') {
         chart = (
@@ -112,10 +131,10 @@ export default withRouter(props => {
                 </div>
                 <section id="metric-details">
                     <h5>Details</h5>
-                    <dl>
-                      <dt>n</dt>
-                      <dd>{props.n.toLocaleString('en-US')}</dd>
-                    </dl>
+                    <div className="n-values">
+                        <h6>n</h6>
+                        {buildNValuesDL(props.nValues)}
+                    </div>
                     <a className="get-json" href={props.chartDataURL}>Get JSON</a>
                     <p className="metric-description">{props.description}</p>
                 </section>
