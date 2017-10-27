@@ -63,8 +63,6 @@ export default withRouter(props => {
                         yAxes: [{
                             ticks: {
                                 callback: label => label + '%',
-                                min: 0,
-                                max: 100,
                             },
                         }],
                         xAxes: [{
