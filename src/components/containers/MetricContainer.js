@@ -109,15 +109,17 @@ class MetricContainer extends React.Component {
         } else if (metricFetch.rejected) {
             return <Error message={metricFetch.reason.message} />;
         } else if (metricFetch.fulfilled) {
+            const type = metricFetch.value.type;
+
             let formatData;
-            if (this._isLineType(metricFetch.value.type)) {
+            if (this._isLineType(type)) {
                 formatData = this._formatLineData;
-            } else if (this._isBarType('bar')) {
+            } else if (this._isBarType(type)) {
                 formatData = this._formatBarData;
             }
 
             if (!formatData) {
-                return <Error message="Metric type unsupported" />;
+                return <Error message={`Unsupported metric type: ${type}`} />;
             } else {
                 return (
                     <Metric
@@ -130,7 +132,7 @@ class MetricContainer extends React.Component {
                         yUnit={metricFetch.value.units ? metricFetch.value.units.y : undefined}
                         chartDataURL={metricFetch.meta.request.url}
 
-                        type={metricFetch.value.type}
+                        type={type}
                         isLineType={this._isLineType}
                         isBarType={this._isBarType}
 
