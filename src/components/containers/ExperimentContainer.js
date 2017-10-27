@@ -16,6 +16,7 @@ const ExperimentContainer = props => {
     } else if (experimentFetch.fulfilled) {
         return (
             <Experiment
+                id={Number(props.match.params.experimentId)}
                 name={experimentFetch.value.name}
                 description={experimentFetch.value.description}
                 authors={experimentFetch.value.authors}

@@ -74,13 +74,14 @@ class Experiment extends React.Component {
         this.um = new URLManager(nextProps.location, nextProps.history);
     }
 
-    render(props) {
+    render() {
         const selectedMetricId = Number(this.um.getQueryParameter('chart'));
 
         let maybeMetricOverlay = null;
         if (selectedMetricId !== undefined && this.state.activeMetrics.includes(selectedMetricId)) {
             maybeMetricOverlay = (
               <MetricContainer
+                  experimentId={this.props.id}
                   id={selectedMetricId}
                   asOverlay={true}
               />
