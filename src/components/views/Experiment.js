@@ -127,7 +127,11 @@ class Experiment extends React.Component {
                         <section id="experiment-metrics">
                             <h3>Metrics</h3>
                             {this.state.activeMetrics.map(id => (
-                                <MetricContainer key={id} id={id} />
+                                <MetricContainer
+                                    key={id}
+                                    experimentId={this.props.id}
+                                    id={id}
+                                />
                             ))}
                             <ReactPaginate
                                 containerClassName='react-paginate'
