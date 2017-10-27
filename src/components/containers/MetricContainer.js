@@ -34,6 +34,27 @@ class MetricContainer extends React.Component {
         return ns;
     }
 
+    _isLineType(type) {
+        const lineTypes = [
+            'CountHistogram',
+            'UintScalar',
+            'StringScalar',
+            'LinearHistogram',
+            'EnumeratedHistogram',
+            'ExponentialHistogram',
+        ];
+        return lineTypes.includes(type);
+    }
+
+    _isBarType(type) {
+        const barTypes = [
+            'BooleanHistogram',
+            'BooleanScalar',
+            'FlagHistogram',
+        ];
+        return barTypes.includes(type);
+    }
+
     /**
      * Format the /metric/[id] JSON for use with chart.js
      */
@@ -89,28 +110,35 @@ class MetricContainer extends React.Component {
             return <Error message={metricFetch.reason.message} />;
         } else if (metricFetch.fulfilled) {
             let formatData;
-            if (metricFetch.value.type === 'line') {
+            if (this._isLineType(metricFetch.value.type)) {
                 formatData = this._formatLineData;
-            } else if (metricFetch.value.type === 'bar') {
+            } else if (this._isBarType('bar')) {
                 formatData = this._formatBarData;
             }
 
-            return (
-                <Metric
-                    id={metricFetch.value.id}
-                    name={metricFetch.value.name}
-                    nValues={this._buildNValues(metricFetch.value)}
-                    description={metricFetch.value.description}
-                    type={metricFetch.value.type}
-                    data={formatData(metricFetch.value)}
-                    xUnit={metricFetch.value.units ? metricFetch.value.units.x : undefined}
-                    yUnit={metricFetch.value.units ? metricFetch.value.units.y : undefined}
-                    chartDataURL={metricFetch.meta.request.url}
+            if (!formatData) {
+                return <Error message="Metric type unsupported" />;
+            } else {
+                return (
+                    <Metric
+                        id={metricFetch.value.id}
+                        name={metricFetch.value.name}
+                        nValues={this._buildNValues(metricFetch.value)}
+                        description={metricFetch.value.description}
+                        data={formatData(metricFetch.value)}
+                        xUnit={metricFetch.value.units ? metricFetch.value.units.x : undefined}
+                        yUnit={metricFetch.value.units ? metricFetch.value.units.y : undefined}
+                        chartDataURL={metricFetch.meta.request.url}
 
-                    // Force to "false" if undefined
-                    asOverlay={this.props.asOverlay === true}
-                />
-            );
+                        type={metricFetch.value.type}
+                        isLineType={this._isLineType}
+                        isBarType={this._isBarType}
+
+                        // Force to "false" if undefined
+                        asOverlay={this.props.asOverlay === true}
+                    />
+                );
+            }
         }
 
         return (

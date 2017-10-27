@@ -38,7 +38,7 @@ export default withRouter(props => {
     }
 
     let chart = null;
-    if (props.type === 'line') {
+    if (props.isLineType(props.type)) {
         chart = (
             <ScatterChart
                 data={props.data}
@@ -80,7 +80,7 @@ export default withRouter(props => {
                 }}
             />
         );
-    } else if (props.type === 'bar') {
+    } else if (props.isBarType(props.type)) {
         chart = (
             <BarChart
                 data={props.data}
