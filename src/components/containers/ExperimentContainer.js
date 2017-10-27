@@ -33,6 +33,6 @@ export default connect(props => {
     const id = props.match.params.experimentId;
 
     return {
-        experimentFetch: { url: `${process.env.REACT_APP_API_URL}/experiments/${id}`, refreshInterval: Number(process.env.REACT_APP_REFRESH_INTERVAL) },
+        experimentFetch: { url: `${process.env.REACT_APP_API_URL}/experiments/${id}/`, refreshInterval: Number(process.env.REACT_APP_REFRESH_INTERVAL) },
     };
 })(ExperimentContainer);
