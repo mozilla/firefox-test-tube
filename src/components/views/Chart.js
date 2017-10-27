@@ -38,7 +38,6 @@ export default props => {
                             },
                         }],
                         xAxes: [{
-                            type: 'logarithmic',
                             scaleLabel: {
                                 display: true,
                                 labelString: xUnit,
