@@ -71,6 +71,13 @@ class MetricContainer extends React.Component {
                 return a.x - b.x;
             });
 
+            // The API provides y values as numbers between 0 and 1, but we want
+            // to display them as percentages.
+            population.data.map(dataPoint => {
+                dataPoint.y = dataPoint.y * 100;
+                return dataPoint;
+            });
+
             formattedData.datasets.push({
                 label: population.name,
                 data: population.data,
