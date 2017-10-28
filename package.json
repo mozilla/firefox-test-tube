@@ -2,7 +2,7 @@
   "name": "test-tube",
   "private": true,
   "dependencies": {
-    "chart.js": "2.7.0",
+    "chart.js": "2.7.1",
     "gravatar": "^1.6.0",
     "npm-run-all": "^4.1.1",
     "query-string": "^5.0.0",
