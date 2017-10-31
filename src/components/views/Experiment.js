@@ -90,7 +90,7 @@ class Experiment extends React.Component {
         return (
             <div>
                 <article id="experiment">
-                    <h2>{this.props.name}</h2>
+                    <h2>{this.props.name || this.props.slug}</h2>
                     <div id="experiment-content">
                         <section id="experiment-details">
                             <h3>Details</h3>

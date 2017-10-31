@@ -18,6 +18,7 @@ const ExperimentContainer = props => {
             <Experiment
                 id={Number(props.match.params.experimentId)}
                 name={experimentFetch.value.name}
+                slug={experimentFetch.value.slug}
                 description={experimentFetch.value.description}
                 authors={experimentFetch.value.authors}
                 metrics={experimentFetch.value.metrics}
