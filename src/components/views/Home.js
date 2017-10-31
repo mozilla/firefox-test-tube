@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+
+import ExperimentsTable from './ExperimentsTable';
 
 import './css/Home.css';
 
@@ -13,17 +14,7 @@ export default props => {
         maybeActiveSection = (
             <section id="active-experiments">
                 <h2>Active experiments</h2>
-                <nav>
-                    <ul>
-                        {activeExperiments.map((experiment, index) => {
-                            return (
-                                <li key={index}>
-                                    <Link to={`/experiment/${experiment.id}/`}>{experiment.name}</Link>
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </nav>
+                <ExperimentsTable experiments={activeExperiments} />
             </section>
         );
     }
@@ -33,17 +24,7 @@ export default props => {
         maybeCompletedSection = (
             <section id="completed-experiments">
                 <h2>Completed experiments</h2>
-                <nav>
-                    <ul>
-                        {completedExperiments.map((experiment, index) => {
-                            return (
-                                <li key={index}>
-                                    <Link to={`/experiment/${experiment.id}/`}>{experiment.name}</Link>
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </nav>
+                <ExperimentsTable experiments={completedExperiments} />
             </section>
         );
     }

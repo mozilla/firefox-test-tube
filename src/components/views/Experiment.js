@@ -1,13 +1,12 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import gravatar from 'gravatar';
-import ReactPaginate from 'react-paginate';
 
 import MetricContainer from '../containers/MetricContainer';
 import URLManager from '../../lib/URLManager';
+import Paginator from './Paginator';
 
 import './css/Experiment.css';
-import './css/ReactPaginate.css';
 
 
 class Experiment extends React.Component {
@@ -133,16 +132,7 @@ class Experiment extends React.Component {
                                     id={id}
                                 />
                             ))}
-                            <ReactPaginate
-                                containerClassName='react-paginate'
-                                activeClassName='active'
-
-                                marginPagesDisplayed={1}
-                                pageRangeDisplayed={4}
-
-                                previousLabel='previous'
-                                nextLabel='next'
-
+                            <Paginator
                                 initialPage={this.selectedPage - 1} // zero-based
                                 pageCount={Math.ceil(this.props.metrics.length / this.metricsPerPage)}
 
