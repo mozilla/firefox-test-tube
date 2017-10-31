@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import dateFormat from 'dateformat';
 
 import Paginator from './Paginator';
 import { sortByProperty } from '../../lib/utils';
@@ -10,6 +11,10 @@ export default props => {
 
     return (
         <table>
+            <colgroup>
+                <col className="experiment-name" />
+                <col className="experiment-start-date" />
+            </colgroup>
             <thead>
                 <tr>
                     <th>Name</th>
@@ -20,7 +25,7 @@ export default props => {
                 {sortedExperiments.map((e, index) => (
                     <tr key={index}>
                         <td><Link to={`/experiment/${e.id}/`}>{e.name || `Experiment #${e.id}`}</Link></td>
-                        <td></td>
+                        <td>{dateFormat(e.startDate, 'longDate', true)}</td>
                     </tr>
                 ))}
             </tbody>
