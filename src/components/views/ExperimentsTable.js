@@ -2,29 +2,33 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import dateFormat from 'dateformat';
 
-import { sortByProperty } from '../../lib/utils';
+import './css/ExperimentTable.css';
 
 
 export default props => {
-    const sortedExperiments = sortByProperty(props.experiments, 'name');
+    function _getHeaderClass(headerKey) {
+        if (props.sortedColumn === headerKey) {
+            return `sorted ${props.sortDirection}`;
+        }
+    }
 
     return (
-        <table>
+        <table className="sortable">
             <colgroup>
                 <col className="experiment-name" />
                 <col className="experiment-start-date" />
             </colgroup>
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Start date</th>
+                    <th id={props.nameId} className={_getHeaderClass('name')} onClick={props.handleNameClick}>Name</th>
+                    <th id={props.startDateId} className={_getHeaderClass('startDate')} onClick={props.handleStartDateClick}>Start date</th>
                 </tr>
             </thead>
             <tbody>
-                {sortedExperiments.map((e, index) => (
+                {props.sortedExperiments.map((e, index) => (
                     <tr key={index}>
                         <td><Link to={`/experiment/${e.id}/`}>{e.name || e.slug}</Link></td>
-                        <td>{dateFormat(e.startDate, 'longDate', true)}</td>
+                        <td>{e.startDate && dateFormat(e.startDate, 'longDate', true)}</td>
                     </tr>
                 ))}
             </tbody>

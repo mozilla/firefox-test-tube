@@ -1,8 +1,9 @@
 /**
- * Sort an array of objects by a given property.
+ * Sort an array of objects by a given property. Don't sort the array in place,
+ * but instead return a copy.
  */
-export function sortByProperty(objectArray, property) {
-    return objectArray.sort((a, b) => {
+export function sortedByProperty(objectArray, property) {
+    return objectArray.concat().sort((a, b) => {
         const aProp = a[property];
         const bProp = b[property];
 
@@ -17,10 +18,11 @@ export function sortByProperty(objectArray, property) {
 }
 
 /**
- * Reverse-sort an array of objects by a given property.
+ * Reverse-sort an array of objects by a given property. Don't sort the array in
+ * place, but instead return a copy.
  */
-export function reverseSortByProperty(objectArray, property) {
-    return objectArray.sort((a, b) => {
+export function reverseSortedByProperty(objectArray, property) {
+    return objectArray.concat().sort((a, b) => {
         const aProp = a[property];
         const bProp = b[property];
 

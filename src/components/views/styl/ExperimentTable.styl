@@ -1,0 +1,19 @@
+.sortable {
+    th {
+        cursor: pointer;
+
+        &.sorted.ascending::after,
+        &.sorted.descending::after {
+            font-family: 'FontAwesome';
+            margin-left: 10px;
+        }
+
+        &.sorted.ascending::after {
+            content: '\f062'; /* Up arrow */
+        }
+
+        &.sorted.descending::after {
+            content: '\f063'; /* Down arrow */
+        }
+    }
+}

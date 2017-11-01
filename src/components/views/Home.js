@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ExperimentsTable from './ExperimentsTable';
+import ExperimentsTableContainer from '../containers/ExperimentsTableContainer';
 
 import './css/Home.css';
 
@@ -14,7 +14,7 @@ export default props => {
         maybeActiveSection = (
             <section id="active-experiments">
                 <h2>Active experiments</h2>
-                <ExperimentsTable experiments={activeExperiments} />
+                <ExperimentsTableContainer experiments={activeExperiments} />
             </section>
         );
     }
@@ -24,7 +24,7 @@ export default props => {
         maybeCompletedSection = (
             <section id="completed-experiments">
                 <h2>Completed experiments</h2>
-                <ExperimentsTable experiments={completedExperiments} />
+                <ExperimentsTableContainer experiments={completedExperiments} />
             </section>
         );
     }
