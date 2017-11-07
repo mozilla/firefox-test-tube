@@ -81,6 +81,7 @@ class MetricContainer extends React.Component {
             formattedData.datasets.push({
                 label: population.name,
                 data: population.data,
+                steppedLine: 'before', // What d3 calls curveStepBefore
                 backgroundColor: `rgba(${thisColor.r}, ${thisColor.g}, ${thisColor.b}, .5)`,
             })
         });
