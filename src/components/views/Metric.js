@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Icon } from 'react-fa';
 
-import Chart from './Chart';
+import ChartContainer from '../containers/ChartContainer';
 import OverlayContainer from '../containers/OverlayContainer';
 import URLManager from '../../lib/URLManager';
 
@@ -34,7 +34,7 @@ export default withRouter(props => {
     if (props.asOverlay) {
         return (
             <OverlayContainer title={props.name} onClose={() => um.removeQueryParameter('chart')}>
-                <Chart {...props} />
+                <ChartContainer {...props} />
             </OverlayContainer>
         );
     } else {
@@ -53,7 +53,7 @@ export default withRouter(props => {
                     <a className="get-json" href={props.chartDataURL}>Get JSON</a>
                     <p className="metric-description">{props.description}</p>
                 </section>
-                <Chart {...props} />
+                <ChartContainer {...props} />
             </section>
         );
     }
