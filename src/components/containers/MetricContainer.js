@@ -81,9 +81,23 @@ class MetricContainer extends React.Component {
             formattedData.datasets.push({
                 label: population.name,
                 data: population.data,
-                steppedLine: 'before', // What d3 calls curveStepBefore
-                backgroundColor: `rgba(${thisColor.r}, ${thisColor.g}, ${thisColor.b}, .5)`,
-            })
+
+                // What d3 calls curveStepBefore
+                steppedLine: 'before',
+
+                // Don't color the area below the chart
+                fill: false,
+
+                // Line color
+                borderColor: `rgba(${thisColor.r}, ${thisColor.g}, ${thisColor.b}, .5)`,
+
+                // Color of this dataset's box in the legend and also the dots
+                // in the corresponding line
+                backgroundColor: `rgb(${thisColor.r}, ${thisColor.g}, ${thisColor.b})`,
+
+                // Don't show a border for this dataset's box in the legend
+                borderWidth: 0,
+            });
         });
 
         return formattedData;
@@ -103,7 +117,7 @@ class MetricContainer extends React.Component {
                 label: population.name,
                 data: population.data,
                 backgroundColor: `rgba(${thisColor.r}, ${thisColor.g}, ${thisColor.b}, .5)`,
-            })
+            });
         });
 
         return formattedData;
