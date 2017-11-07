@@ -9,6 +9,8 @@ export default props => {
     const xUnit = props.xUnit ? props.xUnit : '';
     const yUnit = props.yUnit ? props.yUnit : '';
 
+    const significantDigits = 5;
+
     let chart = null;
     if (props.isLineType(props.type)) {
         chart = (
@@ -22,7 +24,7 @@ export default props => {
                     showLines: true,
                     tooltips: {
                         callbacks: {
-                            label: (tt, data) => `${data.datasets[tt.datasetIndex].label}: (${tt.xLabel.toLocaleString('en-US')} ${xUnit}, ${tt.yLabel}%)`,
+                            label: (tt, data) => `${data.datasets[tt.datasetIndex].label}: (${tt.xLabel.toLocaleString('en-US', { minimumSignificantDigits: significantDigits })}${xUnit ? ' ' : ''}${xUnit}, ${tt.yLabel.toPrecision(significantDigits)}%)`,
                         },
                     },
                     scales: {
@@ -55,7 +57,7 @@ export default props => {
                     responsive: props.asOverlay,
                     tooltips: {
                         callbacks: {
-                            label: (tt, data) => `${data.datasets[tt.datasetIndex].label}: ${tt.yLabel.toLocaleString('en-US')}`
+                            label: (tt, data) => `${data.datasets[tt.datasetIndex].label}: ${tt.yLabel.toLocaleString('en-US', { minimumSignificantDigits: significantDigits })}`
                         },
                     },
                     scales: {
