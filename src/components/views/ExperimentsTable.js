@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import dateFormat from 'dateformat';
 
-import './css/ExperimentTable.css';
+import './css/ExperimentsTable.css';
 
 
 export default props => {
