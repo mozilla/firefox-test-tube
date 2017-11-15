@@ -1,6 +1,16 @@
 {
   "name": "test-tube",
   "private": true,
+  "scripts": {
+    "build": "npm-run-all --parallel build:*",
+    "build:js": "react-scripts build",
+    "build:css": "stylus --sourcemap ./src/components/views/styl/* --out ./src/components/views/css/",
+    "start": "npm-run-all --parallel start:js watch:css",
+    "start:js": "react-scripts start",
+    "watch:css": "stylus --watch --sourcemap src/components/views/styl/* --out ./src/components/views/css/",
+    "eject": "react-scripts eject",
+    "test": "react-scripts test --env=jsdom"
+  },
   "dependencies": {
     "chart.js": "2.7.0",
     "dateformat": "^3.0.2",
@@ -16,15 +26,5 @@
     "react-router-dom": "4.2.2",
     "react-scripts": "1.0.14",
     "stylus": "^0.54.5"
-  },
-  "scripts": {
-    "build": "npm-run-all --parallel build:*",
-    "build:js": "react-scripts build",
-    "build:css": "stylus --sourcemap ./src/components/views/styl/* --out ./src/components/views/css/",
-    "start": "npm-run-all --parallel start:js watch:css",
-    "start:js": "react-scripts start",
-    "watch:css": "stylus --watch --sourcemap src/components/views/styl/* --out ./src/components/views/css/",
-    "eject": "react-scripts eject",
-    "test": "react-scripts test --env=jsdom"
   }
 }
