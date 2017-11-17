@@ -1,0 +1,31 @@
+{
+  "name": "test-tube",
+  "private": true,
+  "proxy": "http://localhost:8000",
+  "scripts": {
+    "build": "npm-run-all --parallel build:*",
+    "build:js": "react-scripts build",
+    "build:css": "stylus --sourcemap ./src/components/views/styl/* --out ./src/components/views/css/",
+    "start": "npm-run-all --parallel start:js watch:css",
+    "start:js": "react-scripts start",
+    "watch:css": "stylus --watch --sourcemap src/components/views/styl/* --out ./src/components/views/css/",
+    "eject": "react-scripts eject",
+    "test": "react-scripts test --env=jsdom"
+  },
+  "dependencies": {
+    "chart.js": "2.7.0",
+    "dateformat": "^3.0.2",
+    "gravatar": "^1.6.0",
+    "npm-run-all": "^4.1.1",
+    "query-string": "^5.0.0",
+    "react": "^16.0.0",
+    "react-chartjs-2": "2.6.2",
+    "react-dom": "^16.0.0",
+    "react-fa": "^5.0.0",
+    "react-paginate": "^5.0.0",
+    "react-refetch": "1.0.1",
+    "react-router-dom": "4.2.2",
+    "react-scripts": "1.0.14",
+    "stylus": "^0.54.5"
+  }
+}
