@@ -1,15 +1,17 @@
-class CORSMiddleware(object):
+def dev_cors_middleware(get_response):
+    """
+    Adds CORS headers for local testing only to allow the frontend, which is
+    served on localhost:3000, to access the API, which is served on
+    localhost:8000.
+    """
+    def middleware(request):
+        response = get_response(request)
 
-    def __init__(self, get_response):
-        self.get_response = get_response
-
-    def __call__(self, request):
-        response = self.get_response(request)
-        return response
-
-    def process_response(self, request, response):
-        response['Access-Control-Allow-Origin'] = '*'
+        response['Access-Control-Allow-Origin'] = 'http://localhost:3000'
         response['Access-Control-Allow-Methods'] = 'GET, HEAD, OPTIONS'
-        response['Access-Control-Allow-Headers'] = 'Authorization, Content-Type'
+        response['Access-Control-Allow-Headers'] = 'Content-Type, X-CSRFToken'
+        response['Access-Control-Allow-Credentials'] = 'true'
 
         return response
+
+    return middleware
