@@ -21,11 +21,13 @@ class TestExperiments(DataTestCase):
             'experiments': [
                 {
                     'id': self.dataset.id,
+                    'slug': self.dataset.slug,
                     'name': self.dataset.name,
                     'completed': True,
                 },
                 {
                     'id': self.dataset_older.id,
+                    'slug': self.dataset_older.slug,
                     'name': self.dataset_older.name,
                     'completed': True,
                 },
