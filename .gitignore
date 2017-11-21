@@ -5,6 +5,7 @@
 
 # testing
 /frontend/coverage
+/backend/.coverage
 
 # production
 /frontend/build
@@ -23,3 +24,6 @@ yarn-error.log*
 # Compiled CSS
 /frontend/src/**/css/*
 !/frontend/src/**/css/README
+
+# We use yarn.lock, not package-lock.json
+/frontend/package-lock.json
