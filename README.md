@@ -1,8 +1,11 @@
-Firefox Test Tube is an experimental version 2 of
+Firefox Test Tube is the successor of
 [Experiments Viewer](https://github.com/mozilla/experiments-viewer).
 
-[Check it out](http://firefox-test-tube.herokuapp.com/) on Heroku!
+## Demo
+
+[http://firefox-test-tube.herokuapp.com/](http://firefox-test-tube.herokuapp.com/)
 
 ## Contributing
 
-See the [development instructions](docs/development.md) to get started.
+See the [development instructions](docs/development.md) to learn how to get
+started.

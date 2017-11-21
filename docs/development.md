@@ -1,24 +1,25 @@
-# Install dependencies
+## Running Test Tube
 
-1. Install yarn
+### Install dependencies
+
+1. Install yarn globally
 2. From the root of the repository, run `yarn`
 
-# Run
+### Build
 
-## Application
+Run `make build`
 
-Run `yarn start`
+### Run
 
-## Mock API server
+1. From the root of the repository, run `docker-compose up`
+2. In another terminal, from the *frontend* directory, run `yarn start`
 
-1. Download [test-tube-mock-api](https://github.com/openjck/test-tube-mock-api)
-   locally
-2. Follow the instructions in the README to start the mock API
+## Front-end dependency management
 
-# Add a dependency
+### Adding a dependency
 
-`yarn add example-package-name`
+From the *frontend* directory, run `yarn add example-package-name`
 
-# Remove a dependency
+### Remove a dependency
 
-`yarn remove example-package-name`
+From the *frontend* directory, run `yarn remove example-package-name`
