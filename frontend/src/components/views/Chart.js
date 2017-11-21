@@ -24,7 +24,7 @@ export default props => {
                     showLines: true,
                     tooltips: {
                         callbacks: {
-                            label: (tt, data) => `${data.datasets[tt.datasetIndex].label}: (${tt.xLabel.toLocaleString('en-US', { minimumSignificantDigits: significantDigits })}${xUnit ? ' ' : ''}${xUnit}, ${tt.yLabel.toPrecision(significantDigits)}%)`,
+                            label: (tt, data) => `${data.datasets[tt.datasetIndex].label}: (x: ${tt.xLabel.toLocaleString('en-US', { minimumSignificantDigits: significantDigits })}${xUnit ? ' ' : ''}${xUnit}, y: ${tt.yLabel.toPrecision(significantDigits)}%)`,
                         },
                     },
                     scales: {
