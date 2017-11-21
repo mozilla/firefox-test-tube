@@ -10,22 +10,33 @@
         "bottom-left bottom-right";
 }
 
-.name-and-fullscreen-button {
+.name-and-buttons {
     grid-area: top;
 
     display: flex;
+
+    > a, > .fa {
+        fix-fa-link-height();
+    }
 }
 
-.fullscreen-button {
+.chart-button-link {
+    text-decoration: none;
+}
+
+.chart-button {
     color: #000;
     cursor: pointer;
-    text-decoration: none;
 
-    fix-fa-link-height();
+    margin-left: 10px;
 
-    grow-hitbox(10px);
-    position: relative;
-    left: 10px;
+    &:not(.fa) {
+        font-weight: bold;
+    }
+
+    &.fa {
+        font-weight: normal;
+    }
 }
 
 .metric-name {
@@ -69,10 +80,6 @@ canvas {
     div {
         margin-top: 2px;
     }
-}
-
-.get-json {
-    grid-area: top-midleft;
 }
 
 .metric-description {

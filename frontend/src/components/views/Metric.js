@@ -40,9 +40,14 @@ export default withRouter(props => {
     } else {
         return (
             <section className="metric">
-                <div className="name-and-fullscreen-button">
+                <div className="name-and-buttons">
                     <h4 className="metric-name">{props.name}</h4>
-                    <Icon className="fullscreen-button" name="arrows-alt" onClick={() => um.setQueryParameter('chart', props.id)} />
+
+                    {/* There might be a better icon for this in the future */}
+                    {/* https://github.com/FortAwesome/Font-Awesome/issues/1797 */}
+                    <a className="chart-button-link" title="JSON" href={props.chartDataURL} target="_blank"><Icon className="chart-button" name="file-code-o" /></a>
+
+                    <Icon className="chart-button" name="arrows-alt" title="Fullscreen" onClick={() => um.setQueryParameter('chart', props.id)} />
                 </div>
                 <section id="metric-details">
                     <h5>Details</h5>
@@ -50,7 +55,6 @@ export default withRouter(props => {
                         <h6>n</h6>
                         {buildNValuesDL(props.nValues)}
                     </div>
-                    <a className="get-json" href={props.chartDataURL}>Get JSON</a>
                     <p className="metric-description">{props.description}</p>
                 </section>
                 <ChartContainer {...props} />
