@@ -27,7 +27,7 @@ export default props => {
             <tbody>
                 {props.sortedExperiments.map((e, index) => (
                     <tr key={index}>
-                        <td><Link to={`/experiment/${e.id}/`}>{e.name || e.slug}</Link></td>
+                        <td><Link to={`/experiments/${e.id}/`}>{e.name || e.slug}</Link></td>
                         <td>{e.startDate && dateFormat(e.startDate, 'longDate', true)}</td>
                     </tr>
                 ))}
