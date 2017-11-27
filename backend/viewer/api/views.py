@@ -16,6 +16,7 @@ def experiments(request):
     for d in datasets:
         data.append({
             'id': d.id,
+            'slug': d.slug,
             'name': d.name,
             'completed': True,  # TODO
         })
