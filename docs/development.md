@@ -1,25 +1,23 @@
-## Running Test Tube
+# Install and build
 
-### Install dependencies
+1. Install yarn globally (`npm install --global yarn` or `brew install yarn`,
+   for example)
+2. From the project root, run `yarn`
+3. From the project root, run `make build`
 
-1. Install yarn globally
-2. From the root of the repository, run `yarn`
+# Run
 
-### Build
+1. From the project root, run `docker-compose up`
+2. In another terminal, also from the project root, run `yarn start`
 
-Run `make build`
+## Appendix
 
-### Run
+### Front-end dependency management
 
-1. From the root of the repository, run `docker-compose up`
-2. In another terminal, from the *frontend* directory, run `yarn start`
+#### Adding a dependency
 
-## Front-end dependency management
+Run `yarn add example-package-name`
 
-### Adding a dependency
+#### Remove a dependency
 
-From the *frontend* directory, run `yarn add example-package-name`
-
-### Remove a dependency
-
-From the *frontend* directory, run `yarn remove example-package-name`
+Run `yarn remove example-package-name`
