@@ -3,6 +3,8 @@ Firefox Test Tube is the successor of
 
 ## Demo
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/mozilla/firefox-test-tube.svg)](https://greenkeeper.io/)
+
 [http://firefox-test-tube.herokuapp.com/](http://firefox-test-tube.herokuapp.com/)
 
 ## Contributing
