@@ -1,7 +1,7 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+/frontend/node_modules
 
 # testing
 /frontend/coverage
@@ -26,4 +26,4 @@ yarn-error.log*
 !/frontend/src/**/css/README
 
 # We use yarn.lock, not package-lock.json
-/package-lock.json
+/frontend/package-lock.json
