@@ -5,6 +5,7 @@ import gravatar from 'gravatar';
 import MetricContainer from '../containers/MetricContainer';
 import URLManager from '../../lib/URLManager';
 import Paginator from './Paginator';
+import { visiblePaginatorMembers } from '../../lib/utils';
 
 import './css/Experiment.css';
 
@@ -20,12 +21,7 @@ class Experiment extends React.Component {
 
         this.selectedPage = Number(this.um.getQueryParameter('page')) || 1;
 
-        this.state = { activeMetrics: this.getActiveMetrics(this.selectedPage) };
-    }
-
-    getActiveMetrics(pageNumber) {
-        const firstMetricIndex = (pageNumber * this.metricsPerPage) - this.metricsPerPage;
-        return this.allMetrics.slice(firstMetricIndex, firstMetricIndex + this.metricsPerPage);
+        this.state = { activeMetrics: visiblePaginatorMembers(this.allMetrics, this.metricsPerPage, this.selectedPage) };
     }
 
     getCountDL(populations, accessor) {
@@ -142,7 +138,7 @@ class Experiment extends React.Component {
                                     const pageNumber = e.selected + 1;
 
                                     this.um.setQueryParameter('page', pageNumber);
-                                    this.setState({ activeMetrics: this.getActiveMetrics(pageNumber) });
+                                    this.setState({ activeMetrics: visiblePaginatorMembers(this.allMetrics, this.metricsPerPage, pageNumber) });
                                 }}
                             />
                         </section>

@@ -35,3 +35,16 @@ export function reverseSortedByProperty(objectArray, property) {
         return 0;
     });
 }
+
+/**
+ * Given an array, return a subset of that array containing only those elements
+ * that would be visible assuming the array is being paginated and the specified
+ * page is active.
+ *
+ * For example:
+ * visiblePaginatorMembers(['A', 'B', 'C', 'D', 'E'], 2, 2) => ['C', 'D']
+ */
+export function visiblePaginatorMembers(allMembers, membersPerPage, pageNumber) {
+    const firstMemberIndex = (membersPerPage * pageNumber) - membersPerPage;
+    return allMembers.slice(firstMemberIndex, firstMemberIndex + membersPerPage);
+}

@@ -1,75 +1,40 @@
 import React from 'react';
 
 import ExperimentsTable from '../views/ExperimentsTable';
-import { sortedByProperty, reverseSortedByProperty } from '../../lib/utils';
+import { visiblePaginatorMembers, reverseSortedByProperty } from '../../lib/utils';
 
 
-/**
- * It would be nice to use a third-party component for this, like reactable[1],
- * but reactable appears to be the best option and yet it's unmaintained.
- *
- * [1] https://github.com/glittershark/reactable
- */
 export default class extends React.Component {
     constructor(props) {
         super(props);
 
-        this.columns = ['name', 'startDate'];
-
-        // Chache sorting results
-        this.sorts = {};
-        this.columns.forEach(column => {
-            this.sorts[column] = {};
-            this.sorts[column]['ascending'] = sortedByProperty(props.experiments, column);
-            this.sorts[column]['descending'] = reverseSortedByProperty(props.experiments, column);
-        });
+        this.initialPageNumber = 1;
+        this.experimentsPerPage = 10;
 
         this.state = {
-            sortedColumn: 'name',
-            sortDirection: 'ascending',
+            pageNumber: this.initialPageNumber,
         };
 
-        this._handleNameClick = this._handleNameClick.bind(this);
-        this._handleStartDateClick = this._handleStartDateClick.bind(this);
+        this._handlePaginate = this._handlePaginate.bind(this);
     }
 
-    _getOppositeDirection(direction) {
-        if (direction === 'ascending') return 'descending';
-        if (direction === 'descending') return 'ascending';
-    }
-
-    _handleClick(column) {
-        let newSortDirection;
-        if (this.state.sortedColumn === column) {
-            newSortDirection = this._getOppositeDirection(this.state.sortDirection);
-        } else {
-            newSortDirection = 'ascending';
-        }
-
-        this.setState({
-            sortedColumn: column,
-            sortDirection: newSortDirection,
-        });
-    }
-
-    _handleNameClick() {
-        this._handleClick('name');
-    }
-
-    _handleStartDateClick() {
-        this._handleClick('startDate');
+    _handlePaginate(e) {
+        this.setState({ pageNumber: e.selected + 1 }); // zero-based
     }
 
     render() {
+        const sortedExperiments = reverseSortedByProperty(this.props.experiments, 'startDate');
+        const visibleExperiments = visiblePaginatorMembers(sortedExperiments, this.experimentsPerPage, this.state.pageNumber);
+
         return (
             <ExperimentsTable
-                sortedExperiments={this.sorts[this.state.sortedColumn][this.state.sortDirection]}
+                experiments={visibleExperiments}
 
-                handleNameClick={this._handleNameClick}
-                handleStartDateClick={this._handleStartDateClick}
+                initialPageNumber={this.initialPageNumber}
+                numExperiments={this.props.experiments.length}
+                experimentsPerPage={this.experimentsPerPage}
 
-                sortedColumn={this.state.sortedColumn}
-                sortDirection={this.state.sortDirection}
+                handlePaginate={this._handlePaginate}
             />
         );
     }
