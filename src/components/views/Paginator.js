@@ -7,19 +7,27 @@ import './css/ReactPaginate.css';
 /**
  * Wrapper class for ReactPaginate that sets some defaults
  */
-export default props => (
-    <ReactPaginate
-        containerClassName='react-paginate'
-        activeClassName='active'
+export default props => {
+    // Don't show a paginator if there is only one page
+    if (props.pageCount === 1) {
+        return null;
+    }
 
-        marginPagesDisplayed={1}
-        pageRangeDisplayed={4}
+    return (
+        <ReactPaginate
+            containerClassName='react-paginate'
+            activeClassName='active'
 
-        previousLabel='previous'
-        nextLabel='next'
+            marginPagesDisplayed={1}
+            pageRangeDisplayed={4}
 
-        // This line must be last if we want the provided props to override the
-        // defaults set above
-        {...props}
-    />
-)
+            previousLabel='previous'
+            nextLabel='next'
+
+            // This line must be last if we want the provided props to override the
+            // defaults set above
+            {...props}
+        />
+    );
+
+};
