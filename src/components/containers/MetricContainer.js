@@ -34,6 +34,7 @@ class MetricContainer extends React.Component {
                     xUnit={metricFetch.value.units ? metricFetch.value.units.x : undefined}
                     yUnit={metricFetch.value.units ? metricFetch.value.units.y : undefined}
                     chartDataURL={metricFetch.meta.request.url}
+                    showOutliers={this.props.showOutliers}
 
                     // Force to "false" if undefined
                     asOverlay={this.props.asOverlay === true}

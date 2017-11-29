@@ -23,6 +23,7 @@ const ExperimentContainer = props => {
                 authors={experimentFetch.value.authors}
                 metrics={experimentFetch.value.metrics}
                 populations={experimentFetch.value.populations}
+                showOutliers={false}
             />
         );
     }
