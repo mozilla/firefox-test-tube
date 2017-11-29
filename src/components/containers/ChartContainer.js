@@ -22,6 +22,10 @@ export default class extends React.Component {
 
         this._formatLineData = this._formatLineData.bind(this);
         this._formatBarData = this._formatBarData.bind(this);
+
+        // Show outliers toggle constants.
+        this.outliersThreshold = 10;
+        this.outliersSmallestProportion = 0.01;
     }
 
     /**
@@ -34,6 +38,7 @@ export default class extends React.Component {
 
         data.populations.forEach((population, index) => {
             const thisColor = this.colors[index];
+            const resultData = [];
 
             // Sort by x-axis value
             population.data.sort((a, b) => {
@@ -42,14 +47,13 @@ export default class extends React.Component {
 
             // The API provides y values as numbers between 0 and 1, but we want
             // to display them as percentages.
-            population.data.map(dataPoint => {
-                dataPoint.y = dataPoint.y * 100;
-                return dataPoint;
+            population.data.forEach(dataPoint => {
+                resultData.push({x: dataPoint.x, y: dataPoint.y * 100});
             });
 
             formattedData.datasets.push({
                 label: population.name,
-                data: population.data,
+                data: this.props.showOutliers ? resultData : this._removeOutliers(resultData),
 
                 // What d3 calls curveStepBefore
                 steppedLine: 'before',
@@ -113,6 +117,24 @@ export default class extends React.Component {
         return barTypes.includes(type);
     }
 
+    // Return an array with buckets with data less than the
+    // `outliersSmallestProportion` trimmed from the right.
+    _removeOutliers(data) {
+        if (data.length <= this.outliersThreshold) return data;
+
+        let indexLast = data.length - 1;
+        for (; indexLast >= 0; indexLast--) {
+          if (data[indexLast]['y'] > this.outliersSmallestProportion) {
+            break;
+          }
+        }
+
+        // Add 1 because the second paramater to Array.slice is not inclusive.
+        return data.slice(0, indexLast + 1);
+    }
+
+    // TODO: Move formatData out of render() and use componentWillReceiveProps().
+    // This should allow us to store the trimmed data for each chart and simply toggle between full/trimmed data.
     render() {
         let formatData;
         if (this._isLineType(this.props.type)) {
