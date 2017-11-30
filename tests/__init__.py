@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from viewer.api import factories
+from backend.api import factories
 
 
 SUBGROUPS = ('Windows', 'Linux', 'Mac', 'Other')

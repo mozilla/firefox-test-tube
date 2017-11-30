@@ -12,7 +12,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # Backend
-/backend/.coverage
+.coverage
 
 # Misc
 .DS_Store

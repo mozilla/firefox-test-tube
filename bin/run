@@ -2,8 +2,7 @@
 set -eo pipefail
 
 run_back_end_tests() {
-    cd backend
-    flake8 viewer
+    flake8 backend
     coverage run ./manage.py test
 }
 
@@ -17,7 +16,6 @@ case $1 in
         # Wait for database to get started.
         ./bin/wait-for-it.sh db:5432 --timeout=0 --strict
         if [ $? -eq 0 ]; then
-            cd backend
             ./manage.py migrate --noinput
             # Try running this in a loop, so that the whole container
             # doesn't exit when runserver reloads and hits an error.
@@ -28,9 +26,8 @@ case $1 in
         fi
         ;;
     prod)
-        cd backend
         ./manage.py migrate --noinput
-        exec gunicorn viewer.wsgi:application -b 0.0.0.0:${PORT:-8000} --log-file -
+        exec gunicorn backend.wsgi:application -b 0.0.0.0:${PORT:-8000} --log-file -
         ;;
     test)
         shift
