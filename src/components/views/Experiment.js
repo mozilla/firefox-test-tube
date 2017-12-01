@@ -6,6 +6,7 @@ import MetricContainer from '../containers/MetricContainer';
 import URLManager from '../../lib/URLManager';
 import Paginator from './Paginator';
 import { visiblePaginatorMembers } from '../../lib/utils';
+import Switch from './Switch';
 
 import './css/Experiment.css';
 
@@ -21,7 +22,10 @@ class Experiment extends React.Component {
 
         this.selectedPage = Number(this.um.getQueryParameter('page')) || 1;
 
-        this.state = { activeMetrics: visiblePaginatorMembers(this.allMetrics, this.metricsPerPage, this.selectedPage) };
+        this.state = {
+            activeMetrics: visiblePaginatorMembers(this.allMetrics, this.metricsPerPage, this.selectedPage),
+            showOutliers: props.showOutliers
+        };
     }
 
     getCountDL(populations, accessor) {
@@ -87,6 +91,15 @@ class Experiment extends React.Component {
             <div>
                 <article id="experiment">
                     <h2>{this.props.name || this.props.slug}</h2>
+                    <aside className="inline">
+                        <Switch
+                            active={this.state.showOutliers}
+                            label="show outliers"
+                            onClick={evt => {
+                                this.setState({showOutliers: !this.state.showOutliers});
+                            }}
+                        />
+                    </aside>
                     <div id="experiment-content">
                         <section id="experiment-details">
                             <h3>Details</h3>
@@ -126,6 +139,7 @@ class Experiment extends React.Component {
                                     key={id}
                                     experimentId={this.props.id}
                                     id={id}
+                                    showOutliers={this.state.showOutliers}
                                 />
                             ))}
                             <Paginator
