@@ -38,7 +38,7 @@ COPY . /app
 # Collect the static assets together, with placeholder env vars.
 #RUN SECRET_KEY=foo DEBUG=False ALLOWED_HOSTS=localhost \
 #    DATABASE_URL=postgres://postgres@db/postgres \
-#    ./backend/manage.py collectstatic --noinput
+#    ./manage.py collectstatic --noinput
 
 RUN chown -R app:app /app
 

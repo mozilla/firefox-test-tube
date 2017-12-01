@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework.reverse import reverse
 
-from viewer.api import factories
+from backend.api import factories
 
 from . import DataTestCase
 

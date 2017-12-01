@@ -1,5 +1,5 @@
 """
-WSGI config for viewer project.
+WSGI config for backend project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -13,6 +13,6 @@ from django.core.wsgi import get_wsgi_application
 from whitenoise.django import DjangoWhiteNoise
 
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "viewer.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings.production")
 
 application = DjangoWhiteNoise(get_wsgi_application())

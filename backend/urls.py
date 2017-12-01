@@ -20,6 +20,6 @@ urlpatterns = [
     # url(r'^admin/login/$', auth_views.login_view),
     url(r'^admin/', admin_site.urls),
 
-    # The catch-all.
-    url(r'.*', IndexView.as_view(), name='index'),
+    # The root index view for React.
+    url(r'^$', IndexView.as_view(), name='index'),
 ]

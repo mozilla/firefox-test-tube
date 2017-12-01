@@ -1,4 +1,4 @@
-from viewer.api.models import Collection, Stats
+from backend.api.models import Collection, Stats
 
 from . import DataTestCase
 
