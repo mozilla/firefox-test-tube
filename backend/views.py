@@ -2,11 +2,12 @@ import logging
 import os
 
 from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.views.generic import View
 
 
-class IndexView(View):
+class IndexView(LoginRequiredMixin, View):
     """
     Serves the compiled frontend entry point.
 
