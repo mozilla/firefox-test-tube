@@ -24,5 +24,9 @@ services:
       - DJANGO_LOG_LEVEL=DEBUG
       - DJANGO_LOG_FORMAT=json
       - DJANGO_SETTINGS_MODULE=backend.settings.local
+      - OIDC_RP_CLIENT_ID=
+      - OIDC_RP_CLIENT_SECRET=
+      - OIDC_OP_DOMAIN=mozilla.auth.auth0.com
+
   db:
     image: postgres:9.5

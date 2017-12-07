@@ -15,6 +15,7 @@ from datetime import timedelta
 
 import dj_database_url
 from decouple import config
+from django.core.urlresolvers import reverse_lazy
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # 3rd party
+    'mozilla_django_oidc',
     'dockerflow.django',
     'rest_framework',
 
@@ -178,7 +180,24 @@ REST_FRAMEWORK = {
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
+    'mozilla_django_oidc.auth.OIDCAuthenticationBackend',
 )
+
+# Auth0
+
+OIDC_RP_CLIENT_ID = config('OIDC_RP_CLIENT_ID')
+OIDC_RP_CLIENT_SECRET = config('OIDC_RP_CLIENT_SECRET')
+OIDC_OP_DOMAIN = config('OIDC_OP_DOMAIN')
+OIDC_OP_AUTHORIZATION_ENDPOINT = '%s/authorize' % OIDC_OP_DOMAIN
+OIDC_OP_TOKEN_ENDPOINT = '%s/oauth/token' % OIDC_OP_DOMAIN
+OIDC_OP_USER_ENDPOINT = '%s/userinfo' % OIDC_OP_DOMAIN
+OIDC_STORE_ACCESS_TOKEN = True
+
+LOGIN_URL = reverse_lazy('oidc_authentication_init')
+LOGOUT_URL = reverse_lazy('oidc_logout')
+LOGIN_REDIRECT_URL = reverse_lazy('index')
+LOGOUT_REDIRECT_URL = reverse_lazy('index')
+LOGIN_REDIRECT_URL_FAILURE = reverse_lazy('index')
 
 
 # TODO: Sentry
