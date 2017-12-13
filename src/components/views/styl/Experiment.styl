@@ -10,9 +10,17 @@ $grid-gap = 50px;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 50px;
     grid-row-gap: 10px;
-    grid-template-areas:
-        "top top"\
-        "bottom-left bottom-right";
+
+    &.with-description {
+        grid-template-areas:
+            "top top"\
+            "bottom-left bottom-right";
+    };
+
+    &.without-description {
+        grid-template-areas:
+            "bottom-left bottom-right";
+    }
 }
 
 #experiment-description {

@@ -130,7 +130,7 @@ class Experiment extends React.Component {
                         />
                     </aside>
                     <div id="experiment-content">
-                        <section id="experiment-details">
+                        <section id="experiment-details" className={maybeDescription ? 'with-description' : 'without-description'}>
                             <h3>Details</h3>
                             {maybeDescription}
                             <section id="experiment-counts">
