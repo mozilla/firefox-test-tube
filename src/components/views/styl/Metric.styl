@@ -1,22 +1,21 @@
-@import 'includes/variables';
 @import 'includes/mixins';
+
+$grid-row-gap = 15px;
 
 .metric {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: $grid-column-gap-on-experiment-page;
-    grid-template-areas:
-        "top top"\
-        "bottom-left bottom-right";
+    grid-row-gap: $grid-row-gap;
 }
 
 .name-and-buttons {
-    grid-area: top;
-
     display: flex;
 
     > a, > .fa {
         fix-fa-link-height();
+    }
+
+    h4 {
+        margin: 0;
     }
 }
 
@@ -44,19 +43,12 @@
 }
 
 canvas {
-    grid-area: bottom-left;
     justify-self: start;
 }
 
 #metric-details {
     display: grid;
-    grid-area: bottom-right;
-    grid-auto-columns: 1fr;
-    grid-auto-rows: max-content;
-    grid-gap: 20px;
-    grid-template-areas:
-        "top-left top-midleft top-midright top-right"\
-        "bottom bottom bottom bottom";
+    grid-row-gap: $grid-row-gap;
 
     /* Intentionally hidden. Adds value semantically, but not visually. */
     h5 {
@@ -64,25 +56,23 @@ canvas {
     }
 }
 
-.n-values {
-    grid-area: top-left;
-
-    h6 {
-        font-size: 1rem;
-        margin: 0;
-    }
-
+#metric-details {
     dl {
-        font-size: .7em;
+        display: flex;
+        font-size: .8em;
         margin: 0;
-    }
 
-    div {
-        margin-top: 2px;
+        div {
+            display: flex;
+            margin-left: 10px;
+
+            &:first-child {
+                margin-left: 0;
+            }
+        }
     }
 }
 
 .metric-description {
-    grid-area: bottom;
     margin: 0;
 }

@@ -1,16 +1,14 @@
-@import 'includes/variables';
-
-$grid-row-gap = 50px;
+$grid-gap = 50px;
 
 #experiment-content {
     display: grid;
-    grid-row-gap: $grid-row-gap;
+    grid-row-gap: $grid-gap;
 }
 
 #experiment-details {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-column-gap: $grid-column-gap-on-experiment-page;
+    grid-column-gap: 50px;
     grid-row-gap: 10px;
     grid-template-areas:
         "top top"\
@@ -58,7 +56,8 @@ $grid-row-gap = 50px;
 
 #experiment-metrics {
     display: grid;
-    grid-row-gap: $grid-row-gap;
+    grid-gap: $grid-gap;
+    grid-template-columns: 1fr 1fr;
 }
 
 /* Intentionally hidden. Add value semantically, but not visually. */

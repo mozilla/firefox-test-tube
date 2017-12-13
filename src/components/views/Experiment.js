@@ -142,20 +142,20 @@ class Experiment extends React.Component {
                                     showOutliers={this.state.showOutliers}
                                 />
                             ))}
-                            <Paginator
-                                initialPage={this.selectedPage - 1} // zero-based
-                                pageCount={Math.ceil(this.props.metrics.length / this.metricsPerPage)}
-
-                                disableInitialCallback={true}
-                                onPageChange={e => {
-                                    // zero-based
-                                    const pageNumber = e.selected + 1;
-
-                                    this.um.setQueryParameter('page', pageNumber);
-                                    this.setState({ activeMetrics: visiblePaginatorMembers(this.allMetrics, this.metricsPerPage, pageNumber) });
-                                }}
-                            />
                         </section>
+                        <Paginator
+                            initialPage={this.selectedPage - 1} // zero-based
+                            pageCount={Math.ceil(this.props.metrics.length / this.metricsPerPage)}
+
+                            disableInitialCallback={true}
+                            onPageChange={e => {
+                                // zero-based
+                                const pageNumber = e.selected + 1;
+
+                                this.um.setQueryParameter('page', pageNumber);
+                                this.setState({ activeMetrics: visiblePaginatorMembers(this.allMetrics, this.metricsPerPage, pageNumber) });
+                            }}
+                        />
                     </div>
                 </article>
                 {maybeMetricOverlay}

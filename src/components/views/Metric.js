@@ -38,6 +38,13 @@ export default withRouter(props => {
             </OverlayContainer>
         );
     } else {
+        let maybeDescription = null;
+        if (props.description) {
+            maybeDescription = (
+                <p className="metric-description">{props.description}</p>
+            );
+        }
+
         return (
             <section className="metric">
                 <div className="name-and-buttons">
@@ -51,11 +58,7 @@ export default withRouter(props => {
                 </div>
                 <section id="metric-details">
                     <h5>Details</h5>
-                    <div className="n-values">
-                        <h6>n</h6>
-                        {buildNValuesDL(props.nValues)}
-                    </div>
-                    <p className="metric-description">{props.description}</p>
+                    {buildNValuesDL(props.nValues)}
                 </section>
                 <ChartContainer {...props} />
             </section>
