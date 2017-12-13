@@ -60,6 +60,7 @@ export default withRouter(props => {
                     <h5>Details</h5>
                     {buildNValuesDL(props.nValues)}
                 </section>
+                {maybeDescription}
                 <ChartContainer {...props} />
             </section>
         );
