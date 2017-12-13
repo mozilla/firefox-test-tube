@@ -27,6 +27,13 @@ export default props => {
                             label: (tt, data) => `${data.datasets[tt.datasetIndex].label}: (x: ${tt.xLabel.toLocaleString('en-US', { minimumSignificantDigits: significantDigits })}${xUnit ? ' ' : ''}${xUnit}, y: ${tt.yLabel.toPrecision(significantDigits)}%)`,
                         },
                     },
+                    elements: {
+                        point: {
+                            // Hide dots by default but show them upon hover
+                            radius: 0,
+                            hitRadius: 10,
+                        },
+                    },
                     scales: {
                         yAxes: [{
                             ticks: {
