@@ -87,6 +87,35 @@ class Experiment extends React.Component {
             );
         }
 
+        let maybeDescription = null;
+        if (this.props.description) {
+            maybeDescription = (
+                <section id="experiment-description">
+                    <h4>Description</h4>
+                    <p>{this.props.description}</p>
+                </section>
+            );
+        }
+
+        let maybeAuthors = null;
+        if (this.props.authors.length) {
+            maybeAuthors = (
+                <section id="experiment-authors">
+                    <h4>Authors</h4>
+                    <ul>
+                        {this.props.authors.map((contact, index) => (
+                            <li key={index}>
+                                <a href={`mailto:${contact.email}`}>
+                                    <img src={this.getGravatarURL(contact.email)} alt={contact.name} />
+                                    <span>{contact.name}</span>
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </section>
+            );
+        }
+
         return (
             <div>
                 <article id="experiment">
@@ -103,10 +132,7 @@ class Experiment extends React.Component {
                     <div id="experiment-content">
                         <section id="experiment-details">
                             <h3>Details</h3>
-                            <section id="experiment-description">
-                                <h4>Description</h4>
-                                <p>{this.props.description}</p>
-                            </section>
+                            {maybeDescription}
                             <section id="experiment-counts">
                                 <h4>Counts</h4>
                                 <section id="experiment-client-counts">
@@ -118,19 +144,7 @@ class Experiment extends React.Component {
                                     {this.getCountDL(this.props.populations, 'total_pings')}
                                 </section>
                             </section>
-                            <section id="experiment-authors">
-                                <h4>Authors</h4>
-                                <ul>
-                                    {this.props.authors.map((contact, index) => (
-                                        <li key={index}>
-                                            <a href={`mailto:${contact.email}`}>
-                                                <img src={this.getGravatarURL(contact.email)} alt={contact.name} />
-                                                <span>{contact.name}</span>
-                                            </a>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </section>
+                            {maybeAuthors}
                         </section>
                         <section id="experiment-metrics">
                             <h3>Metrics</h3>
