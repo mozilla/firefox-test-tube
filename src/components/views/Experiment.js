@@ -120,7 +120,8 @@ class Experiment extends React.Component {
             <div>
                 <article id="experiment">
                     <h2>{this.props.name || this.props.slug}</h2>
-                    <aside className="inline">
+                    <aside id="experiment-options">
+                        <h3>Options</h3>
                         <Switch
                             active={this.state.showOutliers}
                             label="show outliers"

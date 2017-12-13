@@ -1,4 +1,13 @@
-$grid-gap = 50px;
+$grid-gap = 30px;
+
+#experiment {
+    display: grid;
+    grid-gap: 30px;
+
+    h2 {
+        margin-bottom: 0;
+    }
+}
 
 #experiment-content {
     display: grid;
@@ -21,6 +30,10 @@ $grid-gap = 50px;
         grid-template-areas:
             "bottom-left bottom-right";
     }
+}
+
+#experiment-details h3 {
+    margin-bottom: 0;
 }
 
 #experiment-description {
@@ -69,6 +82,7 @@ $grid-gap = 50px;
 }
 
 /* Intentionally hidden. Add value semantically, but not visually. */
+#experiment-options h3,
 #experiment-details h3,
 #experiment-metrics h3 {
     display: none;
@@ -93,8 +107,4 @@ $grid-gap = 50px;
         font-size: .75em;
         margin: $vertical-spacing 0;
     }
-}
-
-aside.inline {
-    text-align: right;
 }
