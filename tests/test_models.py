@@ -7,7 +7,16 @@ class TestDataSet(DataTestCase):
 
     def test_get_metrics(self):
         self.assertCountEqual(self.dataset.get_metrics(),
-                              [self.flag_metric.id, self.count_metric.id])
+                              [
+                                  {
+                                      'id': self.flag_metric.id,
+                                      'name': self.flag_metric.name,
+                                  },
+                                  {
+                                      'id': self.count_metric.id,
+                                      'name': self.count_metric.name,
+                                  },
+                              ])
 
     def test_get_populations(self):
         pops = list(

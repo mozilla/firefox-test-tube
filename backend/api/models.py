@@ -43,8 +43,8 @@ class DataSet(models.Model):
     def get_metrics(self):
         return list(
             Metric.objects.filter(collection__dataset=self)
-                          .distinct('id')
-                          .values_list('id', flat=True)
+                          .distinct('id', 'name')
+                          .values('id', 'name')
         )
 
     def get_populations(self):
