@@ -21,7 +21,7 @@ const ExperimentContainer = props => {
                 slug={experimentFetch.value.slug}
                 description={experimentFetch.value.description}
                 authors={experimentFetch.value.authors}
-                metrics={experimentFetch.value.metrics}
+                metrics={experimentFetch.value.metrics.map(m => m.id)}
                 populations={experimentFetch.value.populations}
                 showOutliers={false}
             />
