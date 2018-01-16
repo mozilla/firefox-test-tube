@@ -47,8 +47,8 @@ export default class extends React.Component {
 
             // The API provides y values as numbers between 0 and 1, but we want
             // to display them as percentages.
-            population.data.forEach(dataPoint => {
-                resultData.push({x: dataPoint.x, y: dataPoint.y * 100});
+            population.data.forEach((dataPoint, i) => {
+                resultData.push({x: i, xVal: dataPoint.x, y: dataPoint.y * 100});
             });
 
             formattedData.datasets.push({
