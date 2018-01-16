@@ -1,6 +1,19 @@
 import React from 'react';
 import { Scatter as ScatterChart, Bar as BarChart } from 'react-chartjs-2';
+import Chart from 'chart.js';
+import Ticks from 'chart.js/src/core/core.ticks';
 
+import OrdinalScale from '../../lib/OrdinalScale';
+
+
+const defaultConfig = {
+    position: 'bottom',
+    ticks: {
+        callback: Ticks.formatters.linear
+    }
+};
+
+Chart.scaleService.registerScaleType('ordinal', OrdinalScale, defaultConfig);
 
 export default props => {
     const chartWidth = props.asOverlay ? null : 500;
@@ -41,12 +54,20 @@ export default props => {
                             },
                         }],
                         xAxes: [{
+                            type: 'ordinal',
                             scaleLabel: {
                                 display: true,
                                 labelString: xUnit,
                             },
                             ticks: {
-                                callback: label => label.toLocaleString('en-US'),
+                                callback: (val, i, vals) => {
+                                    // Storing this in a var for readability.
+                                    // We use the first line's X values as indices to set the ticks
+                                    // which would be a bad idea if they were wildly different.
+                                    // Our use case allows for this.
+                                    const result = props.data.datasets[0].data[val];
+                                    return result ? result.xVal : '';
+                                }
                             },
                         }],
                     },
