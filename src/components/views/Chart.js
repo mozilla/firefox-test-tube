@@ -2,6 +2,13 @@ import React from 'react';
 import { Scatter as ScatterChart, Bar as BarChart } from 'react-chartjs-2';
 
 
+/**
+ * We use ordinal x-axis labeling for all line charts. The data points are
+ * positioned as if x values are ordinal, but the x-axis is labeled with the
+ * actual values instead.
+ *
+ * See issue #47 for more info.
+ */
 export default props => {
     const chartWidth = props.asOverlay ? null : 500;
     const chartHeight = props.asOverlay ? null : 350;
@@ -10,6 +17,13 @@ export default props => {
     const yUnit = props.yUnit ? props.yUnit : '';
 
     const significantDigits = 5;
+
+    function ordinalToActualValue(ordinal, datasetIndex = 0) {
+        const currentDataPoint = props.data.datasets[datasetIndex].data.find(e => e.x === Number(ordinal));
+        if (currentDataPoint) {
+            return currentDataPoint.xActualValue;
+        }
+    }
 
     let chart = null;
     if (props.isLineType(props.type)) {
@@ -24,7 +38,10 @@ export default props => {
                     showLines: true,
                     tooltips: {
                         callbacks: {
-                            label: (tt, data) => `${data.datasets[tt.datasetIndex].label}: (x: ${tt.xLabel.toLocaleString('en-US', { minimumSignificantDigits: significantDigits })}${xUnit ? ' ' : ''}${xUnit}, y: ${tt.yLabel.toPrecision(significantDigits)}%)`,
+                            label: (tt, data) => {
+                                const xValue = ordinalToActualValue(tt.xLabel, tt.datasetIndex);
+                                return `${data.datasets[tt.datasetIndex].label}: (x: ${xValue.toLocaleString('en-US', { minimumSignificantDigits: significantDigits })}${xUnit ? ' ' : ''}${xUnit}, y: ${tt.yLabel.toPrecision(significantDigits)}%)`;
+                            }
                         },
                     },
                     elements: {
@@ -46,7 +63,14 @@ export default props => {
                                 labelString: xUnit,
                             },
                             ticks: {
-                                callback: label => label.toLocaleString('en-US'),
+                                stepSize: 1,
+                                maxTicksLimit: 10,
+                                callback: xLabel => {
+                                    const actualValue = ordinalToActualValue(xLabel);
+                                    if (actualValue) {
+                                        return actualValue.toLocaleString('en-US');
+                                    }
+                                }
                             },
                         }],
                     },

@@ -29,7 +29,7 @@ export default class extends React.Component {
     }
 
     /**
-     * Format the /metric/[id] JSON for use with chart.js
+     * Format the /metric/[id] JSON for use with chart.js scatter charts.
      */
     _formatLineData(data) {
         const formattedData = {
@@ -47,8 +47,8 @@ export default class extends React.Component {
 
             // The API provides y values as numbers between 0 and 1, but we want
             // to display them as percentages.
-            population.data.forEach(dataPoint => {
-                resultData.push({x: dataPoint.x, y: dataPoint.y * 100});
+            population.data.forEach((dataPoint, index) => {
+                resultData.push({x: index, xActualValue: dataPoint.x, y: dataPoint.y * 100});
             });
 
             formattedData.datasets.push({
@@ -76,6 +76,9 @@ export default class extends React.Component {
         return formattedData;
     }
 
+    /**
+     * Format the /metric/[id] JSON for use with chart.js bar charts.
+     */
     _formatBarData(data) {
         const formattedData = {
             datasets: [],
@@ -97,24 +100,22 @@ export default class extends React.Component {
     }
 
     _isLineType(type) {
-        const lineTypes = [
+        return [
             'CountHistogram',
-            'UintScalar',
-            'StringScalar',
-            'LinearHistogram',
             'EnumeratedHistogram',
             'ExponentialHistogram',
-        ];
-        return lineTypes.includes(type);
+            'LinearHistogram',
+            'StringScalar',
+            'UintScalar',
+        ].includes(type);
     }
 
     _isBarType(type) {
-        const barTypes = [
+        return [
             'BooleanHistogram',
             'BooleanScalar',
             'FlagHistogram',
-        ];
-        return barTypes.includes(type);
+        ].includes(type);
     }
 
     // Return an array with buckets with data less than the
