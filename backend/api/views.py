@@ -19,6 +19,7 @@ def experiments(request):
             'slug': d.slug,
             'name': d.name,
             'completed': True,  # TODO
+            'enabled': d.enabled,
         })
 
     return Response({'experiments': data})

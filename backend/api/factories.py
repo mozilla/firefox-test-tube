@@ -14,6 +14,7 @@ class DataSetFactory(factory.django.DjangoModelFactory):
     date = factory.Sequence(
         lambda n: timezone.now() + datetime.timedelta(days=n))
     display = True
+    enabled = True
 
     class Meta:
         model = models.DataSet
