@@ -32,6 +32,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(null=True)),
                 ('date', models.DateField()),
                 ('display', models.BooleanField(default=False)),
+                ('enabled', models.BooleanField(default=False)),
                 ('import_start', models.DateTimeField(null=True)),
                 ('import_stop', models.DateTimeField(null=True)),
             ],

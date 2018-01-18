@@ -25,12 +25,14 @@ class TestExperiments(DataTestCase):
                     'slug': self.dataset.slug,
                     'name': self.dataset.name,
                     'completed': True,
+                    'enabled': True,
                 },
                 {
                     'id': self.dataset_older.id,
                     'slug': self.dataset_older.slug,
                     'name': self.dataset_older.name,
                     'completed': True,
+                    'enabled': False,
                 },
             ]
         }

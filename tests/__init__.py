@@ -53,7 +53,7 @@ class DataTestCase(TestCase):
         create_collections(dataset, 'control', flag_metric, count_metric)
         create_collections(dataset, 'chaos', flag_metric, count_metric)
 
-        dataset_older = factories.DataSetFactory()
+        dataset_older = factories.DataSetFactory(enabled=False)
         create_collections(dataset_older, 'control', flag_metric, count_metric)
         create_collections(dataset_older, 'chaos', flag_metric, count_metric)
 
