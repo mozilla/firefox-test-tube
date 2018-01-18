@@ -6,8 +6,8 @@ import './css/Home.css';
 
 
 export default props => {
-    const activeExperiments = props.experiments.filter(e => !e.completed);
-    const completedExperiments = props.experiments.filter(e => e.completed);
+    const activeExperiments = props.experiments.filter(e => e.enabled === true);
+    const completedExperiments = props.experiments.filter(e => e.enabled === false);
 
     let maybeActiveSection = null;
     if (activeExperiments.length) {
