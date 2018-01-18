@@ -1,0 +1,14 @@
+[run]
+include = backend/*
+
+[report]
+exclude_lines =
+  def __str__
+
+omit =
+  backend/api/settings/*
+  backend/api/migrations/*
+  backend/templates/*
+  backend/wsgi.py
+
+show_missing = True
