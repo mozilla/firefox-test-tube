@@ -6,5 +6,10 @@ export CI_ENV=`bash <(curl -s https://codecov.io/env)`
 
 # run docker compose with the given environment variables
 docker run --interactive --net=host $CI_ENV \
-	-e DATABASE_URL=$DATABASE_URL -e DEBUG=$DEBUG \
-	-e DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE app:build test
+	-e DATABASE_URL=$DATABASE_URL \
+	-e DEBUG=$DEBUG \
+	-e DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE \
+	-e OIDC_OP_DOMAIN=$OIDC_OP_DOMAIN \
+	-e OIDC_RP_CLIENT_ID=$OIDC_RP_CLIENT_ID \
+	-e OIDC_RP_CLIENT_SECRET=$OIDC_RP_CLIENT_SECRET \
+	app:build test
