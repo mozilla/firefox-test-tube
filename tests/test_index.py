@@ -1,3 +1,4 @@
+import io
 from unittest import mock
 
 from django.contrib.auth.models import User
@@ -18,10 +19,17 @@ class TestIndex(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, '/accounts/authenticate/?next=/')
 
-    def test_authed_user(self):
+    @mock.patch('builtins.open', create=True)
+    def test_authed_user(self, mock_open):
         self.client.login(username='testuser', password='password')
+        mock_open.return_value = mock.MagicMock(spec=io.IOBase)
+        output = io.StringIO()
+        output.write('test')
+        mock_open.return_value.__enter__.return_value = output
+
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
+        output.close()
 
     @mock.patch('builtins.open', create=True)
     def test_missing_yarn_build_files(self, mock_open):
