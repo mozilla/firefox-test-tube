@@ -19,10 +19,10 @@ jobs:
       - checkout
       - run:
           name: Install system dependencies
-          command: apk --no-cache add build-base openssl-dev libffi-dev py-cffi postgresql-client postgresql-dev
+          command: apk --no-cache add build-base bash curl openssl-dev libffi-dev py-cffi postgresql-client postgresql-dev
       - run:
           name: Install Python libraries
           command: pip install -U pip && pip install -r requirements.txt
       - run: flake8 backend
       - run: coverage run ./manage.py test
-      - run: coverage xml && bash <(curl -s https://codecov.io/bash) -s /tmp
+      - run: coverage xml && curl -s https://codecov.io/bash | bash -
