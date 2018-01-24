@@ -1,30 +1,18 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import gravatar from 'gravatar';
 
 import MetricContainer from '../containers/MetricContainer';
-import URLManager from '../../lib/URLManager';
 import Paginator from './Paginator';
-import { visiblePaginatorMembers } from '../../lib/utils';
 import Switch from './Switch';
 
 import './css/Experiment.css';
 
-
-class Experiment extends React.Component {
+export default class extends React.Component {
     constructor(props) {
         super(props);
 
-        this.um = new URLManager(props.location, props.history);
-
-        this.allMetrics = props.metrics;
-        this.metricsPerPage = Number(process.env.REACT_APP_METRICS_PER_PAGE);
-
-        this.selectedPage = Number(this.um.getQueryParameter('page')) || 1;
-
         this.state = {
-            activeMetrics: visiblePaginatorMembers(this.allMetrics, this.metricsPerPage, this.selectedPage),
-            showOutliers: props.showOutliers
+            showOutliers: props.showOutliers,
         };
     }
 
@@ -69,19 +57,13 @@ class Experiment extends React.Component {
         });
     }
 
-    componentWillUpdate(nextProps) {
-        this.um = new URLManager(nextProps.location, nextProps.history);
-    }
-
     render() {
-        const selectedMetricId = Number(this.um.getQueryParameter('chart'));
-
         let maybeMetricOverlay = null;
-        if (selectedMetricId !== undefined && this.state.activeMetrics.includes(selectedMetricId)) {
+        if (this.props.selectedMetricId !== undefined && this.props.visibleMetricIds.includes(this.props.selectedMetricId)) {
             maybeMetricOverlay = (
               <MetricContainer
                   experimentId={this.props.id}
-                  id={selectedMetricId}
+                  id={this.props.selectedMetricId}
                   asOverlay={true}
               />
             );
@@ -149,7 +131,7 @@ class Experiment extends React.Component {
                         </section>
                         <section id="experiment-metrics">
                             <h3>Metrics</h3>
-                            {this.state.activeMetrics.map(id => (
+                            {this.props.visibleMetricIds.map(id => (
                                 <MetricContainer
                                     key={id}
                                     experimentId={this.props.id}
@@ -159,17 +141,9 @@ class Experiment extends React.Component {
                             ))}
                         </section>
                         <Paginator
-                            initialPage={this.selectedPage - 1} // zero-based
-                            pageCount={Math.ceil(this.props.metrics.length / this.metricsPerPage)}
-
-                            disableInitialCallback={true}
-                            onPageChange={e => {
-                                // zero-based
-                                const pageNumber = e.selected + 1;
-
-                                this.um.setQueryParameter('page', pageNumber);
-                                this.setState({ activeMetrics: visiblePaginatorMembers(this.allMetrics, this.metricsPerPage, pageNumber) });
-                            }}
+                            initialPage={this.props.initialPage - 1}
+                            pageCount={Math.ceil(this.props.numItems / this.props.itemsPerPage)}
+                            onPageChange={this.props.onPageChange}
                         />
                     </div>
                 </article>
@@ -178,5 +152,3 @@ class Experiment extends React.Component {
         );
     }
 }
-
-export default withRouter(Experiment);

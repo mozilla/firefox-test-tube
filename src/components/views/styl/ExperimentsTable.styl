@@ -1,6 +1,24 @@
 .experiments-table {
+    border-collapse: collapse;
+
     a, a:visited {
         color: #00f;
         text-decoration: none;
+    }
+
+    thead {
+        border-bottom: 3px solid #ccc;
+    }
+
+    tbody tr {
+        border-bottom: 1px solid #ccc;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+    }
+
+    .experiment-start-date {
+        width: 20%;
     }
 }

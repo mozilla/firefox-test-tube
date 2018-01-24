@@ -22,6 +22,10 @@ import './css/ExperimentsTable.css';
 export default props => [
     (
         <table key="fragment-1" className="experiments-table">
+            <colgroup>
+                <col className="experiment-name" />
+                <col className="experiment-start-date" />
+            </colgroup>
             <thead>
                 <tr>
                     <th>Name</th>
@@ -29,7 +33,7 @@ export default props => [
                 </tr>
             </thead>
             <tbody>
-                {props.experiments.map((e, index) => (
+                {props.visibleExperiments.map((e, index) => (
                     <tr key={index}>
                         <td><Link to={`/experiments/${e.id}/`}>{e.name || e.slug}</Link></td>
                         <td>{e.startDate && dateFormat(e.startDate, 'longDate', true)}</td>
@@ -40,11 +44,11 @@ export default props => [
     ),
     (
         <Paginator
-            key="fragment-2"
+            key='key-fragment-2'
 
-            initialPage={props.initialPageNumber - 1} // zero-based
-            pageCount={Math.ceil(props.numExperiments / props.experimentsPerPage)}
-            onPageChange={props.handlePaginate}
+            initialPage={props.initialPage - 1} // zero-based
+            pageCount={Math.ceil(props.numItems / props.itemsPerPage)}
+            onPageChange={props.onPageChange}
         />
     ),
 ];

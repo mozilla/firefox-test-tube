@@ -18,6 +18,8 @@ export default props => {
             containerClassName='react-paginate'
             activeClassName='active'
 
+            disableInitialCallback={true}
+
             marginPagesDisplayed={1}
             pageRangeDisplayed={4}
 

@@ -20,12 +20,12 @@ export default class extends React.Component {
             { r: 250, g: 190, b: 190 },
         ];
 
-        this._formatLineData = this._formatLineData.bind(this);
-        this._formatBarData = this._formatBarData.bind(this);
-
         // Show outliers toggle constants.
         this.outliersThreshold = 10;
         this.outliersSmallestProportion = 0.01;
+
+        this._formatLineData = this._formatLineData.bind(this);
+        this._formatBarData = this._formatBarData.bind(this);
     }
 
     /**

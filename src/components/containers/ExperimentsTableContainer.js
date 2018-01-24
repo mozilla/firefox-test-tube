@@ -8,33 +8,32 @@ export default class extends React.Component {
     constructor(props) {
         super(props);
 
-        this.initialPageNumber = 1;
-        this.experimentsPerPage = 10;
+        this.initialPage = 1;
+        this.itemsPerPage = 10;
 
         this.state = {
-            pageNumber: this.initialPageNumber,
+            pageNumber: this.initialPage,
         };
 
-        this._handlePaginate = this._handlePaginate.bind(this);
+        this._onPageChange = this._onPageChange.bind(this);
     }
 
-    _handlePaginate(e) {
-        this.setState({ pageNumber: e.selected + 1 }); // zero-based
+    _onPageChange(e) {
+        this.setState({ pageNumber: e.selected + 1}); // zero-based
     }
 
     render() {
         const sortedExperiments = reverseSortedByProperty(this.props.experiments, 'startDate');
-        const visibleExperiments = visiblePaginatorMembers(sortedExperiments, this.experimentsPerPage, this.state.pageNumber);
+        const visibleExperiments = visiblePaginatorMembers(sortedExperiments, this.itemsPerPage, this.state.pageNumber);
 
         return (
             <ExperimentsTable
-                experiments={visibleExperiments}
+                visibleExperiments={visibleExperiments}
 
-                initialPageNumber={this.initialPageNumber}
-                numExperiments={this.props.experiments.length}
-                experimentsPerPage={this.experimentsPerPage}
-
-                handlePaginate={this._handlePaginate}
+                onPageChange={this._onPageChange}
+                initialPage={this.initialPage}
+                itemsPerPage={this.itemsPerPage}
+                numItems={this.props.experiments.length}
             />
         );
     }
