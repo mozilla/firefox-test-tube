@@ -18,7 +18,6 @@ def experiments(request):
             'id': d.id,
             'slug': d.slug,
             'name': d.name,
-            'completed': True,  # TODO
             'enabled': d.enabled,
         })
 
