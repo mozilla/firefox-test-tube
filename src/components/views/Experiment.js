@@ -98,6 +98,17 @@ export default class extends React.Component {
             );
         }
 
+        let maybePaginator = null;
+        if (!this.props.searchActive) {
+            maybePaginator = (
+                <Paginator
+                    initialPage={this.props.initialPage - 1}
+                    pageCount={Math.ceil(this.props.numItems / this.props.itemsPerPage)}
+                    onPageChange={this.props.onPageChange}
+                />
+            );
+        }
+
         return (
             <div>
                 <article id="experiment">
@@ -140,11 +151,7 @@ export default class extends React.Component {
                             />
                         ))}
                     </section>
-                    <Paginator
-                        initialPage={this.props.initialPage - 1}
-                        pageCount={Math.ceil(this.props.numItems / this.props.itemsPerPage)}
-                        onPageChange={this.props.onPageChange}
-                    />
+                    {maybePaginator}
                 </article>
                 {maybeMetricOverlay}
             </div>

@@ -79,10 +79,13 @@ class ExperimentContainer extends React.Component {
         } else if (experimentFetch.rejected) {
             return <Error message={experimentFetch.reason.message} />;
         } else if (experimentFetch.fulfilled) {
-            let visibleMetricIds;
+            let visibleMetricIds = [];
+            let searchActive = false;
+
             if (this.state.sifter && this.state.searchPhrase) {
                 const matchedIndices = this.state.sifter.search(this.state.searchPhrase, { fields: ['name'] }).items.map(m => m.id);
                 visibleMetricIds = experimentFetch.value.metrics.filter((_, index) => matchedIndices.includes(index)).map(m => m.id);
+                searchActive = true;
             } else {
                 visibleMetricIds = visiblePaginatorMembers(this.allMetricIds, this.itemsPerPage, this.state.pageNumber);
             }
@@ -104,6 +107,7 @@ class ExperimentContainer extends React.Component {
                     itemsPerPage={this.itemsPerPage}
                     numItems={this.allMetricIds.length}
                     visibleMetricIds={visibleMetricIds}
+                    searchActive={searchActive}
                 />
             );
         }
