@@ -21,7 +21,7 @@ export default withRouter(props => {
                 pairs.push(
                     <div key={populationName}>
                         <dt>{populationName}</dt>
-                        <dd>{nValues[populationName].toLocaleString('en-US')}</dd>
+                        <dd>{nValues[populationName].toLocaleString('en-US')} pings</dd>
                     </div>
                 );
 
