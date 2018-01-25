@@ -102,8 +102,25 @@ export default class extends React.Component {
             <div>
                 <article id="experiment">
                     <h2>{this.props.name || this.props.slug}</h2>
+                    <section id="experiment-details" className={maybeDescription ? 'with-description' : 'without-description'}>
+                        <h3>Details</h3>
+                        {maybeDescription}
+                        <section id="experiment-counts">
+                            <h4>Counts</h4>
+                            <section id="experiment-client-counts">
+                                <h5>Clients</h5>
+                                {this.getCountDL(this.props.populations, 'total_clients')}
+                            </section>
+                            <section id="experiment-ping-counts">
+                                <h5>Pings</h5>
+                                {this.getCountDL(this.props.populations, 'total_pings')}
+                            </section>
+                        </section>
+                        {maybeAuthors}
+                    </section>
                     <aside id="experiment-options">
                         <h3>Options</h3>
+                        <input type="search" placeholder="Search..." onKeyUp={this.props.onSearch} />
                         <Switch
                             active={this.state.showOutliers}
                             label="show outliers"
@@ -112,40 +129,22 @@ export default class extends React.Component {
                             }}
                         />
                     </aside>
-                    <div id="experiment-content">
-                        <section id="experiment-details" className={maybeDescription ? 'with-description' : 'without-description'}>
-                            <h3>Details</h3>
-                            {maybeDescription}
-                            <section id="experiment-counts">
-                                <h4>Counts</h4>
-                                <section id="experiment-client-counts">
-                                    <h5>Clients</h5>
-                                    {this.getCountDL(this.props.populations, 'total_clients')}
-                                </section>
-                                <section id="experiment-ping-counts">
-                                    <h5>Pings</h5>
-                                    {this.getCountDL(this.props.populations, 'total_pings')}
-                                </section>
-                            </section>
-                            {maybeAuthors}
-                        </section>
-                        <section id="experiment-metrics">
-                            <h3>Metrics</h3>
-                            {this.props.visibleMetricIds.map(id => (
-                                <MetricContainer
-                                    key={id}
-                                    experimentId={this.props.id}
-                                    id={id}
-                                    showOutliers={this.state.showOutliers}
-                                />
-                            ))}
-                        </section>
-                        <Paginator
-                            initialPage={this.props.initialPage - 1}
-                            pageCount={Math.ceil(this.props.numItems / this.props.itemsPerPage)}
-                            onPageChange={this.props.onPageChange}
-                        />
-                    </div>
+                    <section id="experiment-metrics">
+                        <h3>Metrics</h3>
+                        {this.props.visibleMetricIds.map(id => (
+                            <MetricContainer
+                                key={id}
+                                experimentId={this.props.id}
+                                id={id}
+                                showOutliers={this.state.showOutliers}
+                            />
+                        ))}
+                    </section>
+                    <Paginator
+                        initialPage={this.props.initialPage - 1}
+                        pageCount={Math.ceil(this.props.numItems / this.props.itemsPerPage)}
+                        onPageChange={this.props.onPageChange}
+                    />
                 </article>
                 {maybeMetricOverlay}
             </div>

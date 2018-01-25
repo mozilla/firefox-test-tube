@@ -48,3 +48,13 @@ export function visiblePaginatorMembers(allMembers, membersPerPage, pageNumber) 
     const firstMemberIndex = (membersPerPage * pageNumber) - membersPerPage;
     return allMembers.slice(firstMemberIndex, firstMemberIndex + membersPerPage);
 }
+
+export function debounce(fn, wait = 250) {
+  let timeout;
+
+  return function() {
+    const args = arguments;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => fn.apply(this, args), wait);
+  };
+}
