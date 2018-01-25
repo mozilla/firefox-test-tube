@@ -20,6 +20,6 @@ urlpatterns = [
     # Admin
     url(r'^admin/', admin_site.urls),
 
-    # The root index view for React.
-    url(r'^$', IndexView.as_view(), name='index'),
+    # Send everything else to React
+    url(r'.*', IndexView.as_view(), name='index'),
 ]
