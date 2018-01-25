@@ -33,6 +33,7 @@ export default props => {
                 width={chartWidth}
                 height={chartHeight}
                 options={{
+                    animation: false,
                     maintainAspectRatio: false,
                     responsive: props.asOverlay,
                     showLines: true,
@@ -84,6 +85,7 @@ export default props => {
                 width={chartWidth}
                 height={chartHeight}
                 options={{
+                    animation: false,
                     maintainAspectRatio: false,
                     responsive: props.asOverlay,
                     tooltips: {
