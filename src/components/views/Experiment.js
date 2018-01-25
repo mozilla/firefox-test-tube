@@ -4,6 +4,7 @@ import gravatar from 'gravatar';
 import MetricContainer from '../containers/MetricContainer';
 import Paginator from './Paginator';
 import Switch from './Switch';
+import SearchBox from './SearchBox';
 
 import './css/Experiment.css';
 
@@ -120,7 +121,7 @@ export default class extends React.Component {
                     </section>
                     <aside id="experiment-options">
                         <h3>Options</h3>
-                        <input type="search" placeholder="Search..." onKeyUp={this.props.onSearch} />
+                        <SearchBox onKeyUp={this.props.onSearch} />
                         <Switch
                             active={this.state.showOutliers}
                             label="show outliers"
