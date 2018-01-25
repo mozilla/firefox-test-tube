@@ -23,15 +23,12 @@ export default class extends React.Component {
         // Show outliers toggle constants.
         this.outliersThreshold = 10;
         this.outliersSmallestProportion = 0.01;
-
-        this._formatLineData = this._formatLineData.bind(this);
-        this._formatBarData = this._formatBarData.bind(this);
     }
 
     /**
      * Format the /metric/[id] JSON for use with chart.js scatter charts.
      */
-    _formatLineData(data) {
+    _formatLineData = data => {
         const formattedData = {
             datasets: [],
         };
@@ -79,7 +76,7 @@ export default class extends React.Component {
     /**
      * Format the /metric/[id] JSON for use with chart.js bar charts.
      */
-    _formatBarData(data) {
+    _formatBarData = data => {
         const formattedData = {
             datasets: [],
         };
