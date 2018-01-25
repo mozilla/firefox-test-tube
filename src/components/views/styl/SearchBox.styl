@@ -1,17 +1,22 @@
 @import 'includes/variables';
 
 .search-box {
+    background: #fff;
     border-radius: 10px;
     border: 1px solid $gray;
     display: inline-flex;
     padding: 3px;
+
+    input {
+        background: @background;
+    }
 
     &::after {
         color: $gray;
         content: '\f002';
         font-family: 'FontAwesome';
 
-        background: #fff;
+        background: @background;
         padding: 3px;
         z-index: 10;
     }
