@@ -4,13 +4,7 @@ import './css/Switch.css';
 
 
 export default class extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.toggleSwitch = this.toggleSwitch.bind(this);
-    }
-
-    toggleSwitch(evt) {
+    toggleSwitch = evt => {
         function getWrapper(elm) {
             if (elm.classList.contains('switch-content')) {
                 return elm;

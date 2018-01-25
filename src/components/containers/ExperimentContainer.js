@@ -27,18 +27,16 @@ class ExperimentContainer extends React.Component {
             pageNumber: this.initialPage,
         };
 
-        this._onPageChange = this._onPageChange.bind(this);
-        this._onSearch = this._onSearch.bind(this);
         this._setSearchPhrase = debounce(this._setSearchPhrase, 100);
     }
 
-    _onPageChange(e) {
+    _onPageChange = e => {
         const currentPageNumber = e.selected + 1; // zero-based
         this.urlManager.setQueryParameter('page', currentPageNumber);
         this.setState({ pageNumber: currentPageNumber });
     }
 
-    _onSearch(e) {
+    _onSearch = e => {
         this._setSearchPhrase(e.target.value);
     }
 

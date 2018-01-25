@@ -14,11 +14,9 @@ export default class extends React.Component {
         this.state = {
             pageNumber: this.initialPage,
         };
-
-        this._onPageChange = this._onPageChange.bind(this);
     }
 
-    _onPageChange(e) {
+    _onPageChange = e => {
         this.setState({ pageNumber: e.selected + 1}); // zero-based
     }
 

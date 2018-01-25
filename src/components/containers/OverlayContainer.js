@@ -5,16 +5,11 @@ import Overlay from '../views/Overlay';
 
 
 class OverlayContainer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.onClick = this.onClick.bind(this);
-    }
-
     /**
      * When the overlay is clicked, don't propagate that same onClick event to
      * the wrapper parent.
      */
-    onClick(e) {
+    onClick = e => {
         e.stopPropagation();
     }
 
