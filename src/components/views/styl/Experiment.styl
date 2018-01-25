@@ -1,3 +1,5 @@
+@import 'includes/variables';
+
 $grid-gap = 30px;
 
 #experiment {
@@ -9,9 +11,17 @@ $grid-gap = 30px;
     }
 }
 
-#experiment-content {
-    display: grid;
-    grid-row-gap: $grid-gap;
+#experiment-options {
+    display: flex;
+    align-items: center;
+
+    > * {
+        margin-left: 10px;
+    }
+
+    h3 + * {
+        margin-left: 0;
+    }
 }
 
 #experiment-details {
@@ -19,6 +29,9 @@ $grid-gap = 30px;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 50px;
     grid-row-gap: 10px;
+
+    border-bottom: 1px solid $gray;
+    padding-bottom: $grid-gap;
 
     &.with-description {
         grid-template-areas:
@@ -90,6 +103,8 @@ $grid-gap = 30px;
 
 #experiment-counts {
     $vertical-spacing = 1rem;
+
+    margin-bottom: -$vertical-spacing;
 
     h4 {
         margin-bottom: $vertical-spacing;

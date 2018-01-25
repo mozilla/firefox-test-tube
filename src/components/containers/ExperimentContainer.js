@@ -1,12 +1,13 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-refetch';
+import Sifter from 'sifter';
 
 import Experiment from '../views/Experiment';
 import Loading from '../views/Loading';
 import Error from '../views/Error';
 import URLManager from '../../lib/URLManager';
-import { visiblePaginatorMembers } from '../../lib/utils';
+import { visiblePaginatorMembers, debounce } from '../../lib/utils';
 
 
 class ExperimentContainer extends React.Component {
@@ -27,6 +28,8 @@ class ExperimentContainer extends React.Component {
         };
 
         this._onPageChange = this._onPageChange.bind(this);
+        this._onSearch = this._onSearch.bind(this);
+        this._setSearchPhrase = debounce(this._setSearchPhrase, 100);
     }
 
     _onPageChange(e) {
@@ -35,10 +38,32 @@ class ExperimentContainer extends React.Component {
         this.setState({ pageNumber: currentPageNumber });
     }
 
+    _onSearch(e) {
+        this._setSearchPhrase(e.target.value);
+    }
+
+    /**
+     * This method is needed to make the debounce function work without the
+     * event expiring.
+     *
+     * http://blog.revathskumar.com/2016/02/reactjs-using-debounce-in-react-components.html
+     */
+    _setSearchPhrase(searchPhrase) {
+        this.setState({ searchPhrase })
+    }
+
     componentWillReceiveProps(nextProps) {
         if (this.fetchedMetricIds === false && nextProps.experimentFetch.value.metrics) {
             this.fetchedMetricIds = true;
             this.allMetricIds = nextProps.experimentFetch.value.metrics.map(m => m.id);
+        }
+
+        if (nextProps.experimentFetch.fulfilled) {
+            const nextMetrics = nextProps.experimentFetch.value.metrics;
+
+            if (!this.props.experimentFetch.fulfilled || nextMetrics !== this.props.experimentFetch.value.metrics) {
+                this.setState({ sifter: new Sifter(nextMetrics) });
+            }
         }
     }
 
@@ -48,13 +73,20 @@ class ExperimentContainer extends React.Component {
 
     render() {
         const experimentFetch = this.props.experimentFetch;
-        const visibleMetricIds = visiblePaginatorMembers(this.allMetricIds, this.itemsPerPage, this.state.pageNumber);
 
         if (experimentFetch.pending) {
             return <Loading />;
         } else if (experimentFetch.rejected) {
             return <Error message={experimentFetch.reason.message} />;
         } else if (experimentFetch.fulfilled) {
+            let visibleMetricIds;
+            if (this.state.sifter && this.state.searchPhrase) {
+                const matchedIndices = this.state.sifter.search(this.state.searchPhrase, { fields: ['name'] }).items.map(m => m.id);
+                visibleMetricIds = experimentFetch.value.metrics.filter((_, index) => matchedIndices.includes(index)).map(m => m.id);
+            } else {
+                visibleMetricIds = visiblePaginatorMembers(this.allMetricIds, this.itemsPerPage, this.state.pageNumber);
+            }
+
             return (
                 <Experiment
                     id={Number(this.props.match.params.experimentId)}
@@ -67,6 +99,7 @@ class ExperimentContainer extends React.Component {
                     selectedMetricId={Number(this.urlManager.getQueryParameter('chart'))}
 
                     onPageChange={this._onPageChange}
+                    onSearch={this._onSearch}
                     initialPage={this.initialPage}
                     itemsPerPage={this.itemsPerPage}
                     numItems={this.allMetricIds.length}
