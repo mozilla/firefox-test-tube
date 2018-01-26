@@ -1,8 +1,27 @@
+@import 'includes/variables';
+
 #home {
     display: grid;
     grid-row-gap: 40px;
 
-    table {
+    .experiments {
+        position: relative;
+    }
+
+    .experiments-table {
         width: 100%;
+    }
+
+    /* Vertially align the h2 with the search box */
+    h2 {
+        align-items: center;
+        display: flex;
+        float: left;
+        height: $search-box-height;
+    }
+
+    .search-box {
+        float: right;
+        margin-bottom: 0;
     }
 }

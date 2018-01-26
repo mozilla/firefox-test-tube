@@ -12,7 +12,7 @@ export default props => {
     let maybeActiveSection = null;
     if (activeExperiments.length) {
         maybeActiveSection = (
-            <section id="active-experiments">
+            <section id="active-experiments" className="experiments">
                 <h2>Active experiments</h2>
                 <ExperimentsTableContainer experiments={activeExperiments} />
             </section>
@@ -22,7 +22,7 @@ export default props => {
     let maybeCompletedSection = null;
     if (completedExperiments.length) {
         maybeCompletedSection = (
-            <section id="completed-experiments">
+            <section id="completed-experiments" className="experiments">
                 <h2>Completed experiments</h2>
                 <ExperimentsTableContainer experiments={completedExperiments} />
             </section>
