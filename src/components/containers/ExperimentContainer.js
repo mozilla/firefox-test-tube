@@ -27,7 +27,7 @@ class ExperimentContainer extends React.Component {
             pageNumber: this.initialPage,
         };
 
-        this._setSearchPhrase = debounce(this._setSearchPhrase, 100);
+        this._setSearchPhrase = debounce(this._setSearchPhrase, process.env.REACT_APP_SEARCH_DEBOUNCE_TIME);
     }
 
     _onPageChange = e => {

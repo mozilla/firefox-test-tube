@@ -6,6 +6,8 @@
     border: 1px solid $gray;
     display: inline-flex;
     padding: 3px;
+    box-sizing: border-box;
+    height: $search-box-height;
 
     input {
         background: @background;
@@ -24,5 +26,13 @@
     input {
         border: 0;
         text-indent: 3px;
+
+        /* Remove some browser styles that would ruin the effect */
+        &::-webkit-search-cancel-button {
+            display: none;
+        }
+        &:focus {
+            outline: none;
+        }
     }
 }
