@@ -14,10 +14,6 @@ Viewer was forked from an existing project for the sake of expediency, Test Tube
 was written from the ground up to address relevant user needs with clean and
 maintainable code.
 
-## Demo
-
-[http://firefox-test-tube.herokuapp.com/](http://firefox-test-tube.herokuapp.com/)
-
 ## Contributing
 
 See the [development instructions](docs/development.md) to learn how to get
