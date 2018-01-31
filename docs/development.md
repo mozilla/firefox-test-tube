@@ -5,6 +5,11 @@
 2. From the project root, run `yarn`
 3. From the project root, run `make build`
 
+## Notes
+
+To run Test Tube outside of Mozilla, be sure to disable authentication or obtain
+your own private keys.
+
 # Run
 
 1. From the project root, run `docker-compose up`
