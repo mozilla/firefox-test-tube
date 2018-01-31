@@ -9,7 +9,7 @@ Tube outside of Mozilla, be sure to disable authentication or obtain your own
 private keys.
 
 Test Tube is the successor to [Experiments
-Viewer](https://github.com/mozilla/experiments-viewer). Whereas Expeirments
+Viewer](https://github.com/mozilla/experiments-viewer). Whereas Experiments
 Viewer was forked from an existing project for the sake of expediency, Test Tube
 was written from the ground up to address relevant user needs with clean and
 maintainable code.
