@@ -22,7 +22,31 @@ export default class extends React.Component {
 
         // Show outliers toggle constants.
         this.outliersThreshold = 10;
-        this.outliersSmallestProportion = 0.01;
+        this.outliersSmallestProportion = 0.0001;
+
+        this.populations = []; // Local (component) representation of the populations.
+        const barChartThreshold = 20; // What number of x values should be used for bar chart determination.
+        this.chartType = this._getChartType(props.type); // String of various chart types.
+
+        // Create an internal population representation.
+        // Adds completeData and trimmedData keys for use with props.showOutliers.
+        props.unformattedData.populations.forEach((population, index) => {
+
+            // Sort by x-axis value
+            population.data.sort((a, b) => {
+                return a.x - b.x;
+            });
+
+            const dataWithoutOutliers = this._removeOutliers(population.data);
+
+            if (dataWithoutOutliers.length < barChartThreshold) {
+                this.chartType = 'bar';
+            }
+
+            this.populations.push(population);
+            this.populations[index].completeData = population.data;
+            this.populations[index].trimmedData = dataWithoutOutliers;
+        });
     }
 
     /**
@@ -33,24 +57,22 @@ export default class extends React.Component {
             datasets: [],
         };
 
-        data.populations.forEach((population, index) => {
+        this.populations.forEach((population, index) => {
             const thisColor = this.colors[index];
             const resultData = [];
 
-            // Sort by x-axis value
-            population.data.sort((a, b) => {
-                return a.x - b.x;
-            });
+            // Data to send to view component based on show outliers toggle.
+            const rawData = this.props.showOutliers ? population.completeData : population.trimmedData;
 
             // The API provides y values as numbers between 0 and 1, but we want
             // to display them as percentages.
-            population.data.forEach((dataPoint, index) => {
+            rawData.forEach((dataPoint, index) => {
                 resultData.push({x: index, xActualValue: dataPoint.x, y: dataPoint.y * 100});
             });
 
             formattedData.datasets.push({
                 label: population.name,
-                data: this.props.showOutliers ? resultData : this._removeOutliers(resultData),
+                data: resultData,
 
                 // What d3 calls curveStepBefore
                 steppedLine: 'before',
@@ -83,12 +105,19 @@ export default class extends React.Component {
 
         formattedData['labels'] = data.categories;
 
-        data.populations.forEach((population, index) => {
+        if (!data.categories) {
+            const dataToUse = this.props.showOutliers ? this.populations[0].completeData : this.populations[0].trimmedData;
+            formattedData['labels'] = dataToUse.map(dp => dp.x);
+        }
+
+        console.log('labels:', formattedData['labels']);
+
+        this.populations.forEach((population, index) => {
             const thisColor = this.colors[index];
 
             formattedData.datasets.push({
                 label: population.name,
-                data: population.data,
+                data: this.props.showOutliers ? population.completeData : population.trimmedData,
                 backgroundColor: `rgba(${thisColor.r}, ${thisColor.g}, ${thisColor.b}, .5)`,
             });
         });
@@ -96,23 +125,25 @@ export default class extends React.Component {
         return formattedData;
     }
 
-    _isLineType(type) {
-        return [
+    _getChartType(type) {
+        const lineTypes = [
             'CountHistogram',
             'EnumeratedHistogram',
             'ExponentialHistogram',
             'LinearHistogram',
             'StringScalar',
             'UintScalar',
-        ].includes(type);
-    }
+        ];
 
-    _isBarType(type) {
-        return [
+        const barTypes = [
             'BooleanHistogram',
             'BooleanScalar',
             'FlagHistogram',
-        ].includes(type);
+        ];
+
+        if (lineTypes.includes(type)) { return 'line'; }
+        if (barTypes.includes(type)) { return 'bar'; }
+        return null;
     }
 
     // Return an array with buckets with data less than the
@@ -135,9 +166,9 @@ export default class extends React.Component {
     // This should allow us to store the trimmed data for each chart and simply toggle between full/trimmed data.
     render() {
         let formatData;
-        if (this._isLineType(this.props.type)) {
+        if (this.chartType === 'line') {
             formatData = this._formatLineData;
-        } else if (this._isBarType(this.props.type)) {
+        } else if (this.chartType === 'bar') {
             formatData = this._formatBarData;
         }
 
@@ -148,8 +179,7 @@ export default class extends React.Component {
                 <Chart
                     {...this.props}
 
-                    isLineType={this._isLineType}
-                    isBarType={this._isBarType}
+                    chartType={this.chartType}
                     data={formatData(this.props.unformattedData)}
                 />
             );
