@@ -23,10 +23,25 @@ export default class extends React.Component {
         // Show outliers toggle constants.
         this.outliersThreshold = 10;
         this.outliersSmallestProportion = 0.01;
+
+        // The minimum number of data points that the biggest population of a
+        // "line type" metric must have in order for it to be rendered as a line
+        // chart. If the biggest population has fewer than this many data
+        // points, it will be rendered as a bar chart instead.
+        this.minLinePoints = 21;
     }
 
     /**
-     * Format the /metric/[id] JSON for use with chart.js scatter charts.
+     * Return the size of the biggest population in a dataset.
+     */
+    _biggestPopulationSize(data) {
+        return Math.max(...data.populations.map(p => p.data.length));
+    }
+
+    /**
+     * Format metric JSON for use with Chart.js bar charts.
+     *
+     * @param  data  The raw JSON from /metric/[id]
      */
     _formatLineData = data => {
         const formattedData = {
@@ -74,45 +89,63 @@ export default class extends React.Component {
     }
 
     /**
-     * Format the /metric/[id] JSON for use with chart.js bar charts.
+     * Format metric JSON for use with Chart.js bar charts.
+     *
+     * @param  data        The raw JSON from /metric/[id]
+     * @param  isLineType  True if this metric is technically a "line type," but
+     *                     it needs to be rendered as a bar chart anyway. The
+     *                     JSON of "line type" metrics is formatted differently
+     *                     and need to account for that here.
      */
-    _formatBarData = data => {
+    _formatBarData = (data, isLineType = false) => {
         const formattedData = {
             datasets: [],
         };
 
-        formattedData['labels'] = data.categories;
+        if (isLineType) {
+            formattedData['labels'] = data.populations[0].data.map(dp => dp.x);
+        } else {
+            formattedData['labels'] = data.categories;
+        }
 
         data.populations.forEach((population, index) => {
             const thisColor = this.colors[index];
 
-            formattedData.datasets.push({
+            const newDataset = {
                 label: population.name,
-                data: population.data,
                 backgroundColor: `rgba(${thisColor.r}, ${thisColor.g}, ${thisColor.b}, .5)`,
-            });
+            };
+
+            if (isLineType) {
+                newDataset.data = population.data.map(dp => dp.y);
+            } else {
+                newDataset.data = population.data;
+            }
+
+            formattedData.datasets.push(newDataset);
         });
 
         return formattedData;
     }
 
-    _isLineType(type) {
-        return [
+    _getMetricType(type) {
+        const lineTypes = [
             'CountHistogram',
             'EnumeratedHistogram',
             'ExponentialHistogram',
             'LinearHistogram',
             'StringScalar',
             'UintScalar',
-        ].includes(type);
-    }
+        ];
 
-    _isBarType(type) {
-        return [
+        const barTypes = [
             'BooleanHistogram',
             'BooleanScalar',
             'FlagHistogram',
-        ].includes(type);
+        ];
+
+        if (lineTypes.includes(type)) return 'line';
+        if (barTypes.includes(type)) return 'bar';
     }
 
     // Return an array with buckets with data less than the
@@ -131,26 +164,33 @@ export default class extends React.Component {
         return data.slice(0, indexLast + 1);
     }
 
-    // TODO: Move formatData out of render() and use componentWillReceiveProps().
+    // TODO: Move dataFormattingMethod out of render() and use componentWillReceiveProps().
     // This should allow us to store the trimmed data for each chart and simply toggle between full/trimmed data.
     render() {
-        let formatData;
-        if (this._isLineType(this.props.type)) {
-            formatData = this._formatLineData;
-        } else if (this._isBarType(this.props.type)) {
-            formatData = this._formatBarData;
+        let dataFormattingMethod;
+        let metricType = this._getMetricType(this.props.type);
+        let chartType = metricType;
+
+        if (metricType === 'bar') {
+            dataFormattingMethod = this._formatBarData;
+        } else if (metricType === 'line') {
+            if (this._biggestPopulationSize(this.props.unformattedData) >= this.minLinePoints) {
+                dataFormattingMethod = this._formatLineData;
+            } else {
+                dataFormattingMethod = data => this._formatBarData(data, true);
+                chartType = 'bar';
+            }
         }
 
-        if (!formatData) {
+        if (!dataFormattingMethod) {
             return <Error message={`Unsupported metric type: ${this.props.type}`} />;
         } else {
             return (
                 <Chart
                     {...this.props}
 
-                    isLineType={this._isLineType}
-                    isBarType={this._isBarType}
-                    data={formatData(this.props.unformattedData)}
+                    chartType={chartType}
+                    data={dataFormattingMethod(this.props.unformattedData)}
                 />
             );
         }
