@@ -26,7 +26,7 @@ export default props => {
     }
 
     let chart = null;
-    if (props.isLineType(props.type)) {
+    if (props.chartType === 'line') {
         chart = (
             <ScatterChart
                 data={props.data}
@@ -78,7 +78,7 @@ export default props => {
                 }}
             />
         );
-    } else if (props.isBarType(props.type)) {
+    } else if (props.chartType === 'bar') {
         chart = (
             <BarChart
                 data={props.data}
