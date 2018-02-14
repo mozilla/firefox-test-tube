@@ -11,7 +11,7 @@
     "watch:css": "stylus --watch --sourcemap src/components/views/styl/* --out ./src/components/views/css/",
     "eject": "react-scripts eject",
     "test": "react-scripts test --env=jsdom",
-    "postinstall": "yarn run build"
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "chart.js": "^2.7.1",
