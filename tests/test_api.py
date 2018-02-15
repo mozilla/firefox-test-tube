@@ -25,12 +25,14 @@ class TestExperiments(DataTestCase):
                     'slug': self.dataset.slug,
                     'name': self.dataset.name,
                     'enabled': True,
+                    'creationDate': self.dataset.created_at.date().isoformat(),
                 },
                 {
                     'id': self.dataset_older.id,
                     'slug': self.dataset_older.slug,
                     'name': self.dataset_older.name,
                     'enabled': False,
+                    'creationDate': self.dataset_older.created_at.date().isoformat(),
                 },
             ]
         }

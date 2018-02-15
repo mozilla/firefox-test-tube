@@ -26,19 +26,19 @@ export default props => {
             <table className="experiments-table">
                 <colgroup>
                     <col className="experiment-name" />
-                    <col className="experiment-start-date" />
+                    <col className="experiment-creation-date" />
                 </colgroup>
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Start date</th>
+                        <th>Creation date</th>
                     </tr>
                 </thead>
                 <tbody>
                     {props.visibleExperiments.map((e, index) => (
                         <tr key={index}>
                             <td><Link to={`/experiments/${e.id}/`}>{e.name || e.slug}</Link></td>
-                            <td>{e.startDate && dateFormat(e.startDate, 'longDate', true)}</td>
+                            <td>{e.creationDate && dateFormat(e.creationDate, 'longDate', true)}</td>
                         </tr>
                     ))}
                 </tbody>

@@ -19,6 +19,7 @@ def experiments(request):
             'slug': d.slug,
             'name': d.name,
             'enabled': d.enabled,
+            'creationDate': d.created_at.date().isoformat() if d.created_at else None,
         })
 
     return Response({'experiments': data})

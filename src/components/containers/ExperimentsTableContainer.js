@@ -47,7 +47,7 @@ export default class extends React.Component {
             const searchOptions = {
                 fields: ['name', 'slug'],
                 limit: this.itemsPerPage,
-                sort: 'startDate',
+                sort: 'creationDate',
                 direction: 'desc',
             };
 
@@ -55,7 +55,7 @@ export default class extends React.Component {
             visibleExperiments = this.props.experiments.filter((_, index) => matchedIndices.includes(index));
             searchActive = true;
         } else {
-            const sortedExperiments = reverseSortedByProperty(this.props.experiments, 'startDate');
+            const sortedExperiments = reverseSortedByProperty(this.props.experiments, 'creationDate');
             visibleExperiments = visiblePaginatorMembers(sortedExperiments, this.itemsPerPage, this.state.pageNumber);
         }
 
