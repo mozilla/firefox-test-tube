@@ -5357,9 +5357,9 @@ react-fa@5.0.0:
     font-awesome "^4.3.0"
     prop-types "^15.5.8"
 
-react-paginate@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/react-paginate/-/react-paginate-5.0.0.tgz#b5c12191ea81adc6d4d1b339b805e81841eaa8ea"
+react-paginate@5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/react-paginate/-/react-paginate-5.1.0.tgz#9bee5fa9498812042d783f181b1ca043b57b85a5"
   dependencies:
     classnames "^2.2.5"
     prop-types "^15.6.0"
