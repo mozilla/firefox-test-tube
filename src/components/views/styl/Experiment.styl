@@ -43,10 +43,18 @@ $grid-gap = 30px;
         grid-template-areas:
             "bottom-left bottom-right";
     }
-}
+    dt {
+        font-weight: bold;
+        clear: left;
 
-#experiment-details h3 {
-    margin-bottom: 0;
+        &::after {
+            content: ':';
+            margin-right: 1ch;
+        }
+    }
+    h3 {
+        margin-bottom: 0;
+    }
 }
 
 #experiment-description {

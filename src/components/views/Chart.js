@@ -37,6 +37,9 @@ export default props => {
                     maintainAspectRatio: false,
                     responsive: props.asOverlay,
                     showLines: true,
+                    legend: {
+                        display: false // We'll be using our own custom legend outside of canvas.
+                    },
                     tooltips: {
                         callbacks: {
                             label: (tt, data) => {
