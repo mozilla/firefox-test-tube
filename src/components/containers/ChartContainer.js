@@ -8,27 +8,90 @@ export default class extends React.Component {
     constructor(props) {
         super(props);
 
-        // See https://sashat.me/2017/01/11/list-of-20-simple-distinct-colors/
-        this.colors = [
-            { r: 74, g: 144, b: 226 },
-            { r: 230, g: 25, b: 75 },
-            { r: 60, g: 180, b: 75 },
-            { r: 255, g: 255, b: 25 },
-            { r: 245, g: 130, b: 49 },
-            { r: 145, g: 30, b: 180 },
-            { r: 70, g: 240, b: 240 },
-            { r: 250, g: 190, b: 190 },
-        ];
+        this.chartType = this._getChartType(props.type);
 
-        // Show outliers toggle constants.
-        this.outliersThreshold = 10;
-        this.outliersSmallestProportion = 0.01;
+        if (this.chartType !== 'unsupported') {
+            // See https://sashat.me/2017/01/11/list-of-20-simple-distinct-colors/
+            this.colors = [
+                { r: 74, g: 144, b: 226 },
+                { r: 230, g: 25, b: 75 },
+                { r: 60, g: 180, b: 75 },
+                { r: 255, g: 255, b: 25 },
+                { r: 245, g: 130, b: 49 },
+                { r: 145, g: 30, b: 180 },
+                { r: 70, g: 240, b: 240 },
+                { r: 250, g: 190, b: 190 },
+            ];
+
+            // Outlier constants
+            this.outliersThreshold = 10;
+            this.outliersSmallestProportion = 0.01;
+
+            this.dataPack = this._createDataPack(props.unformattedData, this.chartType);
+        }
+    }
+
+    /**
+     * Return a "data pack". A data pack is an object of data formatted for use
+     * with Chart.js, organized by whether or not the data has been trimmed to
+     * remove outliers.
+     *
+     * Example output:
+     *
+     *     {
+     *         all: [...] // Formatted data with all data points present
+     *         trimmed: [...] // Formatted data with outlying data points removed
+     *     }
+     *
+     * If a "line type" metric has too few data points, it will be formatted for
+     * use as a bar chart instead. this.chartType will also be changed
+     * accordingly.
+     */
+    _createDataPack(data, chartType) {
+        const dataPack = {};
 
         // The minimum number of data points that the biggest population of a
         // "line type" metric must have in order for it to be rendered as a line
         // chart. If the biggest population has fewer than this many data
         // points, it will be rendered as a bar chart instead.
-        this.minLinePoints = 21;
+        const minLinePoints = 21;
+
+        /**
+         * Quick summary:
+         *
+         * "Bar-type" metrics will always be presented as bar charts.
+         *
+         * If a "line-type" metric has <= this.minLinePoints data points before
+         * outliers are removed, it will be presented as a bar chart when
+         * outliers are shown and when outliers are hidden.
+         *
+         * If a "line-type" metric has > this.minLinePoints data points before
+         * before outliers are removed, it will be presented as a line chart
+         * when outliers are shown and when outliers are hidden. This means that
+         * it will be presented as a line chart when outliers are hidden even if
+         * there are less than this.minLinePoints data points when outliers are
+         * hidden. This is better than the alternatives. Switching between a
+         * line chart and a bar chart depending on the state of the outliers
+         * setting would be confusing. Presenting it as a bar chart and
+         * showing/hiding bars depending on the state of the outliers setting
+         * would also be strange.
+         */
+        if (chartType === 'bar') {
+            dataPack.all = this._formatBarData(data);
+        } else if (chartType === 'line') {
+            if (this._biggestPopulationSize(data) >= minLinePoints) {
+                dataPack.all = this._formatLineData(data, true);
+
+                if (this._biggestPopulationSize(data) >= this.outliersThreshold) {
+                    dataPack.trimmed = this._formatLineData(data, false);
+                }
+            } else {
+                dataPack.all = this._formatBarData(data, true);
+                this.chartType = 'bar';
+            }
+        }
+
+        return dataPack;
     }
 
     /**
@@ -43,7 +106,7 @@ export default class extends React.Component {
      *
      * @param  data  The raw JSON from /metric/[id]
      */
-    _formatLineData = data => {
+    _formatLineData = (data, includeOutliers) => {
         const formattedData = {
             datasets: [],
         };
@@ -65,7 +128,7 @@ export default class extends React.Component {
 
             formattedData.datasets.push({
                 label: population.name,
-                data: this.props.showOutliers ? resultData : this._removeOutliers(resultData),
+                data: includeOutliers ? resultData : this._removeOutliers(resultData),
 
                 // What d3 calls curveStepBefore
                 steppedLine: 'before',
@@ -95,7 +158,7 @@ export default class extends React.Component {
      * @param  isLineType  True if this metric is technically a "line type," but
      *                     it needs to be rendered as a bar chart anyway. The
      *                     JSON of "line type" metrics is formatted differently
-     *                     and need to account for that here.
+     *                     and we need to account for that here.
      */
     _formatBarData = (data, isLineType = false) => {
         const formattedData = {
@@ -113,7 +176,7 @@ export default class extends React.Component {
 
             const newDataset = {
                 label: population.name,
-                backgroundColor: `rgba(${thisColor.r}, ${thisColor.g}, ${thisColor.b}, .5)`,
+                backgroundColor: `rgb(${thisColor.r}, ${thisColor.g}, ${thisColor.b})`,
             };
 
             if (isLineType) {
@@ -128,7 +191,7 @@ export default class extends React.Component {
         return formattedData;
     }
 
-    _getMetricType(type) {
+    _getChartType(metricType) {
         const lineTypes = [
             'CountHistogram',
             'EnumeratedHistogram',
@@ -144,15 +207,18 @@ export default class extends React.Component {
             'FlagHistogram',
         ];
 
-        if (lineTypes.includes(type)) return 'line';
-        if (barTypes.includes(type)) return 'bar';
+        if (lineTypes.includes(metricType)) {
+            return 'line';
+        } else if (barTypes.includes(metricType)) {
+            return 'bar';
+        } else {
+            return 'unsupported';
+        }
     }
 
     // Return an array with buckets with data less than the
     // `outliersSmallestProportion` trimmed from the right.
     _removeOutliers(data) {
-        if (data.length <= this.outliersThreshold) return data;
-
         let indexLast = data.length - 1;
         for (; indexLast >= 0; indexLast--) {
           if (data[indexLast]['y'] > this.outliersSmallestProportion) {
@@ -164,33 +230,27 @@ export default class extends React.Component {
         return data.slice(0, indexLast + 1);
     }
 
-    // TODO: Move dataFormattingMethod out of render() and use componentWillReceiveProps().
-    // This should allow us to store the trimmed data for each chart and simply toggle between full/trimmed data.
     render() {
-        let dataFormattingMethod;
-        let metricType = this._getMetricType(this.props.type);
-        let chartType = metricType;
-
-        if (metricType === 'bar') {
-            dataFormattingMethod = this._formatBarData;
-        } else if (metricType === 'line') {
-            if (this._biggestPopulationSize(this.props.unformattedData) >= this.minLinePoints) {
-                dataFormattingMethod = this._formatLineData;
-            } else {
-                dataFormattingMethod = data => this._formatBarData(data, true);
-                chartType = 'bar';
-            }
-        }
-
-        if (!dataFormattingMethod) {
-            return <Error message={`Unsupported metric type: ${this.props.type}`} />;
+        if (this.chartType === 'unsupported') {
+            return <Error message={`Unsupported metric type: ${this.props.type}`} showPageTitle={false} />;
         } else {
+            let dataToShow;
+            if (this.dataPack.trimmed && this.props.showOutliers === false) {
+                dataToShow = this.dataPack.trimmed;
+            } else {
+                dataToShow = this.dataPack.all;
+            }
+
+            // Temporary workaround for this issue:
+            // https://github.com/jerairrest/react-chartjs-2/issues/250
+            dataToShow = JSON.parse(JSON.stringify(dataToShow));
+
             return (
                 <Chart
                     {...this.props}
 
-                    chartType={chartType}
-                    data={dataFormattingMethod(this.props.unformattedData)}
+                    chartType={this.chartType}
+                    data={dataToShow}
                 />
             );
         }
