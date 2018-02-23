@@ -165,7 +165,7 @@ export default class extends React.Component {
             datasets: [],
         };
 
-        if (isLineType) {
+        if (isLineType || !data.categories) {
             formattedData['labels'] = data.populations[0].data.map(dp => dp.x);
         } else {
             formattedData['labels'] = data.categories;
