@@ -1,5 +1,5 @@
 {
-  "name": "test-tube",
+  "name": "firefox-test-tube",
   "private": true,
   "proxy": "http://localhost:8000",
   "scripts": {
