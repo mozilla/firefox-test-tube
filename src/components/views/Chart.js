@@ -37,6 +37,9 @@ export default props => {
                     maintainAspectRatio: false,
                     responsive: props.asOverlay,
                     showLines: true,
+                    legend: {
+                        display: false
+                    },
                     tooltips: {
                         callbacks: {
                             label: (tt, data) => {
