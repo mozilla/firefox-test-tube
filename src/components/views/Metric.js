@@ -4,6 +4,7 @@ import { Icon } from 'react-fa';
 
 import ChartContainer from '../containers/ChartContainer';
 import OverlayContainer from '../containers/OverlayContainer';
+import ChartColors from '../../lib/ChartColors';
 import URLManager from '../../lib/URLManager';
 
 import './css/Metric.css';
@@ -15,18 +16,20 @@ export default withRouter(props => {
     function buildNValuesDL(nValues) {
         let pairs = [];
 
-        for (let populationName in nValues) {
-            if (nValues.hasOwnProperty(populationName)) {
+        Object.keys(nValues).forEach((populationName, i) => {
+            let itemColor = {backgroundColor: `rgb(${ChartColors[i].r}, ${ChartColors[i].g}, ${ChartColors[i].b})`};
+            let borderColor = {border: `1px solid rgb(${ChartColors[i].r}, ${ChartColors[i].g}, ${ChartColors[i].b})`};
 
-                pairs.push(
-                    <div key={populationName}>
-                        <dt>{populationName}</dt>
-                        <dd>{nValues[populationName].toLocaleString('en-US')} pings</dd>
-                    </div>
-                );
+            pairs.push(
+                <div key={populationName}>
+                    <dt style={itemColor}>{populationName}</dt>
+                    <dd style={borderColor}>
+                        {nValues[populationName].toLocaleString('en-US')} pings
+                    </dd>
+                </div>
+            );
 
-            }
-        }
+        });
 
         return <dl>{pairs}</dl>;
     }

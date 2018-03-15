@@ -1,6 +1,9 @@
 @import 'includes/mixins';
 
 $grid-row-gap = 15px;
+$chart-grid-width = 500px;
+$legend-item-height = 30px;
+$legend-grid-gap = 10px;
 
 .metric {
     display: grid;
@@ -57,19 +60,50 @@ canvas {
 }
 
 #metric-details {
+    margin-bottom: 20px;
+
     dl {
-        display: flex;
+        display: grid;
         font-size: .8em;
+        font-size: 12px;
+        grid-gap: $legend-grid-gap;
+        grid-template-columns: 1fr 1fr 1fr;
         margin: 0;
+        max-width: $chart-grid-width;
 
         div {
             display: flex;
-            margin-left: 10px;
+            position: relative;
 
-            &:first-child {
-                margin-left: 0;
+            &:hover dd {
+                display: block;
             }
         }
+    }
+    dt {
+        border-radius: 3px;
+        color: #fff;
+        line-height: $legend-item-height;
+        overflow: hidden;
+        padding: 0 10px;
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 140px;
+    }
+    dd {
+        background-color: #fff;
+        border-radius: 3px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        color: #000;
+        display: none;
+        left: 0;
+        line-height: 1.5;
+        min-width: 138px;
+        padding: 10px;
+        position: absolute;
+        top: $legend-item-height + $legend-grid-gap;
+        z-index: 10;
     }
 }
 
