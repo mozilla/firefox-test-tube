@@ -37,11 +37,25 @@ $grid-gap = 30px;
         grid-template-areas:
             "top top"\
             "bottom-left bottom-right";
+
+        #experiment-counts {
+            grid-area: bottom-left;
+        }
     };
 
     &.without-description {
         grid-template-areas:
             "bottom-left bottom-right";
+
+        #experiment-counts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-column-gap: $grid-gap;
+
+            h4 {
+                grid-column: 1 / 3;
+            }
+        }
     }
     dt {
         font-weight: bold;
@@ -59,10 +73,6 @@ $grid-gap = 30px;
 
 #experiment-description {
     grid-area: top;
-}
-
-#experiment-counts {
-    grid-area: bottom-left;
 }
 
 #experiment-authors {
