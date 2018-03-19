@@ -1,10 +1,9 @@
 @import 'includes/variables';
 
-$grid-gap = 30px;
 
 #experiment {
     display: grid;
-    grid-gap: 30px;
+    grid-gap: $global-gap;
 
     h2 {
         margin-bottom: 0;
@@ -25,24 +24,9 @@ $grid-gap = 30px;
 }
 
 #experiment-details {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 50px;
-    grid-row-gap: 10px;
-
     border-bottom: 1px solid $gray;
-    padding-bottom: $grid-gap;
+    padding-bottom: 15px;
 
-    &.with-description {
-        grid-template-areas:
-            "top top"\
-            "bottom-left bottom-right";
-    };
-
-    &.without-description {
-        grid-template-areas:
-            "bottom-left bottom-right";
-    }
     dt {
         font-weight: bold;
         clear: left;
@@ -58,11 +42,17 @@ $grid-gap = 30px;
 }
 
 #experiment-description {
-    grid-area: top;
+    margin-bottom: $global-gap;
+
+    p {
+        margin: 0;
+    }
 }
 
 #experiment-counts {
-    grid-area: bottom-left;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: $global-gap;
 }
 
 #experiment-authors {
@@ -98,7 +88,7 @@ $grid-gap = 30px;
 
 #experiment-metrics {
     display: grid;
-    grid-gap: $grid-gap;
+    grid-gap: $global-gap;
     grid-template-columns: 1fr 1fr;
 }
 
@@ -115,7 +105,7 @@ $grid-gap = 30px;
     margin-bottom: -$vertical-spacing;
 
     h4 {
-        margin-bottom: $vertical-spacing;
+        display: none;
     }
 
     h5 {

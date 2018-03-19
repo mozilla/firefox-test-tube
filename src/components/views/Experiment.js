@@ -114,7 +114,7 @@ export default class extends React.Component {
             <div>
                 <article id="experiment">
                     <h2>{this.props.name || this.props.slug}</h2>
-                    <section id="experiment-details" className={maybeDescription ? 'with-description' : 'without-description'}>
+                    <section id="experiment-details">
                         <h3>Details</h3>
                         {maybeDescription}
                         <section id="experiment-counts">
