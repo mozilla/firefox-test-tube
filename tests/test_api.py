@@ -60,14 +60,14 @@ class TestExperiments(DataTestCase):
         self.assertEqual(data['experiments'][1]['id'], self.dataset_older.id)
 
 
-class TestExperimentById(DataTestCase):
+class TestExperimentBySlug(DataTestCase):
 
     def setUp(self):
         User.objects.create_user(username='testuser',
                                  email='example@mozilla.com',
                                  password='password')
         self.client.login(username='testuser', password='password')
-        self.url = reverse('v2-experiment-by-id', args=[self.dataset.id])
+        self.url = reverse('v2-experiment-by-slug', args=[self.dataset.slug])
 
     def test_basic(self):
         response = self.client.get(self.url)
@@ -83,13 +83,13 @@ class TestExperimentById(DataTestCase):
         self.assertEqual(response.json(), expected)
 
     def test_404(self):
-        response = self.client.get(reverse('v2-experiment-by-id', args=[99]))
+        response = self.client.get(reverse('v2-experiment-by-slug', args=[99]))
         assert response.status_code == 404
 
     def test_display(self):
         # Test that an experiment with display=False isn't returned.
         dataset = factories.DataSetFactory(display=False)
-        response = self.client.get(reverse('v2-experiment-by-id',
+        response = self.client.get(reverse('v2-experiment-by-slug',
                                            args=[dataset.id]))
         assert response.status_code == 404
 

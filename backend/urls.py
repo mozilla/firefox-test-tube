@@ -1,4 +1,4 @@
-from django.conf.urls import include, url
+from django.urls import include, path, re_path
 
 from .admin import admin_site
 from .api import views as api_views
@@ -7,19 +7,19 @@ from .views import IndexView
 
 urlpatterns = [
     # API v2
-    url(r'^v2/experiments/$',
-        api_views.experiments, name='v2-experiments'),
-    url(r'^v2/experiments/(?P<exp_id>\d+)/$',
-        api_views.experiment_by_id, name='v2-experiment-by-id'),
-    url(r'^v2/experiments/(?P<exp_id>\d+)/metrics/(?P<metric_id>\d+)/$',
-        api_views.metric_by_id, name='v2-metric-by-id'),
+    path('v2/experiments/',
+         api_views.experiments, name='v2-experiments'),
+    path('v2/experiments/<slug:exp_slug>/',
+         api_views.experiment_by_slug, name='v2-experiment-by-slug'),
+    path('v2/experiments/<int:exp_id>/metrics/<int:metric_id>/',
+         api_views.metric_by_id, name='v2-metric-by-id'),
 
     # Auth0
-    url(r'^accounts/', include('mozilla_django_oidc.urls')),
+    path('accounts/', include('mozilla_django_oidc.urls')),
 
     # Admin
-    url(r'^admin/', admin_site.urls),
+    path('admin/', admin_site.urls),
 
     # Send everything else to React
-    url(r'.*', IndexView.as_view(), name='index'),
+    re_path(r'.*', IndexView.as_view(), name='index'),
 ]
