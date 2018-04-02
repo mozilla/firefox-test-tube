@@ -3,7 +3,7 @@ jobs:
   build:
     environment:
     docker:
-      - image: python:3.6-alpine
+      - image: python:3.6-alpine@sha256:0f65c66115749270c8affffd7b164c91a0c756993b1f181d4c0870836b321d4b
         environment:
         - DATABASE_URL: postgresql://root:@localhost/circle_test?sslmode=disable
         - DEBUG: False
@@ -11,7 +11,7 @@ jobs:
         - OIDC_OP_DOMAIN: https://auth.mozilla.auth0.com
         - OIDC_RP_CLIENT_ID: test
         - OIDC_RP_CLIENT_SECRET: test
-      - image: circleci/postgres:9.5
+      - image: circleci/postgres:9.5@sha256:db5c4d71826f7713abc0dff381861e99aa1f4de67cbbd9824393947ad236b81f
         environment:
         - POSTGRES_USER: root
         - POSTGRES_DB: circle_test
