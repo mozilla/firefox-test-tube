@@ -28,4 +28,4 @@ services:
       - DJANGO_SETTINGS_MODULE=backend.settings.local
 
   db:
-    image: postgres:9.5
+    image: postgres:9.5@sha256:888b62ebb1265a7df59258fa22227e707faa2b39d9abfe2a1d6f9e3cd5936468
