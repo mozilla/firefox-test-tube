@@ -25,15 +25,15 @@ you have a Git remote named "prod" which tracks the moz-experiments-viewer
 Heroku app.
 
 1. Download a new backup of the production Experiments Viewer site.
-    a. Navigate to your local clone of the experiments-viewer project
-    b. Run `heroku pg:backups:capture --remote prod`
-    c. Run `heroku pg:backups:download --remote prod -o latest.dump b001` (where
+    1. Navigate to your local clone of the experiments-viewer project
+    2. Run `heroku pg:backups:capture --remote prod`
+    3. Run `heroku pg:backups:download --remote prod -o latest.dump b001` (where
     `b001` is the identifier that appeared in the previous command)
 2. Move *latest.dump* from your clone of experiments-viewer to your clone of
    firefox-test-tube.
 3. Import the database
-    a. Run `make shell`
-    b. Run `pg_restore -h db -U postgres -d postgres --clean latest.dump`
+    1. Run `make shell`
+    2. Run `pg_restore -h db -U postgres -d postgres --clean latest.dump`
 
 ## Front-end dependency management
 
