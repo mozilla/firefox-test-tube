@@ -18,6 +18,7 @@ class DataTestCase(TestCase):
         def collections_and_points(metric, **kwargs):
             coll = factories.CollectionFactory(metric=metric, **kwargs)
             factories.PointFactory.create_batch(3, collection=coll)
+            factories.StatsFactory(metric=metric, **kwargs)
             return coll
 
         def create_collections(dataset, population, flag_metric, count_metric,

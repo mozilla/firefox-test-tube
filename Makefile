@@ -1,5 +1,7 @@
 .PHONY: build clean migrate shell stop test test-backend test-frontend up
 
+HOSTUSER := $(shell id -u):$(shell id -g)
+
 help:
 	@echo "The list of commands for local development:\n"
 	@echo "  build         Builds the docker images for the docker-compose setup"
@@ -20,22 +22,22 @@ clean: stop
 	rm -rf coverage/ .coverage
 
 migrate:
-	docker-compose run server python manage.py migrate --run-syncdb
+	docker-compose run -u ${HOSTUSER} server python manage.py migrate --run-syncdb
 
 shell:
-	docker-compose run server bash
+	docker-compose run -u ${HOSTUSER} server bash
 
 stop:
 	docker-compose stop
 
 test:
-	docker-compose run server test
+	docker-compose run -u ${HOSTUSER} server test
 
 test-backend:
-	docker-compose run server test backend
+	docker-compose run -u ${HOSTUSER} server test backend
 
 test-frontend:
-	docker-compose run server test frontend
+	docker-compose run -u ${HOSTUSER} server test frontend
 
 up:
 	docker-compose up

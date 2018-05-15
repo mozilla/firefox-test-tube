@@ -106,6 +106,14 @@ class TestMetricById(DataTestCase):
 
     def test_basic(self):
         response = self.client.get(self.url)
+        stats = {
+            'mean': {
+                'value': 10.0,
+                'confidence_low': 9.9,
+                'confidence_high': 11.1,
+                'confidence_level': 0.01,
+            }
+        }
         expected = {
             'id': self.flag_metric.id,
             'name': self.flag_metric.name,
@@ -119,7 +127,8 @@ class TestMetricById(DataTestCase):
                     {'x': '1', 'y': 0.9, 'count': 12600},
                     {'x': '10', 'y': 0.07, 'count': 980},
                     {'x': '100', 'y': 0.03, 'count': 420},
-                ]
+                ],
+                'stats': stats,
             }, {
                 'name': 'control',
                 'n': 12345,
@@ -127,7 +136,8 @@ class TestMetricById(DataTestCase):
                     {'x': '1', 'y': 0.9, 'count': 12600},
                     {'x': '10', 'y': 0.07, 'count': 980},
                     {'x': '100', 'y': 0.03, 'count': 420},
-                ]
+                ],
+                'stats': stats,
             }]
         }
         self.assertEqual(response.json(), expected)
