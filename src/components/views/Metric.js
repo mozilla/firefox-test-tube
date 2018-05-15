@@ -4,7 +4,6 @@ import { Icon } from 'react-fa';
 
 import ChartContainer from '../containers/ChartContainer';
 import OverlayContainer from '../containers/OverlayContainer';
-import ChartColors from '../../lib/ChartColors';
 import URLManager from '../../lib/URLManager';
 
 import './css/Metric.css';
@@ -17,8 +16,8 @@ export default withRouter(props => {
         let pairs = [];
 
         Object.keys(nValues).forEach((populationName, i) => {
-            let itemColor = {backgroundColor: `rgb(${ChartColors[i].r}, ${ChartColors[i].g}, ${ChartColors[i].b})`};
-            let borderColor = {border: `1px solid rgb(${ChartColors[i].r}, ${ChartColors[i].g}, ${ChartColors[i].b})`};
+            let itemColor = {backgroundColor: `rgb(${props.populationColors[i][0]}, ${props.populationColors[i][1]}, ${props.populationColors[i][2]})`};
+            let borderColor = {border: `1px solid rgb(${props.populationColors[i][0]}, ${props.populationColors[i][1]}, ${props.populationColors[i][2]})`};
 
             pairs.push(
                 <div key={populationName}>
@@ -37,7 +36,10 @@ export default withRouter(props => {
     if (props.asOverlay) {
         return (
             <OverlayContainer title={props.name} onClose={() => um.removeQueryParameter('chart')}>
-                <ChartContainer {...props} />
+                <ChartContainer
+                    {...props}
+                    populationColors={props.populationColors}
+                />
             </OverlayContainer>
         );
     } else {
@@ -64,7 +66,10 @@ export default withRouter(props => {
                     {buildNValuesDL(props.nValues)}
                 </section>
                 {maybeDescription}
-                <ChartContainer {...props} />
+                <ChartContainer
+                    {...props}
+                    populationColors={props.populationColors}
+                />
             </section>
         );
     }

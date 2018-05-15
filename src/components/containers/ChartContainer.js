@@ -2,7 +2,6 @@ import React from 'react';
 
 import Chart from '../views/Chart';
 import Error from '../views/Error';
-import ChartColors from '../../lib/ChartColors';
 
 
 export default class extends React.Component {
@@ -101,7 +100,7 @@ export default class extends React.Component {
         };
 
         data.populations.forEach((population, index) => {
-            const thisColor = ChartColors[index];
+            const thisPopulationColor = this.props.populationColors[index];
             const resultData = [];
 
             // Sort by x-axis value
@@ -126,11 +125,11 @@ export default class extends React.Component {
                 fill: false,
 
                 // Line color
-                borderColor: `rgba(${thisColor.r}, ${thisColor.g}, ${thisColor.b}, .5)`,
+                borderColor: `rgba(${thisPopulationColor[0]}, ${thisPopulationColor[1]}, ${thisPopulationColor[2]}, .5)`,
 
                 // Color of this dataset's box in the legend and also the dots
                 // in the corresponding line
-                backgroundColor: `rgb(${thisColor.r}, ${thisColor.g}, ${thisColor.b})`,
+                backgroundColor: `rgb(${thisPopulationColor[0]}, ${thisPopulationColor[1]}, ${thisPopulationColor[2]})`,
 
                 // Don't show a border for this dataset's box in the legend
                 borderWidth: 0,
@@ -161,11 +160,11 @@ export default class extends React.Component {
         }
 
         data.populations.forEach((population, index) => {
-            const thisColor = ChartColors[index];
+            const thisPopulationColor = this.props.populationColors[index];
 
             const newDataset = {
                 label: population.name,
-                backgroundColor: `rgb(${thisColor.r}, ${thisColor.g}, ${thisColor.b})`,
+                backgroundColor: `rgb(${thisPopulationColor[0]}, ${thisPopulationColor[1]}, ${thisPopulationColor[2]})`,
             };
 
             if (isLineType) {

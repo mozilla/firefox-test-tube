@@ -5,12 +5,21 @@ import MetricContainer from '../containers/MetricContainer';
 import Paginator from './Paginator';
 import Switch from './Switch';
 import SearchBox from './SearchBox';
+import { getDistinctColors } from '../../lib/utils';
 
 import './css/Experiment.css';
 
 export default class extends React.Component {
     constructor(props) {
         super(props);
+
+        // Generate distinct population colors once per experiment and pass them
+        // down to other components as needed. This has two advantages. First,
+        // generating distinct colors can be resource-intensive. It's better to
+        // do it only once. Second, generating colors here ensures that all
+        // metrics in a given experiment use exactly the same colors, even if
+        // some metrics have more populations than others.
+        this.populationColors = getDistinctColors(Object.keys(props.populations).length);
 
         this.state = {
             showOutliers: props.showOutliers,
@@ -66,6 +75,7 @@ export default class extends React.Component {
                   experimentId={this.props.id}
                   id={this.props.selectedMetricId}
                   asOverlay={true}
+                  populationColors={this.populationColors}
               />
             );
         }
@@ -149,6 +159,7 @@ export default class extends React.Component {
                                 experimentId={this.props.id}
                                 id={id}
                                 showOutliers={this.state.showOutliers}
+                                populationColors={this.populationColors}
                             />
                         ))}
                     </section>
