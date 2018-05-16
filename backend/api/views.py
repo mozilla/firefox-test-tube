@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 
-from .models import Collection, DataSet, Metric
+from .models import Collection, DataSet, Metric, Stats
 
 
 @api_view(['GET'])
@@ -51,6 +51,16 @@ def metric_by_id(request, exp_id, metric_id):
     pops = Collection.objects.filter(dataset=exp_id,
                                      metric=metric_id,
                                      subgroup='All').order_by('population')
+    stats = {}
+    for s in Stats.objects.filter(dataset=exp_id, metric=metric_id):
+        stats[s.population] = {
+            'mean': {
+                'value': s.value,
+                'confidence_low': s.confidence_low,
+                'confidence_high': s.confidence_high,
+                'confidence_level': s.confidence_level,
+            }
+        }
 
     populations = []
     for p in pops:
@@ -62,7 +72,8 @@ def metric_by_id(request, exp_id, metric_id):
                     dict(x=d.bucket,
                          y=round(d.proportion, 16),
                          count=d.count) for d in p.hdr()
-                ]
+                ],
+                'stats': stats.get(p.population),
             })
         else:
             populations.append({
@@ -71,7 +82,8 @@ def metric_by_id(request, exp_id, metric_id):
                 'data': [
                     dict(x=d.bucket,
                          y=round(d.proportion, 16),
-                         count=d.count) for d in p.points()]
+                         count=d.count) for d in p.points()],
+                'stats': stats.get(p.population),
             })
 
     data = {

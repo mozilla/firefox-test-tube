@@ -61,7 +61,10 @@ class StatsFactory(factory.django.DjangoModelFactory):
     population = factory.Sequence(lambda n: 'Group %s' % n)
     subgroup = 'All'
     key = factory.Sequence(lambda n: 'key-%s' % n)
-    value = factory.Iterator([1, 10, 100, 1000])
+    value = 10.0
+    confidence_low = 9.9
+    confidence_high = 11.1
+    confidence_level = 0.01
 
     class Meta:
         model = models.Stats

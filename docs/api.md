@@ -88,6 +88,14 @@ Example output:
         },
         ...
       ],
+      "stats": {
+        "mean": {
+          "value": 18.8009518296997,
+          "confidence_low": 10.8968692052197,
+          "confidence_high": 26.7048498397542,
+          "confidence_level": 0.01
+        }
+      }
     },
     {
       "data": [
@@ -105,6 +113,14 @@ Example output:
         },
         ...
       ],
+      "stats": {
+        "mean": {
+          "value": 25.102458124864,
+          "confidence_low": 9.5981952612705,
+          "confidence_high": 40.6056987459798,
+          "confidence_level": 0.01
+        }
+      }
     }
   ],
   "units": {
