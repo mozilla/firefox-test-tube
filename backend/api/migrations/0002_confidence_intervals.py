@@ -28,6 +28,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='stats',
             name='value',
-            field=models.FloatField(blank=True, null=True),
+            field=models.FloatField(),
         ),
     ]
