@@ -1,6 +1,8 @@
 import React from 'react';
-import { Scatter as ScatterChart, Bar as BarChart } from 'react-chartjs-2';
+import { Scatter as ScatterChart, Bar as BarChart, Chart } from 'react-chartjs-2';
+import annotationPlugin from 'chartjs-plugin-annotation';
 
+Chart.pluginService.register(annotationPlugin);
 
 /**
  * We use ordinal x-axis labeling for all line charts. The data points are
@@ -78,6 +80,30 @@ export default props => {
                             },
                         }],
                     },
+                    annotation: {
+                        annotations: [
+                            {
+                                drawTime: 'afterDraw', // overrides annotation.drawTime if set
+                                //id: 'a-line-1', // optional
+                                type: 'line',
+                                mode: 'horizontal',
+                                scaleID: 'y-axis-0',
+                                value: 10,
+                                borderColor: 'red',
+                                borderWidth: 2
+                            },
+                            {
+                                drawTime: 'afterDraw', // overrides annotation.drawTime if set
+                                //id: 'a-line-1', // optional
+                                type: 'line',
+                                mode: 'vertical',
+                                scaleID: 'x-axis-0',
+                                value: 25,
+                                borderColor: 'black',
+                                borderWidth: 2
+                            }
+                        ]
+                    }
                 }}
             />
         );
