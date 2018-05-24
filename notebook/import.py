@@ -11,7 +11,8 @@ from pyspark.sql import SparkSession
 
 
 BUCKET = environ.get('bucket', 'telemetry-parquet')
-DB = environ.get('db', 'experiments-viewer-db')
+# Note: For staging use 'test-tube-staging-db'.
+DB = environ.get('db', 'test-tube-db')
 PATH = 's3://%s/experiments_aggregates/v1/' % BUCKET
 NORMANDY_URL = 'https://normandy.services.mozilla.com/api/v1/recipe/'
 LOG_LEVEL = logging.INFO  # Change to incr/decr logging output.
