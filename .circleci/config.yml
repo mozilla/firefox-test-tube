@@ -1,28 +1,17 @@
 version: 2
 jobs:
   build:
-    environment:
     docker:
-      - image: python:3.6-alpine
-        environment:
-        - DATABASE_URL: postgresql://root:@localhost/circle_test?sslmode=disable
-        - DEBUG: False
-        - DJANGO_SETTINGS_MODULE: backend.settings.local
-        - OIDC_OP_DOMAIN: https://auth.mozilla.auth0.com
-        - OIDC_RP_CLIENT_ID: test
-        - OIDC_RP_CLIENT_SECRET: test
-      - image: circleci/postgres:9.5
-        environment:
-        - POSTGRES_USER: root
-        - POSTGRES_DB: circle_test
+      - image: docker/compose:1.21.2
     steps:
+      - setup_remote_docker
+
       - checkout
-      - run:
-          name: Install system dependencies
-          command: apk --no-cache add build-base bash curl openssl-dev libffi-dev py-cffi postgresql-client postgresql-dev
-      - run:
-          name: Install Python libraries
-          command: pip install -U pip && pip install -r requirements.txt
-      - run: flake8 backend
-      - run: coverage run ./manage.py test
-      - run: coverage xml && curl -s https://codecov.io/bash | bash -
+
+      # Copy an empty .env file since it is referenced in the docker-compose file.
+      - run: cp backend.env.dist backend.env
+
+      - run: docker-compose run app flake8 backend
+
+      # TODO: Add code coverage.
+      - run: docker-compose run app python manage.py test

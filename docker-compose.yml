@@ -1,20 +1,11 @@
-version: '3'
+version: '2'
 
 services:
-  server:
+  base:
     build:
       context: .
       dockerfile: Dockerfile
-    depends_on:
-      - db
-    ports:
-      - "8000:8000"
     user: app
-    volumes:
-      - .:/app
-    command: dev
-    links:
-      - db
     env_file:
       - backend.env
     environment:
@@ -26,6 +17,29 @@ services:
       - DJANGO_LOG_LEVEL=DEBUG
       - DJANGO_LOG_FORMAT=json
       - DJANGO_SETTINGS_MODULE=backend.settings.local
+
+  # This `app` service is used for testing with no volumes mounted.
+  app:
+    extends:
+      service: base
+    depends_on:
+      - db
+    links:
+      - db
+    command: "true"
+
+  server:
+    extends:
+      service: base
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    links:
+      - db
+    command: dev
 
   db:
     image: postgres:9.5.12
