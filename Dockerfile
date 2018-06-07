@@ -1,49 +1,43 @@
-FROM python:3.6.5-alpine
+FROM python:3.6-slim
 
 EXPOSE 8000
 
+RUN mkdir /app && \
+    chown 10001:10001 /app && \
+    groupadd --gid 10001 app && \
+    useradd --no-create-home --uid 10001 --gid 10001 --home-dir /app app
+
+# Install a few essentials and clean apt caches afterwards.
+RUN mkdir -p \
+        /usr/share/man/man1 \
+        /usr/share/man/man2 \
+        /usr/share/man/man3 \
+        /usr/share/man/man4 \
+        /usr/share/man/man5 \
+        /usr/share/man/man6 \
+        /usr/share/man/man7 \
+        /usr/share/man/man8 && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+        apt-transport-https build-essential curl git libpq-dev \
+        postgresql-client libffi-dev  && \
+    apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 WORKDIR /app
-
-
-RUN addgroup -g 10001 app && \
-    adduser -D -u 10001 -G app -h /app -s /sbin/nologin app
-
-RUN apk --no-cache add \
-    build-base \
-    bash \
-    curl \
-    git \
-    openssl-dev \
-    libffi-dev \
-    py-cffi \
-    postgresql \
-    postgresql-dev \
-    postgresql-client \
-    nodejs
-
 COPY requirements.txt /app/requirements.txt
 RUN pip install -U pip && \
     pip install -r requirements.txt
 # TODO: --require-hashes
 
-#COPY package.json /app/package.json
-#RUN npm install
-
-# Clean up some build packages after we're done with Python.
-RUN apk del --purge build-base gcc
-
 # Copy in the whole app after dependencies have been installed & cached.
 COPY . /app
 
-# Collect the static assets together, with placeholder env vars.
-#RUN SECRET_KEY=foo DEBUG=False ALLOWED_HOSTS=localhost \
-#    DATABASE_URL=postgres://postgres@db/postgres \
-#    ./manage.py collectstatic --noinput
-
-RUN chown -R app:app /app
+RUN chown -R 10001:10001 /app
 
 # De-escalate from root privileges with app user.
-USER app
+USER 10001
 
 ENTRYPOINT ["/bin/bash", "/app/bin/run"]
 CMD ["dev"]
