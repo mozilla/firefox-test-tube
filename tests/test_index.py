@@ -32,7 +32,7 @@ class TestIndex(TestCase):
         output.close()
 
     @mock.patch('builtins.open', create=True)
-    def test_missing_yarn_build_files(self, mock_open):
+    def test_missing_npm_build_files(self, mock_open):
         self.client.login(username='testuser', password='password')
         mock_open.side_effect = FileNotFoundError()
 

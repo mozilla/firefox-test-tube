@@ -11,7 +11,7 @@ class IndexView(LoginRequiredMixin, View):
     """
     Serves the compiled frontend entry point.
 
-    Note: Heroku should run `yarn run build` during deployment for this to be
+    Note: Heroku should run `npm run build` during deployment for this to be
     in place.
 
     """
@@ -26,7 +26,7 @@ class IndexView(LoginRequiredMixin, View):
                 """
                 This URL is only used when you have built the production
                 version of the app. Visit http://localhost:3000/ instead, or
-                run `yarn run build` to test the production version.
+                run `npm run build` to test the production version.
                 """,
                 status=501,
             )

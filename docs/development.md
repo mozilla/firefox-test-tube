@@ -1,14 +1,17 @@
 # Install and build
 
-1. Install yarn globally (`npm install --global yarn` or `brew install yarn`,
-   for example)
-2. From the project root, run `yarn`
-3. From the project root, run `make build`
+1. [Install Node and NPM](https://nodejs.org/en/download/)
+2. From the project root, run `npm install`
+3. From the project root, run `npm run build`
 
 # Run
 
 1. From the project root, run `docker-compose up`
-2. In another terminal, also from the project root, run `yarn start`
+2. In another terminal, also from the project root, run `npm start`
+
+# Test
+
+`npm test`
 
 # Working with Test Tube
 
@@ -34,16 +37,6 @@ Heroku app.
 3. Import the database
     1. Run `make shell`
     2. Run `pg_restore -h db -U postgres -d postgres --clean latest.dump`
-
-## Front-end dependency management
-
-### Add a dependency
-
-Run `yarn add example-package-name`
-
-### Remove a dependency
-
-Run `yarn remove example-package-name`
 
 ## Use Test Tube outside of Mozilla
 
