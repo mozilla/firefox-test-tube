@@ -2,6 +2,7 @@ import React from 'react';
 
 import Chart from '../views/Chart';
 import Error from '../views/Error';
+import { precisionRound } from '../../lib/utils';
 
 
 export default class extends React.Component {
@@ -17,7 +18,70 @@ export default class extends React.Component {
 
             this.dataPack = this._createDataPack(props.unformattedData, this.chartType);
         }
+
+        this.annotations = [];
+
+        let dataToShow = {};
+        if (this.dataPack.trimmed && props.showOutliers === false) {
+            dataToShow = this.dataPack.trimmed;
+        } else {
+            dataToShow = this.dataPack.all;
+        }
+
+        /**
+         * Return the index/bucket location of the actual value.
+         * This is needed since we're using a custom X scale in order to spread the values.
+         * Example: getBucketValue(546, pop) => 13 if this value is found at index 13.
+         */
+        function getBucketValue(val, population) {
+            for (let i = 0; i < population.length; i++) {
+                if (val > population[i].xActualValue && val < population[i + 1].xActualValue) {
+                    return i;
+                }
+            }
+            return val;
+        }
+
+        props.unformattedData.populations.forEach((population, index) => {
+            const data = dataToShow.datasets[index].data;
+            const mean = population.stats.mean.value;
+            const high = population.stats.mean.confidence_high;
+            const low = population.stats.mean.confidence_low;
+            const confidence = (high - low) / 2;
+            const bucketMean = getBucketValue(mean, data);
+            const rgbColor = `${props.populationColors[index][0]}, ${props.populationColors[index][1]}, ${props.populationColors[index][2]}`;
+
+            this.annotations.push({
+                type: 'line',
+                mode: 'vertical',
+                scaleID: 'x-axis-0',
+                borderColor: `rgba(${rgbColor}, .5)`,
+                borderWidth: 1,
+                value: bucketMean,
+            });
+            this.annotations.push({
+                type: 'box',
+                // TODO: The constant below is an arbitrary interval shortener.
+                xMin: bucketMean - (confidence / 5),
+                xMax: bucketMean + (confidence / 5),
+                yMin: 0,
+                yMax: 100,
+                xScaleID: 'x-axis-0',
+                yScaleID: 'y-axis-0',
+                backgroundColor: `rgba(${rgbColor}, .2)`,
+                borderColor: 'transparent',
+                onMouseenter: e => {
+                    const infoElm = document.getElementById(`population-info-${props.id}`);
+                    infoElm.classList.add('show');
+                    infoElm.style.color = `rgba(${rgbColor}, 1)`;
+                    infoElm.querySelector('.label').innerHTML = dataToShow.datasets[index].label;
+                    infoElm.querySelector('.mean').innerHTML = precisionRound(mean, 1);
+                    infoElm.querySelector('.confidence').innerHTML = precisionRound(confidence, 1);
+                }
+            });
+        });
     }
+
 
     /**
      * Return a "data pack". A data pack is an object of data formatted for use
@@ -222,7 +286,7 @@ export default class extends React.Component {
         if (this.chartType === 'unsupported') {
             return <Error message={`Unsupported metric type: ${this.props.type}`} showPageTitle={false} />;
         } else {
-            let dataToShow;
+            let dataToShow = {};
             if (this.dataPack.trimmed && this.props.showOutliers === false) {
                 dataToShow = this.dataPack.trimmed;
             } else {
@@ -239,6 +303,7 @@ export default class extends React.Component {
 
                     chartType={this.chartType}
                     data={dataToShow}
+                    annotations={this.annotations}
                 />
             );
         }

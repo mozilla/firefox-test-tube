@@ -110,3 +110,10 @@ export function getDistinctColors(numColors) {
 
     return distinctColors;
 }
+
+
+// Stolen from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round
+export function precisionRound(number, precision) {
+  const factor = Math.pow(10, precision);
+  return Math.round(number * factor) / factor;
+}
