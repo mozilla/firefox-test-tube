@@ -10,7 +10,7 @@
     "start:js": "react-scripts start",
     "watch:css": "stylus --watch --sourcemap src/components/views/styl/* --out ./src/components/views/css/",
     "eject": "react-scripts eject",
-    "test": "react-scripts test --env=jsdom",
+    "posttest": "npm audit",
     "postinstall": "npm run build"
   },
   "dependencies": {
