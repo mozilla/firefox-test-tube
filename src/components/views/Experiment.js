@@ -75,6 +75,7 @@ export default class extends React.Component {
                   experimentId={this.props.id}
                   id={this.props.selectedMetricId}
                   asOverlay={true}
+                  showOutliers={this.state.showOutliers}
                   populationColors={this.populationColors}
               />
             );
