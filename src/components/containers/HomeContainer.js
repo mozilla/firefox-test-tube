@@ -21,5 +21,5 @@ const HomeContainer = props => {
 };
 
 export default connect(() => ({
-    experimentsFetch: { url: `${process.env.REACT_APP_API_URL}/experiments/`, refreshInterval: Number(process.env.REACT_APP_REFRESH_INTERVAL) },
+    experimentsFetch: `${process.env.REACT_APP_API_URL}/experiments/`,
 }))(HomeContainer);

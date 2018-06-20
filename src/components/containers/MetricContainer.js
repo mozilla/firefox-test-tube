@@ -50,5 +50,5 @@ class MetricContainer extends React.Component {
 }
 
 export default connect(props => ({
-    metricFetch: { url: `${process.env.REACT_APP_API_URL}/experiments/${props.experimentId}/metrics/${props.id}/`, refreshInterval: Number(process.env.REACT_APP_REFRESH_INTERVAL) },
+    metricFetch:`${process.env.REACT_APP_API_URL}/experiments/${props.experimentId}/metrics/${props.id}/`,
 }))(MetricContainer);
