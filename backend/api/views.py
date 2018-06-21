@@ -96,3 +96,11 @@ def metric_by_id(request, exp_id, metric_id):
     }
 
     return Response(data)
+
+
+@api_view(['POST'])
+def uptake(request):
+    """
+    Take a JSON payload from telemetry streaming to record experiment uptake.
+    """
+    return Response('ok')

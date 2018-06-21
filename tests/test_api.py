@@ -207,3 +207,17 @@ class TestScalarMetric(TestCase):
         self.assertEqual(points[28],
                          {'x': 40, 'count': 1,
                           'y': round(1 / 3053.0, 16)})
+
+
+class TestUptakeApi(TestCase):
+
+    def setUp(self):
+        self.url = reverse('v2-uptake')
+
+    def test_verbs(self):
+        for v in ('get', 'put', 'delete', 'patch'):
+            response = getattr(self.client, v)(self.url)
+            self.assertEqual(response.status_code, 405)
+
+        response = self.client.post(self.url)
+        self.assertEqual(response.status_code, 200)
