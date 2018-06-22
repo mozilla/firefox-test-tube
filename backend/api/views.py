@@ -2,8 +2,9 @@ import datetime
 
 from django.db.models import F
 from django.utils import timezone
+from rest_framework import status
 from rest_framework.decorators import api_view
-from rest_framework.exceptions import NotFound, ValidationError
+from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 
 from .models import Collection, DataSet, Metric, Stats, Enrollment
@@ -108,12 +109,15 @@ def enrollment(request):
     """
     payload = request.data.get('enrollment')
     if not payload or not isinstance(payload, list):
-        raise ValidationError
+        return Response('No data', status=status.HTTP_204_NO_CONTENT)
 
     # Note: The telemetry-streaming job currently only sends 1 item in each
     # payload, but may change this in the future. If it does, consider using
     # `bulk_create` here.
     for data in payload:
+        if not data:
+            continue
+
         window_start = timezone.make_aware(
             datetime.datetime.fromtimestamp(data['window_start'] / 1000))
         window_end = timezone.make_aware(

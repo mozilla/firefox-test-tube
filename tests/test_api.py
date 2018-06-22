@@ -239,7 +239,7 @@ class TestEnrollmentApi(TestCase):
             self.assertEqual(response.status_code, 405)
 
         response = self.client.post(self.url)
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 204)
 
     def test_recording(self):
         response = self.client.post(self.url, json.dumps(self.payload),
