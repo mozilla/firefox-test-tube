@@ -13,7 +13,7 @@ urlpatterns = [
          api_views.experiment_by_slug, name='v2-experiment-by-slug'),
     path('v2/experiments/<int:exp_id>/metrics/<int:metric_id>/',
          api_views.metric_by_id, name='v2-metric-by-id'),
-    path('v2/uptake/', api_views.uptake, name='v2-uptake'),
+    path('v2/enrollment/', api_views.enrollment, name='v2-enrollment'),
 
     # Auth0
     path('accounts/', include('mozilla_django_oidc.urls')),

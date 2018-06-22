@@ -171,3 +171,13 @@ class Stats(models.Model):
     confidence_low = models.FloatField(blank=True, null=True)
     confidence_high = models.FloatField(blank=True, null=True)
     confidence_level = models.FloatField(blank=True, null=True)
+
+
+class Enrollment(models.Model):
+    type = models.CharField(max_length=100)
+    experiment = models.CharField(max_length=255)
+    branch = models.CharField(max_length=255, blank=True, null=True)
+    window_start = models.DateTimeField()
+    window_end = models.DateTimeField()
+    enroll_count = models.IntegerField()
+    unenroll_count = models.IntegerField()
