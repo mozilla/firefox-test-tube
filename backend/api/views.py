@@ -1,9 +1,12 @@
+import datetime
+
 from django.db.models import F
+from django.utils import timezone
 from rest_framework.decorators import api_view
-from rest_framework.exceptions import NotFound
+from rest_framework.exceptions import NotFound, ValidationError
 from rest_framework.response import Response
 
-from .models import Collection, DataSet, Metric, Stats
+from .models import Collection, DataSet, Metric, Stats, Enrollment
 
 
 @api_view(['GET'])
@@ -99,8 +102,31 @@ def metric_by_id(request, exp_id, metric_id):
 
 
 @api_view(['POST'])
-def uptake(request):
+def enrollment(request):
     """
-    Take a JSON payload from telemetry streaming to record experiment uptake.
+    Take a JSON payload from telemetry streaming to record experiment enrollment.
     """
+    payload = request.data.get('enrollment')
+    if not payload or not isinstance(payload, list):
+        raise ValidationError
+
+    # Note: The telemetry-streaming job currently only sends 1 item in each
+    # payload, but may change this in the future. If it does, consider using
+    # `bulk_create` here.
+    for data in payload:
+        window_start = timezone.make_aware(
+            datetime.datetime.fromtimestamp(data['window_start'] / 1000))
+        window_end = timezone.make_aware(
+            datetime.datetime.fromtimestamp(data['window_end'] / 1000))
+
+        Enrollment.objects.create(
+            type=data['type'],
+            experiment=data['experiment_id'],
+            branch=data['branch_id'],
+            window_start=window_start,
+            window_end=window_end,
+            enroll_count=data['enroll_count'],
+            unenroll_count=data['unenroll_count'],
+        )
+
     return Response('ok')
