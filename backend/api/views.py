@@ -1,5 +1,6 @@
 import datetime
 
+from django.db import connection
 from django.db.models import F
 from django.utils import timezone
 from rest_framework import status
@@ -7,7 +8,7 @@ from rest_framework.decorators import api_view
 from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 
-from .models import Collection, DataSet, Metric, Stats, Enrollment
+from .models import Collection, DataSet, Enrollment, Metric, Stats
 
 
 @api_view(['GET'])
@@ -45,6 +46,54 @@ def experiment_by_slug(request, exp_slug):
         'subgroups': dataset.get_subgroups(),
         'metrics': dataset.get_metrics(),
     }
+    return Response(data)
+
+
+@api_view(['GET'])
+def experiment_populations(request, exp_slug):
+    enrollment = Enrollment.objects.filter(experiment=exp_slug).exists()
+    if not enrollment:
+        raise NotFound('No experiment with given slug found.')
+
+    branches = list(
+        Enrollment.objects.filter(experiment=exp_slug)
+                          .exclude(branch__isnull=True)
+                          .distinct('branch')
+                          .values_list('branch', flat=True)
+    )
+
+    # Raw SQL because we're using CTEs and WINDOW functions.
+    sql = """
+        WITH enroll_sums AS (
+          SELECT branch, window_start, enroll_count, unenroll_count,
+            SUM(enroll_count) OVER (PARTITION BY branch ORDER BY window_start) AS enrolls,
+            SUM(unenroll_count) OVER (PARTITION BY branch ORDER BY window_start) AS unenrolls
+          FROM api_enrollment
+          WHERE experiment=%s AND branch IS NOT NULL
+        )
+        SELECT
+          branch,
+          window_start,
+          enrolls - unenrolls AS population
+        FROM enroll_sums
+        WHERE window_start >= NOW() - INTERVAL '1 day'
+        ORDER BY branch, window_start ASC
+    """
+    with connection.cursor() as cursor:
+        cursor.execute(sql, [exp_slug])
+        rows = cursor.fetchall()
+
+    # Set up the data dictionary.
+    data = {'population': {}}
+    for branch in branches:
+        data['population'][branch] = []
+
+    for row in rows:
+        data['population'][row[0]].append({
+            'window': row[1].isoformat(),
+            'count': row[2]
+        })
+
     return Response(data)
 
 

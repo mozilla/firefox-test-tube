@@ -11,6 +11,8 @@ urlpatterns = [
          api_views.experiments, name='v2-experiments'),
     path('v2/experiments/<slug:exp_slug>/',
          api_views.experiment_by_slug, name='v2-experiment-by-slug'),
+    path('v2/experiments/<slug:exp_slug>/populations/',
+         api_views.experiment_populations, name='v2-experiment-populations'),
     path('v2/experiments/<int:exp_id>/metrics/<int:metric_id>/',
          api_views.metric_by_id, name='v2-metric-by-id'),
     path('v2/enrollment/', api_views.enrollment, name='v2-enrollment'),
