@@ -122,7 +122,7 @@ export default class extends React.Component {
                 />
             );
         }
-        console.log('slug is:', this.props.slug);
+
         return (
             <div>
                 <article id="experiment">
