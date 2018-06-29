@@ -4,6 +4,7 @@ import pytz
 
 from django.contrib.auth.models import User
 from django.test import TestCase
+from django.utils import timezone
 from rest_framework.reverse import reverse
 
 from backend.api import factories
@@ -214,7 +215,7 @@ class TestScalarMetric(TestCase):
                           'y': round(1 / 3053.0, 16)})
 
 
-class TestEnrollmentApi(TestCase):
+class TestEnrollmentIngestionApi(TestCase):
 
     def setUp(self):
         self.url = reverse('v2-enrollment')
@@ -267,3 +268,91 @@ class TestEnrollmentApi(TestCase):
 
         enroll = Enrollment.objects.get()
         self.assertEqual(enroll.branch, None)
+
+
+class TestEnrollmentPopulationApi(TestCase):
+
+    def setUp(self):
+        self.url = reverse('v2-experiment-populations', args=['pref-flip-1'])
+        self.create_data()
+
+    def create_data(self):
+        self.window1 = timezone.now()
+        self.window2 = self.window1 + datetime.timedelta(seconds=5)
+        self.window3 = self.window2 + datetime.timedelta(seconds=5)
+
+        Enrollment.objects.create(
+            type='preference_study',
+            experiment='pref-flip-1',
+            branch='control',
+            window_start=self.window1,
+            window_end=self.window2,
+            enroll_count=10,
+            unenroll_count=1
+        )
+        Enrollment.objects.create(
+            type='preference_study',
+            experiment='pref-flip-1',
+            branch='control',
+            window_start=self.window2,
+            window_end=self.window3,
+            enroll_count=20,
+            unenroll_count=2
+        )
+        Enrollment.objects.create(
+            type='preference_study',
+            experiment='pref-flip-1',
+            branch='variant',
+            window_start=self.window1,
+            window_end=self.window2,
+            enroll_count=10,
+            unenroll_count=5
+        )
+        Enrollment.objects.create(
+            type='preference_study',
+            experiment='pref-flip-1',
+            branch='variant',
+            window_start=self.window2,
+            window_end=self.window3,
+            enroll_count=20,
+            unenroll_count=10
+        )
+        # Create a random bit of data in a different experiment.
+        Enrollment.objects.create(
+            type='preference_study',
+            experiment='pref-flip-2',
+            branch='control',
+            window_start=self.window1,
+            window_end=self.window2,
+            enroll_count=99999,
+            unenroll_count=99
+        )
+
+    def test_response_data(self):
+
+        # Population for control should be 10 - 1 + 20 - 2 = 27.
+        # Population for variant should be 10 - 5 + 20 - 10 = 15.
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertDictEqual(
+            data['population']['control'][0],
+            {'window': self.window1.isoformat(), 'count': 9}
+        )
+        self.assertEqual(
+            data['population']['control'][1],
+            {'window': self.window2.isoformat(), 'count': 27}
+        )
+        self.assertEqual(
+            data['population']['variant'][0],
+            {'window': self.window1.isoformat(), 'count': 5}
+        )
+        self.assertEqual(
+            data['population']['variant'][1],
+            {'window': self.window2.isoformat(), 'count': 15}
+        )
+
+    def test_404(self):
+        response = self.client.get(
+            reverse('v2-experiment-populations', args=['foo']))
+        self.assertEqual(response.status_code, 404)
