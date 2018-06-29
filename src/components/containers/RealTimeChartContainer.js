@@ -19,20 +19,20 @@ class RealTimeChartContainer extends React.Component {
 
     render() {
         const experimentFetch = this.props.experimentFetch;
-        const data = [];
-
-        Object.keys(experimentFetch.value.population).forEach(cohort => {
-            data.push(experimentFetch.value.population[cohort].map(item => {
-                return {window: new Date(item.window), count: item.count};
-            }));
-        });
-
 
         if (experimentFetch.pending) {
             return <Loading />;
         } else if (experimentFetch.rejected) {
             return <Error message={experimentFetch.reason.message} />;
         } else if (experimentFetch.fulfilled) {
+            const data = [];
+
+            Object.keys(experimentFetch.value.population).forEach(cohort => {
+                data.push(experimentFetch.value.population[cohort].map(item => {
+                    return {window: new Date(item.window), count: item.count};
+                }));
+            });
+
             return (
                 <MetricsGraphics
                     data={data}
