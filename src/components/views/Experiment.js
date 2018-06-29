@@ -6,6 +6,7 @@ import Paginator from './Paginator';
 import Switch from './Switch';
 import SearchBox from './SearchBox';
 import { getDistinctColors } from '../../lib/utils';
+import RealTimeChartContainer from '../containers/RealTimeChartContainer';
 
 import './css/Experiment.css';
 
@@ -121,27 +122,33 @@ export default class extends React.Component {
                 />
             );
         }
-
+        console.log('slug is:', this.props.slug);
         return (
             <div>
                 <article id="experiment">
                     <h2>{this.props.name || this.props.slug}</h2>
-                    <section id="experiment-details">
-                        <h3>Details</h3>
-                        {maybeDescription}
-                        <section id="experiment-counts">
-                            <h4>Counts</h4>
-                            <section id="experiment-client-counts">
-                                <h5>Clients</h5>
-                                {this.getCountDL(this.props.populations, 'total_clients')}
+                    <div className="experiment-info">
+                        <section id="experiment-details">
+                            <h3>Details</h3>
+                            {maybeDescription}
+                            <section id="experiment-counts">
+                                <h4>Counts</h4>
+                                <section id="experiment-client-counts">
+                                    <h5>Clients</h5>
+                                    {this.getCountDL(this.props.populations, 'total_clients')}
+                                </section>
+                                <section id="experiment-ping-counts">
+                                    <h5>Pings</h5>
+                                    {this.getCountDL(this.props.populations, 'total_pings')}
+                                </section>
                             </section>
-                            <section id="experiment-ping-counts">
-                                <h5>Pings</h5>
-                                {this.getCountDL(this.props.populations, 'total_pings')}
-                            </section>
+                            {maybeAuthors}
                         </section>
-                        {maybeAuthors}
-                    </section>
+                        <div className="realtime-chart">
+                            <h3 className="rt-chart-title">Population Size <span>updated every 5 minutes.</span></h3>
+                            <RealTimeChartContainer colors={this.populationColors} slug={this.props.slug} />
+                        </div>
+                    </div>
                     <aside id="experiment-options">
                         <h3>Options</h3>
                         <SearchBox onKeyUp={this.props.onSearch} />

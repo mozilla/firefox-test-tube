@@ -8,21 +8,24 @@
     a, a:visited {
         color: #00f;
         text-decoration: none;
-    }
-
-    thead {
-        border-bottom: 3px solid #ccc;
-    }
-
-    tbody tr {
-        border-bottom: 1px solid #ccc;
-
-        &:last-child {
-            border-bottom: 0;
-        }
+        padding: 0 10px;
     }
 
     .experiment-creation-date {
         width: 20%;
+    }
+
+    tr {
+        padding: 10px 0 9px;
+    }
+
+    tbody tr:nth-child(odd) {
+        background: linear-gradient(to right, rgba(150, 150, 150, 0.15), rgb(255, 255, 255));
+        border-bottom: 0.5px solid rgba(0, 0, 0, 0.25);
+    }
+
+    .experiment-links {
+        display: flex;
+        justify-content: space-between;
     }
 }

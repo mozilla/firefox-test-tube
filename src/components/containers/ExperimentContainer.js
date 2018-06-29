@@ -92,7 +92,7 @@ class ExperimentContainer extends React.Component {
                 <Experiment
                     id={experimentFetch.value.id}
                     name={experimentFetch.value.name}
-                    slug={experimentFetch.value.slug}
+                    slug={this.props.match.params.experimentSlug}
                     description={experimentFetch.value.description}
                     authors={experimentFetch.value.authors}
                     populations={experimentFetch.value.populations}
