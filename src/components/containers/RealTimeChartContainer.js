@@ -26,24 +26,33 @@ class RealTimeChartContainer extends React.Component {
             return <Error message={experimentFetch.reason.message} />;
         } else if (experimentFetch.fulfilled) {
             const data = [];
+            let emptyDataFound = false;
 
             Object.keys(experimentFetch.value.population).forEach(cohort => {
-                data.push(experimentFetch.value.population[cohort].map(item => {
-                    return {window: new Date(item.window), count: item.count};
-                }));
+                if (experimentFetch.value.population[cohort].length) {
+                    data.push(experimentFetch.value.population[cohort].map(item => {
+                        return {window: new Date(item.window), count: item.count};
+                    }));
+                } else {
+                    emptyDataFound = true;
+                }
             });
 
-            return (
-                <MetricsGraphics
-                    data={data}
-                    width={600}
-                    height={300}
-                    x_accessor="window"
-                    y_accessor="count"
-                    interpolate={d3Shape.curveLinear}
-                    colors={this.colors}
-                />
-            );
+            if (!emptyDataFound) {
+                return (
+                    <MetricsGraphics
+                        data={data}
+                        width={600}
+                        height={300}
+                        x_accessor="window"
+                        y_accessor="count"
+                        interpolate={d3Shape.curveLinear}
+                        colors={this.colors}
+                    />
+                );
+            } else {
+                return <Error message="Real-time population data returned was empty." />;
+            }
         }
     }
 }
