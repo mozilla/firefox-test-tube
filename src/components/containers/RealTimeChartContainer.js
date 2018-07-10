@@ -7,6 +7,8 @@ import Error from '../views/Error';
 import Loading from '../views/Loading';
 import * as d3Shape from 'd3-shape';
 
+import '../views/css/RealTimeChart.css';
+
 
 class RealTimeChartContainer extends React.Component {
     constructor(props) {
@@ -43,7 +45,8 @@ class RealTimeChartContainer extends React.Component {
                     <MetricsGraphics
                         data={data}
                         width={600}
-                        height={300}
+                        height={200}
+                        area={false}
                         x_accessor="window"
                         y_accessor="count"
                         interpolate={d3Shape.curveLinear}
