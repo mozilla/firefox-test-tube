@@ -145,7 +145,6 @@ export default class extends React.Component {
                             {maybeAuthors}
                         </section>
                         <div className="realtime-chart">
-                            <h3 className="rt-chart-title">Population Size <span>updated every 5 minutes.</span></h3>
                             <RealTimeChartContainer colors={this.populationColors} slug={this.props.slug} />
                         </div>
                     </div>

@@ -1,13 +1,9 @@
 import React from 'react';
 import { connect } from 'react-refetch';
-import MetricsGraphics from 'react-metrics-graphics';
-import 'metrics-graphics/dist/metricsgraphics.css';
+import Plot from 'react-plotly.js';
 
 import Error from '../views/Error';
 import Loading from '../views/Loading';
-import * as d3Shape from 'd3-shape';
-
-import '../views/css/RealTimeChart.css';
 
 
 class RealTimeChartContainer extends React.Component {
@@ -30,11 +26,16 @@ class RealTimeChartContainer extends React.Component {
             const data = [];
             let emptyDataFound = false;
 
-            Object.keys(experimentFetch.value.population).forEach(cohort => {
+            Object.keys(experimentFetch.value.population).forEach((cohort, i) => {
                 if (experimentFetch.value.population[cohort].length) {
-                    data.push(experimentFetch.value.population[cohort].map(item => {
-                        return {window: new Date(item.window), count: item.count};
-                    }));
+                    data.push({
+                        x: experimentFetch.value.population[cohort].map(item => new Date(item.window)),
+                        y: experimentFetch.value.population[cohort].map(item => item.count),
+                        type: 'scatter',
+                        mode: 'lines+points',
+                        name: cohort,
+                        line: {color: this.colors[i]}
+                    });
                 } else {
                     emptyDataFound = true;
                 }
@@ -42,15 +43,9 @@ class RealTimeChartContainer extends React.Component {
 
             if (!emptyDataFound) {
                 return (
-                    <MetricsGraphics
+                    <Plot
                         data={data}
-                        width={600}
-                        height={200}
-                        area={false}
-                        x_accessor="window"
-                        y_accessor="count"
-                        interpolate={d3Shape.curveLinear}
-                        colors={this.colors}
+                        layout={{width: 600, height: 250, yaxis: {showline: true}, title: 'Last 24h Population Size'}}
                     />
                 );
             } else {
