@@ -131,6 +131,39 @@ def experiment_enrolls(request, exp_slug):
 
 
 @api_view(['GET'])
+def experiment_unenrolls(request, exp_slug):
+    enrollment = Enrollment.objects.filter(experiment=exp_slug).exists()
+    if not enrollment:
+        raise NotFound('No experiment with given slug found.')
+
+    branches = list(
+        Enrollment.objects.filter(experiment=exp_slug)
+                          .exclude(branch__isnull=True)
+                          .distinct('branch')
+                          .values_list('branch', flat=True)
+    )
+
+    start_time = datetime.datetime.now() - datetime.timedelta(hours=24)
+    data = {'population': {}}
+    for branch in branches:
+        data['population'][branch] = []
+
+        enrolls = (
+            Enrollment.objects.filter(experiment=exp_slug,
+                                      branch=branch,
+                                      window_start__gte=start_time)
+                              .order_by('window_start')
+        )
+        for enroll in enrolls:
+            data['population'][enroll.branch].append({
+                'window': enroll.window_start.isoformat(),
+                'count': enroll.unenroll_count,
+            })
+
+    return Response(data)
+
+
+@api_view(['GET'])
 def metric_by_id(request, exp_id, metric_id):
     metric = Metric.objects.get(id=metric_id)
     # TODO: Add subgroups.

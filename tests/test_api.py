@@ -392,3 +392,36 @@ class TestEnrollmentCountsApi(EnrollmentBaseTestCase):
             data['population']['variant'][1],
             {'window': self.window2.isoformat(), 'count': 21}
         )
+
+
+class TestUnenrollmentCountsApi(EnrollmentBaseTestCase):
+
+    def setUp(self):
+        self.url = reverse('v2-experiment-unenrolls', args=['pref-flip-1'])
+        self.create_data()
+
+    def test_enrolls_404(self):
+        response = self.client.get(
+            reverse('v2-experiment-unenrolls', args=['foo']))
+        self.assertEqual(response.status_code, 404)
+
+    def test_unenrolls_api(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertDictEqual(
+            data['population']['control'][0],
+            {'window': self.window1.isoformat(), 'count': 1}
+        )
+        self.assertEqual(
+            data['population']['control'][1],
+            {'window': self.window2.isoformat(), 'count': 2}
+        )
+        self.assertEqual(
+            data['population']['variant'][0],
+            {'window': self.window1.isoformat(), 'count': 5}
+        )
+        self.assertEqual(
+            data['population']['variant'][1],
+            {'window': self.window2.isoformat(), 'count': 10}
+        )
