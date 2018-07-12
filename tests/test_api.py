@@ -230,7 +230,8 @@ class TestEnrollmentIngestionApi(TestCase):
                     'enroll_count': 7,
                     'unenroll_count': 2,
                     'submission_date_s3': '20180621',
-                }
+                },
+                {}  # Test this doesn't break ingestion.
             ]
         }
 
@@ -270,11 +271,7 @@ class TestEnrollmentIngestionApi(TestCase):
         self.assertEqual(enroll.branch, None)
 
 
-class TestEnrollmentPopulationApi(TestCase):
-
-    def setUp(self):
-        self.url = reverse('v2-experiment-populations', args=['pref-flip-1'])
-        self.create_data()
+class EnrollmentBaseTestCase(TestCase):
 
     def create_data(self):
         self.window1 = timezone.now()
@@ -305,7 +302,7 @@ class TestEnrollmentPopulationApi(TestCase):
             branch='variant',
             window_start=self.window1,
             window_end=self.window2,
-            enroll_count=10,
+            enroll_count=11,
             unenroll_count=5
         )
         Enrollment.objects.create(
@@ -314,7 +311,7 @@ class TestEnrollmentPopulationApi(TestCase):
             branch='variant',
             window_start=self.window2,
             window_end=self.window3,
-            enroll_count=20,
+            enroll_count=21,
             unenroll_count=10
         )
         # Create a random bit of data in a different experiment.
@@ -328,10 +325,21 @@ class TestEnrollmentPopulationApi(TestCase):
             unenroll_count=99
         )
 
-    def test_response_data(self):
 
+class TestEnrollmentPopulationApi(EnrollmentBaseTestCase):
+
+    def setUp(self):
+        self.url = reverse('v2-experiment-populations', args=['pref-flip-1'])
+        self.create_data()
+
+    def test_population_404(self):
+        response = self.client.get(
+            reverse('v2-experiment-populations', args=['foo']))
+        self.assertEqual(response.status_code, 404)
+
+    def test_population_api(self):
         # Population for control should be 10 - 1 + 20 - 2 = 27.
-        # Population for variant should be 10 - 5 + 20 - 10 = 15.
+        # Population for variant should be 11 - 5 + 21 - 10 = 17.
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         data = response.json()
@@ -345,14 +353,42 @@ class TestEnrollmentPopulationApi(TestCase):
         )
         self.assertEqual(
             data['population']['variant'][0],
-            {'window': self.window1.isoformat(), 'count': 5}
+            {'window': self.window1.isoformat(), 'count': 6}
         )
         self.assertEqual(
             data['population']['variant'][1],
-            {'window': self.window2.isoformat(), 'count': 15}
+            {'window': self.window2.isoformat(), 'count': 17}
         )
 
-    def test_404(self):
+
+class TestEnrollmentCountsApi(EnrollmentBaseTestCase):
+
+    def setUp(self):
+        self.url = reverse('v2-experiment-enrolls', args=['pref-flip-1'])
+        self.create_data()
+
+    def test_enrolls_404(self):
         response = self.client.get(
-            reverse('v2-experiment-populations', args=['foo']))
+            reverse('v2-experiment-enrolls', args=['foo']))
         self.assertEqual(response.status_code, 404)
+
+    def test_enrolls_api(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertDictEqual(
+            data['population']['control'][0],
+            {'window': self.window1.isoformat(), 'count': 10}
+        )
+        self.assertEqual(
+            data['population']['control'][1],
+            {'window': self.window2.isoformat(), 'count': 20}
+        )
+        self.assertEqual(
+            data['population']['variant'][0],
+            {'window': self.window1.isoformat(), 'count': 11}
+        )
+        self.assertEqual(
+            data['population']['variant'][1],
+            {'window': self.window2.isoformat(), 'count': 21}
+        )

@@ -98,6 +98,39 @@ def experiment_populations(request, exp_slug):
 
 
 @api_view(['GET'])
+def experiment_enrolls(request, exp_slug):
+    enrollment = Enrollment.objects.filter(experiment=exp_slug).exists()
+    if not enrollment:
+        raise NotFound('No experiment with given slug found.')
+
+    branches = list(
+        Enrollment.objects.filter(experiment=exp_slug)
+                          .exclude(branch__isnull=True)
+                          .distinct('branch')
+                          .values_list('branch', flat=True)
+    )
+
+    start_time = datetime.datetime.now() - datetime.timedelta(hours=24)
+    data = {'population': {}}
+    for branch in branches:
+        data['population'][branch] = []
+
+        enrolls = (
+            Enrollment.objects.filter(experiment=exp_slug,
+                                      branch=branch,
+                                      window_start__gte=start_time)
+                              .order_by('window_start')
+        )
+        for enroll in enrolls:
+            data['population'][enroll.branch].append({
+                'window': enroll.window_start.isoformat(),
+                'count': enroll.enroll_count,
+            })
+
+    return Response(data)
+
+
+@api_view(['GET'])
 def metric_by_id(request, exp_id, metric_id):
     metric = Metric.objects.get(id=metric_id)
     # TODO: Add subgroups.
@@ -161,7 +194,7 @@ def enrollment(request):
         return Response('No data', status=status.HTTP_204_NO_CONTENT)
 
     # Note: The telemetry-streaming job currently only sends 1 item in each
-    # payload, but may change this in the future. If it does, consider using
+    # payload, but this may change in the future. If it does, consider using
     # `bulk_create` here.
     for data in payload:
         if not data:
