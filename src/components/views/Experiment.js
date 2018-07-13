@@ -29,10 +29,11 @@ export default class extends React.Component {
     getCountDL(populations, accessor) {
         const termGroups = [];
         let total = 0;
+        let i = 0;
 
         for (const populationName in populations) {
             if (populations.hasOwnProperty(populationName)) {
-
+                const color = `rgb(${this.populationColors[i][0]}, ${this.populationColors[i][1]}, ${this.populationColors[i++][2]})`;
                 const count = populations[populationName][accessor];
                 total += count;
 
@@ -40,7 +41,7 @@ export default class extends React.Component {
                 // it helps with styling.
                 // https://github.com/whatwg/html/pull/1945
                 termGroups.push(
-                    <div key={populationName}>
+                    <div key={populationName} style={{ color }}>
                         <dt>{populationName}</dt>
                         <dd>{count.toLocaleString('en-US')}</dd>
                     </div>

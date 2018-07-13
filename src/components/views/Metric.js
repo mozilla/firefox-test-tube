@@ -16,13 +16,12 @@ export default withRouter(props => {
         let pairs = [];
 
         Object.keys(nValues).forEach((populationName, i) => {
-            let itemColor = {backgroundColor: `rgb(${props.populationColors[i][0]}, ${props.populationColors[i][1]}, ${props.populationColors[i][2]})`};
-            let borderColor = {border: `1px solid rgb(${props.populationColors[i][0]}, ${props.populationColors[i][1]}, ${props.populationColors[i][2]})`};
+            let color = `rgb(${props.populationColors[i][0]}, ${props.populationColors[i][1]}, ${props.populationColors[i][2]})`;
 
             pairs.push(
                 <div key={populationName}>
-                    <dt style={itemColor}>{populationName}</dt>
-                    <dd style={borderColor}>
+                    <dt style={{backgroundColor: color}}>{populationName}</dt>
+                    <dd style={{border: `1px solid ${color}`, color}}>
                         {nValues[populationName].toLocaleString('en-US')} pings
                     </dd>
                 </div>
