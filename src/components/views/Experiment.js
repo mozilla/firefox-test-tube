@@ -127,24 +127,22 @@ export default class extends React.Component {
             <div>
                 <article id="experiment">
                     <h2>{this.props.name || this.props.slug}</h2>
-                    <div>
-                        <section id="experiment-details">
-                            <h3>Details</h3>
-                            {maybeDescription}
-                            <section id="experiment-counts">
-                                <h4>Counts</h4>
-                                <section id="experiment-client-counts">
-                                    <h5>Clients</h5>
-                                    {this.getCountDL(this.props.populations, 'total_clients')}
-                                </section>
-                                <section id="experiment-ping-counts">
-                                    <h5>Pings</h5>
-                                    {this.getCountDL(this.props.populations, 'total_pings')}
-                                </section>
+                    <section id="experiment-details">
+                        <h3>Details</h3>
+                        {maybeDescription}
+                        <section id="experiment-counts">
+                            <h4>Counts</h4>
+                            <section id="experiment-client-counts">
+                                <h5>Clients</h5>
+                                {this.getCountDL(this.props.populations, 'total_clients')}
                             </section>
-                            {maybeAuthors}
+                            <section id="experiment-ping-counts">
+                                <h5>Pings</h5>
+                                {this.getCountDL(this.props.populations, 'total_pings')}
+                            </section>
                         </section>
-                    </div>
+                        {maybeAuthors}
+                    </section>
                     <div className="realtime-charts">
                         <RealTimeChartContainer
                             colors={this.populationColors}
