@@ -10,7 +10,7 @@ export default props => {
     }
 
     return (
-        <section id="error">
+        <section className="error">
             {maybePageTitle}
             <p>{props.message}</p>
         </section>
