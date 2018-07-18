@@ -60,7 +60,7 @@ export default withRouter(props => {
 
                     <Icon className="chart-button" name="arrows-alt" title="Fullscreen" onClick={() => um.setQueryParameter('chart', props.id)} />
                 </div>
-                <section id="metric-details">
+                <section className="metric-details">
                     <h5>Details</h5>
                     {buildNValuesDL(props.nValues)}
                 </section>
