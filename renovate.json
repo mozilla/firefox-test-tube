@@ -5,5 +5,8 @@
     "schedule": ["before 5am on monday"],
     "docker": {
         "enabled": false
+    },
+    "python": {
+        "enabled": false
     }
 }
