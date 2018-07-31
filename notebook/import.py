@@ -316,6 +316,18 @@ for exp in experiments:
             continue
 
         metric_id = get_metric(cursor, metric_name, metric_type)
+
+        # Engagement metrics are stored with metric type of ``DoubleScalar``
+        # and have no histogram data of their own.
+        if metric_type == 'DoubleScalar':
+            median = [r for r in row['statistics'] if r.name == 'Median']
+            if median:
+                m = median[0]
+                create_stat(cursor, dataset_id, metric_id, population, '',
+                            'median', m.value, m.confidence_low,
+                            m.confidence_high, m.confidence_level)
+            continue
+
         collection_id = create_collection(cursor, dataset_id, metric_id,
                                           row['n'], population,
                                           row['subgroup'] or '')
