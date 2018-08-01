@@ -1,7 +1,8 @@
 import datetime
 
 from django.db import connection
-from django.db.models import F
+from django.db.models import F, Sum
+from django.db.models.functions import TruncHour
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -125,7 +126,7 @@ def experiment_populations(request, exp_slug):
 
 
 @api_view(['GET'])
-def experiment_enrolls(request, exp_slug):
+def realtime_experiment_enrolls(request, exp_slug):
     enrollment = Enrollment.objects.filter(experiment=exp_slug).exists()
     if not enrollment:
         raise NotFound('No experiment with given slug found.')
@@ -158,7 +159,7 @@ def experiment_enrolls(request, exp_slug):
 
 
 @api_view(['GET'])
-def experiment_unenrolls(request, exp_slug):
+def realtime_experiment_unenrolls(request, exp_slug):
     enrollment = Enrollment.objects.filter(experiment=exp_slug).exists()
     if not enrollment:
         raise NotFound('No experiment with given slug found.')
@@ -186,6 +187,62 @@ def experiment_unenrolls(request, exp_slug):
                 'window': enroll.window_start.isoformat(),
                 'count': enroll.unenroll_count,
             })
+
+    return Response(data)
+
+
+@api_view(['GET'])
+def experiment_enrolls(request, exp_slug):
+    enrollment = Enrollment.objects.filter(experiment=exp_slug).exists()
+    if not enrollment:
+        raise NotFound('No experiment with given slug found.')
+
+    data = {'population': {}}
+    enrolls = (
+        Enrollment.objects.filter(experiment=exp_slug)
+                          .exclude(branch__isnull=True)
+                          .annotate(period=TruncHour('window_start'))
+                          .values('period', 'branch')
+                          .annotate(counts=Sum('enroll_count'))
+                          .order_by('period')
+    )
+
+    for enroll in enrolls:
+        if enroll['branch'] not in data['population']:
+            data['population'][enroll['branch']] = []
+
+        data['population'][enroll['branch']].append({
+            'window': enroll['period'].isoformat(),
+            'count': enroll['counts'],
+        })
+
+    return Response(data)
+
+
+@api_view(['GET'])
+def experiment_unenrolls(request, exp_slug):
+    enrollment = Enrollment.objects.filter(experiment=exp_slug).exists()
+    if not enrollment:
+        raise NotFound('No experiment with given slug found.')
+
+    data = {'population': {}}
+    unenrolls = (
+        Enrollment.objects.filter(experiment=exp_slug)
+                          .exclude(branch__isnull=True)
+                          .annotate(period=TruncHour('window_start'))
+                          .values('period', 'branch')
+                          .annotate(counts=Sum('unenroll_count'))
+                          .order_by('period')
+    )
+
+    for unenroll in unenrolls:
+        if unenroll['branch'] not in data['population']:
+            data['population'][unenroll['branch']] = []
+
+        data['population'][unenroll['branch']].append({
+            'window': unenroll['period'].isoformat(),
+            'count': unenroll['counts'],
+        })
 
     return Response(data)
 

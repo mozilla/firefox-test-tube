@@ -271,7 +271,7 @@ class TestEnrollmentIngestionApi(TestCase):
         self.assertEqual(enroll.branch, None)
 
 
-class EnrollmentBaseTestCase(TestCase):
+class RealtimeEnrollmentBaseTestCase(TestCase):
 
     def create_data(self):
         now = timezone.now()
@@ -327,7 +327,7 @@ class EnrollmentBaseTestCase(TestCase):
         )
 
 
-class TestRealtimePopulationApi(EnrollmentBaseTestCase):
+class TestRealtimePopulationApi(RealtimeEnrollmentBaseTestCase):
 
     def setUp(self):
         self.url = reverse('v2-experiment-realtime-populations', args=['pref-flip-1'])
@@ -409,18 +409,18 @@ class TestPopulationApi(TestCase):
             {'window': '2018-01-04', 'count': 99})
 
 
-class TestEnrollmentCountsApi(EnrollmentBaseTestCase):
+class TestRealtimeEnrollmentCountsApi(RealtimeEnrollmentBaseTestCase):
 
     def setUp(self):
-        self.url = reverse('v2-experiment-enrolls', args=['pref-flip-1'])
+        self.url = reverse('v2-experiment-realtime-enrolls', args=['pref-flip-1'])
         self.create_data()
 
-    def test_enrolls_404(self):
+    def test_realtime_enrolls_404(self):
         response = self.client.get(
-            reverse('v2-experiment-enrolls', args=['foo']))
+            reverse('v2-experiment-realtime-enrolls', args=['foo']))
         self.assertEqual(response.status_code, 404)
 
-    def test_enrolls_api(self):
+    def test_realtime_enrolls_api(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         data = response.json()
@@ -442,18 +442,18 @@ class TestEnrollmentCountsApi(EnrollmentBaseTestCase):
         )
 
 
-class TestUnenrollmentCountsApi(EnrollmentBaseTestCase):
+class TestRealtimeUnenrollmentCountsApi(RealtimeEnrollmentBaseTestCase):
 
     def setUp(self):
-        self.url = reverse('v2-experiment-unenrolls', args=['pref-flip-1'])
+        self.url = reverse('v2-experiment-realtime-unenrolls', args=['pref-flip-1'])
         self.create_data()
 
-    def test_enrolls_404(self):
+    def test_realtime_unenrolls_404(self):
         response = self.client.get(
-            reverse('v2-experiment-unenrolls', args=['foo']))
+            reverse('v2-experiment-realtime-unenrolls', args=['foo']))
         self.assertEqual(response.status_code, 404)
 
-    def test_unenrolls_api(self):
+    def test_realtime_unenrolls_api(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         data = response.json()
@@ -472,4 +472,111 @@ class TestUnenrollmentCountsApi(EnrollmentBaseTestCase):
         self.assertDictEqual(
             data['population']['variant'][1],
             {'window': self.window2[0].isoformat(), 'count': 10}
+        )
+
+
+class EnrollmentBaseTestCase(TestCase):
+
+    def create_data(self):
+        self.window_start = datetime.datetime(2018, 1, 4, 16, 0, 0, tzinfo=pytz.UTC)
+        # This will create cases where window_start > window_end below which should be OK.
+        self.window_end = datetime.datetime(2018, 1, 4, 16, 1, 1, tzinfo=pytz.UTC)
+
+        Enrollment.objects.create(
+            type='preference_study',
+            experiment='pref-flip-1',
+            branch='control',
+            window_start=self.window_start,
+            window_end=self.window_end,
+            enroll_count=10,
+            unenroll_count=1
+        )
+        Enrollment.objects.create(
+            type='preference_study',
+            experiment='pref-flip-1',
+            branch='control',
+            window_start=self.window_start + datetime.timedelta(minutes=5),
+            window_end=self.window_end,
+            enroll_count=20,
+            unenroll_count=2
+        )
+        Enrollment.objects.create(
+            type='preference_study',
+            experiment='pref-flip-1',
+            branch='variant',
+            window_start=self.window_start + datetime.timedelta(minutes=10),
+            window_end=self.window_end,
+            enroll_count=11,
+            unenroll_count=5
+        )
+        Enrollment.objects.create(
+            type='preference_study',
+            experiment='pref-flip-1',
+            branch='variant',
+            window_start=self.window_start + datetime.timedelta(minutes=15),
+            window_end=self.window_end,
+            enroll_count=21,
+            unenroll_count=10
+        )
+        # Create a random bit of data in a different experiment.
+        Enrollment.objects.create(
+            type='preference_study',
+            experiment='pref-flip-2',
+            branch='control',
+            window_start=self.window_start + datetime.timedelta(minutes=5),
+            window_end=self.window_end,
+            enroll_count=99999,
+            unenroll_count=99
+        )
+
+
+class TestEnrollmentCountsApi(EnrollmentBaseTestCase):
+
+    def setUp(self):
+        self.url = reverse('v2-experiment-enrolls', args=['pref-flip-1'])
+        self.create_data()
+
+    def test_enrolls_404(self):
+        response = self.client.get(
+            reverse('v2-experiment-enrolls', args=['foo']))
+        self.assertEqual(response.status_code, 404)
+
+    def test_enrolls_api(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+
+        self.assertDictEqual(
+            data['population']['control'][0],
+            {'window': self.window_start.isoformat(), 'count': 30}
+        )
+        self.assertDictEqual(
+            data['population']['variant'][0],
+            {'window': self.window_start.isoformat(), 'count': 32}
+        )
+
+
+class TestUnEnrollmentCountsApi(EnrollmentBaseTestCase):
+
+    def setUp(self):
+        self.url = reverse('v2-experiment-unenrolls', args=['pref-flip-1'])
+        self.create_data()
+
+    def test_unenrolls_404(self):
+        response = self.client.get(
+            reverse('v2-experiment-unenrolls', args=['foo']))
+        self.assertEqual(response.status_code, 404)
+
+    def test_unenrolls_api(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+
+        self.assertDictEqual(
+            data['population']['control'][0],
+            {'window': self.window_start.isoformat(), 'count': 3}
+        )
+        self.assertDictEqual(
+            data['population']['variant'][0],
+            {'window': self.window_start.isoformat(), 'count': 15}
         )
