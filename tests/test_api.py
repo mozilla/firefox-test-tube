@@ -274,16 +274,17 @@ class TestEnrollmentIngestionApi(TestCase):
 class EnrollmentBaseTestCase(TestCase):
 
     def create_data(self):
-        self.window1 = timezone.now()
-        self.window2 = self.window1 + datetime.timedelta(seconds=5)
-        self.window3 = self.window2 + datetime.timedelta(seconds=5)
+        now = timezone.now()
+        self.window1 = (now - datetime.timedelta(seconds=10),
+                        now - datetime.timedelta(seconds=5))
+        self.window2 = (now - datetime.timedelta(seconds=5), now)
 
         Enrollment.objects.create(
             type='preference_study',
             experiment='pref-flip-1',
             branch='control',
-            window_start=self.window1,
-            window_end=self.window2,
+            window_start=self.window1[0],
+            window_end=self.window1[1],
             enroll_count=10,
             unenroll_count=1
         )
@@ -291,8 +292,8 @@ class EnrollmentBaseTestCase(TestCase):
             type='preference_study',
             experiment='pref-flip-1',
             branch='control',
-            window_start=self.window2,
-            window_end=self.window3,
+            window_start=self.window2[0],
+            window_end=self.window2[1],
             enroll_count=20,
             unenroll_count=2
         )
@@ -300,8 +301,8 @@ class EnrollmentBaseTestCase(TestCase):
             type='preference_study',
             experiment='pref-flip-1',
             branch='variant',
-            window_start=self.window1,
-            window_end=self.window2,
+            window_start=self.window1[0],
+            window_end=self.window1[1],
             enroll_count=11,
             unenroll_count=5
         )
@@ -309,8 +310,8 @@ class EnrollmentBaseTestCase(TestCase):
             type='preference_study',
             experiment='pref-flip-1',
             branch='variant',
-            window_start=self.window2,
-            window_end=self.window3,
+            window_start=self.window2[0],
+            window_end=self.window2[1],
             enroll_count=21,
             unenroll_count=10
         )
@@ -319,8 +320,8 @@ class EnrollmentBaseTestCase(TestCase):
             type='preference_study',
             experiment='pref-flip-2',
             branch='control',
-            window_start=self.window1,
-            window_end=self.window2,
+            window_start=self.window1[0],
+            window_end=self.window1[1],
             enroll_count=99999,
             unenroll_count=99
         )
@@ -345,19 +346,19 @@ class TestEnrollmentPopulationApi(EnrollmentBaseTestCase):
         data = response.json()
         self.assertDictEqual(
             data['population']['control'][0],
-            {'window': self.window1.isoformat(), 'count': 9}
+            {'window': self.window1[0].isoformat(), 'count': 9}
         )
         self.assertEqual(
             data['population']['control'][1],
-            {'window': self.window2.isoformat(), 'count': 27}
+            {'window': self.window2[0].isoformat(), 'count': 27}
         )
         self.assertEqual(
             data['population']['variant'][0],
-            {'window': self.window1.isoformat(), 'count': 6}
+            {'window': self.window1[0].isoformat(), 'count': 6}
         )
         self.assertEqual(
             data['population']['variant'][1],
-            {'window': self.window2.isoformat(), 'count': 17}
+            {'window': self.window2[0].isoformat(), 'count': 17}
         )
 
 
@@ -378,19 +379,19 @@ class TestEnrollmentCountsApi(EnrollmentBaseTestCase):
         data = response.json()
         self.assertDictEqual(
             data['population']['control'][0],
-            {'window': self.window1.isoformat(), 'count': 10}
+            {'window': self.window1[0].isoformat(), 'count': 10}
         )
         self.assertEqual(
             data['population']['control'][1],
-            {'window': self.window2.isoformat(), 'count': 20}
+            {'window': self.window2[0].isoformat(), 'count': 20}
         )
         self.assertEqual(
             data['population']['variant'][0],
-            {'window': self.window1.isoformat(), 'count': 11}
+            {'window': self.window1[0].isoformat(), 'count': 11}
         )
         self.assertEqual(
             data['population']['variant'][1],
-            {'window': self.window2.isoformat(), 'count': 21}
+            {'window': self.window2[0].isoformat(), 'count': 21}
         )
 
 
@@ -411,17 +412,17 @@ class TestUnenrollmentCountsApi(EnrollmentBaseTestCase):
         data = response.json()
         self.assertDictEqual(
             data['population']['control'][0],
-            {'window': self.window1.isoformat(), 'count': 1}
+            {'window': self.window1[0].isoformat(), 'count': 1}
         )
         self.assertEqual(
             data['population']['control'][1],
-            {'window': self.window2.isoformat(), 'count': 2}
+            {'window': self.window2[0].isoformat(), 'count': 2}
         )
         self.assertEqual(
             data['population']['variant'][0],
-            {'window': self.window1.isoformat(), 'count': 5}
+            {'window': self.window1[0].isoformat(), 'count': 5}
         )
         self.assertEqual(
             data['population']['variant'][1],
-            {'window': self.window2.isoformat(), 'count': 10}
+            {'window': self.window2[0].isoformat(), 'count': 10}
         )
