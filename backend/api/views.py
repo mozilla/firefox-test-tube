@@ -8,7 +8,7 @@ from rest_framework.decorators import api_view
 from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 
-from .models import Collection, DataSet, Enrollment, Metric, Stats
+from .models import Collection, DataSet, Enrollment, Metric, Population, Stats
 
 
 @api_view(['GET'])
@@ -50,7 +50,10 @@ def experiment_by_slug(request, exp_slug):
 
 
 @api_view(['GET'])
-def experiment_populations(request, exp_slug):
+def realtime_experiment_populations(request, exp_slug):
+    """
+    Returns realtime population data in 5m windows over the past 24 hrs.
+    """
     enrollment = Enrollment.objects.filter(experiment=exp_slug).exists()
     if not enrollment:
         raise NotFound('No experiment with given slug found.')
@@ -92,6 +95,30 @@ def experiment_populations(request, exp_slug):
         data['population'][row[0]].append({
             'window': row[1].isoformat(),
             'count': row[2]
+        })
+
+    return Response(data)
+
+
+@api_view(['GET'])
+def experiment_populations(request, exp_slug):
+    """
+    Returns population data in 1d windows over all time.
+    """
+    population = Population.objects.filter(experiment=exp_slug).exists()
+    if not population:
+        raise NotFound('No experiment with given slug found.')
+
+    data = {'population': {}}
+    qs = (Population.objects.filter(experiment=exp_slug)
+                            .order_by('stamp'))
+    for pop in qs:
+        if pop.branch not in data['population']:
+            data['population'][pop.branch] = []
+
+        data['population'][pop.branch].append({
+            'window': pop.stamp.date().isoformat(),
+            'count': pop.count,
         })
 
     return Response(data)

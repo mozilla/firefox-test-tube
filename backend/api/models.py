@@ -181,3 +181,10 @@ class Enrollment(models.Model):
     window_end = models.DateTimeField()
     enroll_count = models.IntegerField()
     unenroll_count = models.IntegerField()
+
+
+class Population(models.Model):
+    experiment = models.CharField(max_length=255, db_index=True)
+    branch = models.CharField(max_length=255, blank=True, null=True)
+    stamp = models.DateTimeField(db_index=True)
+    count = models.IntegerField()
