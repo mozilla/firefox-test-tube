@@ -8,7 +8,7 @@ from django.utils import timezone
 from rest_framework.reverse import reverse
 
 from backend.api import factories
-from backend.api.models import Enrollment
+from backend.api.models import Enrollment, Population
 
 from . import DataTestCase
 
@@ -86,7 +86,7 @@ class TestExperimentBySlug(DataTestCase):
             'subgroups': self.dataset.get_subgroups(),
             'metrics': self.dataset.get_metrics(),
         }
-        self.assertEqual(response.json(), expected)
+        self.assertDictEqual(response.json(), expected)
 
     def test_404(self):
         response = self.client.get(reverse('v2-experiment-by-slug', args=[99]))
@@ -146,7 +146,7 @@ class TestMetricById(DataTestCase):
                 'stats': stats,
             }]
         }
-        self.assertEqual(response.json(), expected)
+        self.assertDictEqual(response.json(), expected)
 
 
 # This is separated to create a more custom set of data for testing.
@@ -327,15 +327,15 @@ class EnrollmentBaseTestCase(TestCase):
         )
 
 
-class TestEnrollmentPopulationApi(EnrollmentBaseTestCase):
+class TestRealtimePopulationApi(EnrollmentBaseTestCase):
 
     def setUp(self):
-        self.url = reverse('v2-experiment-populations', args=['pref-flip-1'])
+        self.url = reverse('v2-experiment-realtime-populations', args=['pref-flip-1'])
         self.create_data()
 
     def test_population_404(self):
         response = self.client.get(
-            reverse('v2-experiment-populations', args=['foo']))
+            reverse('v2-experiment-realtime-populations', args=['foo']))
         self.assertEqual(response.status_code, 404)
 
     def test_population_api(self):
@@ -348,18 +348,65 @@ class TestEnrollmentPopulationApi(EnrollmentBaseTestCase):
             data['population']['control'][0],
             {'window': self.window1[0].isoformat(), 'count': 9}
         )
-        self.assertEqual(
+        self.assertDictEqual(
             data['population']['control'][1],
             {'window': self.window2[0].isoformat(), 'count': 27}
         )
-        self.assertEqual(
+        self.assertDictEqual(
             data['population']['variant'][0],
             {'window': self.window1[0].isoformat(), 'count': 6}
         )
-        self.assertEqual(
+        self.assertDictEqual(
             data['population']['variant'][1],
             {'window': self.window2[0].isoformat(), 'count': 17}
         )
+
+
+class TestPopulationApi(TestCase):
+
+    def setUp(self):
+        self.experiment = 'pref-flip-1'
+        self.url = reverse('v2-experiment-populations', args=[self.experiment])
+        Population.objects.bulk_create([
+            Population(experiment=self.experiment, branch='control', count=1,
+                       stamp=datetime.datetime(2018, 1, 1, tzinfo=pytz.UTC)),
+            Population(experiment=self.experiment, branch='control', count=10,
+                       stamp=datetime.datetime(2018, 1, 2, tzinfo=pytz.UTC)),
+            Population(experiment=self.experiment, branch='control', count=50,
+                       stamp=datetime.datetime(2018, 1, 3, tzinfo=pytz.UTC)),
+            Population(experiment=self.experiment, branch='control', count=100,
+                       stamp=datetime.datetime(2018, 1, 4, tzinfo=pytz.UTC)),
+            Population(experiment=self.experiment, branch='variant', count=0,
+                       stamp=datetime.datetime(2018, 1, 1, tzinfo=pytz.UTC)),
+            Population(experiment=self.experiment, branch='variant', count=9,
+                       stamp=datetime.datetime(2018, 1, 2, tzinfo=pytz.UTC)),
+            Population(experiment=self.experiment, branch='variant', count=49,
+                       stamp=datetime.datetime(2018, 1, 3, tzinfo=pytz.UTC)),
+            Population(experiment=self.experiment, branch='variant', count=99,
+                       stamp=datetime.datetime(2018, 1, 4, tzinfo=pytz.UTC)),
+        ])
+
+    def test_404(self):
+        response = self.client.get(
+            reverse('v2-experiment-populations', args=['foo']))
+        self.assertEqual(response.status_code, 404)
+
+    def test_population_api(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertDictEqual(
+            data['population']['control'][0],
+            {'window': '2018-01-01', 'count': 1})
+        self.assertDictEqual(
+            data['population']['control'][3],
+            {'window': '2018-01-04', 'count': 100})
+        self.assertDictEqual(
+            data['population']['variant'][0],
+            {'window': '2018-01-01', 'count': 0})
+        self.assertDictEqual(
+            data['population']['variant'][3],
+            {'window': '2018-01-04', 'count': 99})
 
 
 class TestEnrollmentCountsApi(EnrollmentBaseTestCase):
@@ -381,15 +428,15 @@ class TestEnrollmentCountsApi(EnrollmentBaseTestCase):
             data['population']['control'][0],
             {'window': self.window1[0].isoformat(), 'count': 10}
         )
-        self.assertEqual(
+        self.assertDictEqual(
             data['population']['control'][1],
             {'window': self.window2[0].isoformat(), 'count': 20}
         )
-        self.assertEqual(
+        self.assertDictEqual(
             data['population']['variant'][0],
             {'window': self.window1[0].isoformat(), 'count': 11}
         )
-        self.assertEqual(
+        self.assertDictEqual(
             data['population']['variant'][1],
             {'window': self.window2[0].isoformat(), 'count': 21}
         )
@@ -414,15 +461,15 @@ class TestUnenrollmentCountsApi(EnrollmentBaseTestCase):
             data['population']['control'][0],
             {'window': self.window1[0].isoformat(), 'count': 1}
         )
-        self.assertEqual(
+        self.assertDictEqual(
             data['population']['control'][1],
             {'window': self.window2[0].isoformat(), 'count': 2}
         )
-        self.assertEqual(
+        self.assertDictEqual(
             data['population']['variant'][0],
             {'window': self.window1[0].isoformat(), 'count': 5}
         )
-        self.assertEqual(
+        self.assertDictEqual(
             data['population']['variant'][1],
             {'window': self.window2[0].isoformat(), 'count': 10}
         )
