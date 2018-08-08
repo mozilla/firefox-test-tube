@@ -271,13 +271,20 @@ class TestEnrollmentIngestionApi(TestCase):
         self.assertEqual(enroll.branch, None)
 
 
-class RealtimeEnrollmentBaseTestCase(TestCase):
+class EnrollmentBaseTestCase(TestCase):
 
     def create_data(self):
         now = timezone.now()
-        self.window1 = (now - datetime.timedelta(seconds=10),
-                        now - datetime.timedelta(seconds=5))
-        self.window2 = (now - datetime.timedelta(seconds=5), now)
+        # Create data that cross an hour time barrier since some views
+        # aggregate per hour, but keep them within the last 24 hours since the
+        # other views aggregate over the last 24h.
+        dt = datetime.datetime(now.year, now.month, now.day, now.hour, 5, 0,
+                               tzinfo=pytz.UTC)
+        self.window1 = (dt - datetime.timedelta(minutes=15),
+                        dt - datetime.timedelta(minutes=10))
+        self.window2 = (dt - datetime.timedelta(minutes=10),
+                        dt - datetime.timedelta(minutes=5))
+        self.window3 = (dt - datetime.timedelta(minutes=5), dt)
 
         Enrollment.objects.create(
             type='preference_study',
@@ -285,7 +292,7 @@ class RealtimeEnrollmentBaseTestCase(TestCase):
             branch='control',
             window_start=self.window1[0],
             window_end=self.window1[1],
-            enroll_count=10,
+            enroll_count=11,
             unenroll_count=1
         )
         Enrollment.objects.create(
@@ -294,8 +301,17 @@ class RealtimeEnrollmentBaseTestCase(TestCase):
             branch='control',
             window_start=self.window2[0],
             window_end=self.window2[1],
-            enroll_count=20,
+            enroll_count=21,
             unenroll_count=2
+        )
+        Enrollment.objects.create(
+            type='preference_study',
+            experiment='pref-flip-1',
+            branch='control',
+            window_start=self.window3[0],
+            window_end=self.window3[1],
+            enroll_count=31,
+            unenroll_count=3
         )
         Enrollment.objects.create(
             type='preference_study',
@@ -303,7 +319,7 @@ class RealtimeEnrollmentBaseTestCase(TestCase):
             branch='variant',
             window_start=self.window1[0],
             window_end=self.window1[1],
-            enroll_count=11,
+            enroll_count=15,
             unenroll_count=5
         )
         Enrollment.objects.create(
@@ -312,8 +328,17 @@ class RealtimeEnrollmentBaseTestCase(TestCase):
             branch='variant',
             window_start=self.window2[0],
             window_end=self.window2[1],
-            enroll_count=21,
+            enroll_count=25,
             unenroll_count=10
+        )
+        Enrollment.objects.create(
+            type='preference_study',
+            experiment='pref-flip-1',
+            branch='variant',
+            window_start=self.window3[0],
+            window_end=self.window3[1],
+            enroll_count=35,
+            unenroll_count=15
         )
         # Create a random bit of data in a different experiment.
         Enrollment.objects.create(
@@ -327,10 +352,11 @@ class RealtimeEnrollmentBaseTestCase(TestCase):
         )
 
 
-class TestRealtimePopulationApi(RealtimeEnrollmentBaseTestCase):
+class TestRealtimePopulationApi(EnrollmentBaseTestCase):
 
     def setUp(self):
-        self.url = reverse('v2-experiment-realtime-populations', args=['pref-flip-1'])
+        self.url = reverse('v2-experiment-realtime-populations',
+                           args=['pref-flip-1'])
         self.create_data()
 
     def test_population_404(self):
@@ -339,26 +365,40 @@ class TestRealtimePopulationApi(RealtimeEnrollmentBaseTestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_population_api(self):
-        # Population for control should be 10 - 1 + 20 - 2 = 27.
-        # Population for variant should be 11 - 5 + 21 - 10 = 17.
+        # Population for control should be:
+        #   11 - 1 = 10
+        #   10 + 21 - 2 = 29
+        #   29 + 31 - 3 = 57
+        # Population for variant should be:
+        #   15 - 5 = 10
+        #   10 + 25 - 10 = 25
+        #   25 + 35 - 15 = 45
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         data = response.json()
         self.assertDictEqual(
             data['population']['control'][0],
-            {'window': self.window1[0].isoformat(), 'count': 9}
+            {'window': self.window1[0].isoformat(), 'count': 10}
         )
         self.assertDictEqual(
             data['population']['control'][1],
-            {'window': self.window2[0].isoformat(), 'count': 27}
+            {'window': self.window2[0].isoformat(), 'count': 29}
+        )
+        self.assertDictEqual(
+            data['population']['control'][2],
+            {'window': self.window3[0].isoformat(), 'count': 57}
         )
         self.assertDictEqual(
             data['population']['variant'][0],
-            {'window': self.window1[0].isoformat(), 'count': 6}
+            {'window': self.window1[0].isoformat(), 'count': 10}
         )
         self.assertDictEqual(
             data['population']['variant'][1],
-            {'window': self.window2[0].isoformat(), 'count': 17}
+            {'window': self.window2[0].isoformat(), 'count': 25}
+        )
+        self.assertDictEqual(
+            data['population']['variant'][2],
+            {'window': self.window3[0].isoformat(), 'count': 45}
         )
 
 
@@ -409,7 +449,7 @@ class TestPopulationApi(TestCase):
             {'window': '2018-01-04', 'count': 99})
 
 
-class TestRealtimeEnrollmentCountsApi(RealtimeEnrollmentBaseTestCase):
+class TestRealtimeEnrollmentCountsApi(EnrollmentBaseTestCase):
 
     def setUp(self):
         self.url = reverse('v2-experiment-realtime-enrolls', args=['pref-flip-1'])
@@ -426,23 +466,31 @@ class TestRealtimeEnrollmentCountsApi(RealtimeEnrollmentBaseTestCase):
         data = response.json()
         self.assertDictEqual(
             data['population']['control'][0],
-            {'window': self.window1[0].isoformat(), 'count': 10}
-        )
-        self.assertDictEqual(
-            data['population']['control'][1],
-            {'window': self.window2[0].isoformat(), 'count': 20}
-        )
-        self.assertDictEqual(
-            data['population']['variant'][0],
             {'window': self.window1[0].isoformat(), 'count': 11}
         )
         self.assertDictEqual(
-            data['population']['variant'][1],
+            data['population']['control'][1],
             {'window': self.window2[0].isoformat(), 'count': 21}
+        )
+        self.assertDictEqual(
+            data['population']['control'][2],
+            {'window': self.window3[0].isoformat(), 'count': 31}
+        )
+        self.assertDictEqual(
+            data['population']['variant'][0],
+            {'window': self.window1[0].isoformat(), 'count': 15}
+        )
+        self.assertDictEqual(
+            data['population']['variant'][1],
+            {'window': self.window2[0].isoformat(), 'count': 25}
+        )
+        self.assertDictEqual(
+            data['population']['variant'][2],
+            {'window': self.window3[0].isoformat(), 'count': 35}
         )
 
 
-class TestRealtimeUnenrollmentCountsApi(RealtimeEnrollmentBaseTestCase):
+class TestRealtimeUnenrollmentCountsApi(EnrollmentBaseTestCase):
 
     def setUp(self):
         self.url = reverse('v2-experiment-realtime-unenrolls', args=['pref-flip-1'])
@@ -475,61 +523,6 @@ class TestRealtimeUnenrollmentCountsApi(RealtimeEnrollmentBaseTestCase):
         )
 
 
-class EnrollmentBaseTestCase(TestCase):
-
-    def create_data(self):
-        self.window_start = datetime.datetime(2018, 1, 4, 16, 0, 0, tzinfo=pytz.UTC)
-        # This will create cases where window_start > window_end below which should be OK.
-        self.window_end = datetime.datetime(2018, 1, 4, 16, 1, 1, tzinfo=pytz.UTC)
-
-        Enrollment.objects.create(
-            type='preference_study',
-            experiment='pref-flip-1',
-            branch='control',
-            window_start=self.window_start,
-            window_end=self.window_end,
-            enroll_count=10,
-            unenroll_count=1
-        )
-        Enrollment.objects.create(
-            type='preference_study',
-            experiment='pref-flip-1',
-            branch='control',
-            window_start=self.window_start + datetime.timedelta(minutes=5),
-            window_end=self.window_end,
-            enroll_count=20,
-            unenroll_count=2
-        )
-        Enrollment.objects.create(
-            type='preference_study',
-            experiment='pref-flip-1',
-            branch='variant',
-            window_start=self.window_start + datetime.timedelta(minutes=10),
-            window_end=self.window_end,
-            enroll_count=11,
-            unenroll_count=5
-        )
-        Enrollment.objects.create(
-            type='preference_study',
-            experiment='pref-flip-1',
-            branch='variant',
-            window_start=self.window_start + datetime.timedelta(minutes=15),
-            window_end=self.window_end,
-            enroll_count=21,
-            unenroll_count=10
-        )
-        # Create a random bit of data in a different experiment.
-        Enrollment.objects.create(
-            type='preference_study',
-            experiment='pref-flip-2',
-            branch='control',
-            window_start=self.window_start + datetime.timedelta(minutes=5),
-            window_end=self.window_end,
-            enroll_count=99999,
-            unenroll_count=99
-        )
-
-
 class TestEnrollmentCountsApi(EnrollmentBaseTestCase):
 
     def setUp(self):
@@ -548,15 +541,27 @@ class TestEnrollmentCountsApi(EnrollmentBaseTestCase):
 
         self.assertDictEqual(
             data['population']['control'][0],
-            {'window': self.window_start.isoformat(), 'count': 30}
+            {'window': self.window1[0].replace(minute=0).isoformat(),
+             'count': 32}
+        )
+        self.assertDictEqual(
+            data['population']['control'][1],
+            {'window': self.window3[0].replace(minute=0).isoformat(),
+             'count': 31}
         )
         self.assertDictEqual(
             data['population']['variant'][0],
-            {'window': self.window_start.isoformat(), 'count': 32}
+            {'window': self.window1[0].replace(minute=0).isoformat(),
+             'count': 40}
+        )
+        self.assertDictEqual(
+            data['population']['variant'][1],
+            {'window': self.window3[0].replace(minute=0).isoformat(),
+             'count': 35}
         )
 
 
-class TestUnEnrollmentCountsApi(EnrollmentBaseTestCase):
+class TestUnenrollmentCountsApi(EnrollmentBaseTestCase):
 
     def setUp(self):
         self.url = reverse('v2-experiment-unenrolls', args=['pref-flip-1'])
@@ -574,9 +579,21 @@ class TestUnEnrollmentCountsApi(EnrollmentBaseTestCase):
 
         self.assertDictEqual(
             data['population']['control'][0],
-            {'window': self.window_start.isoformat(), 'count': 3}
+            {'window': self.window1[0].replace(minute=0).isoformat(),
+             'count': 3}
+        )
+        self.assertDictEqual(
+            data['population']['control'][1],
+            {'window': self.window3[0].replace(minute=0).isoformat(),
+             'count': 3}
         )
         self.assertDictEqual(
             data['population']['variant'][0],
-            {'window': self.window_start.isoformat(), 'count': 15}
+            {'window': self.window1[0].replace(minute=0).isoformat(),
+             'count': 15}
+        )
+        self.assertDictEqual(
+            data['population']['variant'][1],
+            {'window': self.window3[0].replace(minute=0).isoformat(),
+             'count': 15}
         )
