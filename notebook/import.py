@@ -8,12 +8,14 @@ import requests
 import ujson
 from psycopg2.extras import LoggingConnection, execute_values
 from pyspark.sql import SparkSession
+from pyspark.sql.functions import countDistinct
 
 
 BUCKET = environ.get('bucket', 'telemetry-parquet')
 # Note: For staging use 'test-tube-staging-db'.
 DB = environ.get('db', 'test-tube-db')
-PATH = 's3://%s/experiments_aggregates/v1/' % BUCKET
+PATH = 's3://%s/experiments/v1/' % BUCKET
+AGGS_PATH = 's3://%s/experiments_aggregates/v1/' % BUCKET
 NORMANDY_URL = 'https://normandy.services.mozilla.com/api/v1/recipe/'
 LOG_LEVEL = logging.INFO  # Change to incr/decr logging output.
 DEBUG_SQL = False  # Set to True to not insert any data.
@@ -255,6 +257,33 @@ def create_stat(cursor, dataset_id, metric_id, population, subgroup, key,
         cursor.execute(sql, params)
 
 
+def clear_population(cursor, exp):
+    """
+    Clear populations data for a given experiment.
+    """
+    sql = 'DELETE FROM api_population WHERE experiment=%s'
+    params = [exp]
+    if DEBUG_SQL:
+        print cursor.mogrify(sql, params)
+    else:
+        cursor.execute(sql, params)
+
+
+def create_population(cursor, exp, row):
+    """
+    Adds population data for a given experiment record.
+    """
+    sql = ('INSERT INTO api_population '
+           '(experiment, branch, stamp, count) '
+           'VALUES (%s, %s, %s, %s) ')
+    stamp = datetime.datetime.strptime(row['submission_date'], '%Y%m%d'),
+    params = [exp, row['experiment_branch'], stamp, row['count']]
+    if DEBUG_SQL:
+        print cursor.mogrify(sql, params)
+    else:
+        cursor.execute(sql, params)
+
+
 process_date = environ.get('date')
 if not process_date:
     # If no date in environment, assume we are running manually and use
@@ -265,7 +294,7 @@ if not process_date:
 print 'Querying data for date: %s' % process_date
 
 sparkSession = SparkSession.builder.appName('experiments-viewer').getOrCreate()
-df = sparkSession.read.parquet(PATH).filter("date='%s'" % process_date).cache()
+df = sparkSession.read.parquet(AGGS_PATH).filter("date='%s'" % process_date).cache()
 
 # Get database connection and initialize logging.
 conn = get_database_connection()
@@ -346,6 +375,21 @@ for exp in experiments:
 
     # Commit the transaction for this experiment.
     conn.commit()
+
+    # Update experiment populations.
+    path = '%sexperiment_id=%s/' % (PATH, exp)
+    df2 = sparkSession.read.parquet(path)
+
+    clear_population(cursor, exp)
+
+    rows = (df2.select('submission_date', 'experiment_branch', 'client_id')
+               .groupBy('submission_date', 'experiment_branch')
+               .agg(countDistinct('client_id').alias('count'))
+               .orderBy('submission_date')
+               .collect())
+
+    for row in [r.asDict() for r in rows]:
+        create_population(cursor, exp, row)
 
 
 # Update enabled flag for all experiments.
