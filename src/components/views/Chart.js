@@ -91,6 +91,9 @@ export default props => {
                     animation: false,
                     maintainAspectRatio: false,
                     responsive: props.asOverlay,
+                    legend: {
+                        display: false // We'll be using our own custom legend outside of canvas.
+                    },
                     tooltips: {
                         callbacks: {
                             label: (tt, data) => `${data.datasets[tt.datasetIndex].label}: ${tt.yLabel.toLocaleString('en-US', { minimumSignificantDigits: significantDigits })}`
