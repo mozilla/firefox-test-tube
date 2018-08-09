@@ -146,13 +146,25 @@ export default class extends React.Component {
                     <div className="realtime-charts">
                         <RealTimeChartContainer
                             colors={this.populationColors}
+                            endpoint={`${process.env.REACT_APP_API_URL}/experiments/${this.props.slug}/enrolls/`}
+                            title="Enrollments"
+                        />
+                        <RealTimeChartContainer
+                            colors={this.populationColors}
+                            endpoint={`${process.env.REACT_APP_API_URL}/experiments/${this.props.slug}/unenrolls/`}
+                            title="Unenrollments"
+                        />
+                        <RealTimeChartContainer
+                            colors={this.populationColors}
                             endpoint={`${process.env.REACT_APP_API_URL}/experiments/${this.props.slug}/realtime-enrolls/`}
                             title="Enrollments (5min)"
+                            refreshMins={5}
                         />
                         <RealTimeChartContainer
                             colors={this.populationColors}
                             endpoint={`${process.env.REACT_APP_API_URL}/experiments/${this.props.slug}/realtime-unenrolls/`}
                             title="Unenrollments (5min)"
+                            refreshMins={5}
                         />
                     </div>
                     <aside id="experiment-options">

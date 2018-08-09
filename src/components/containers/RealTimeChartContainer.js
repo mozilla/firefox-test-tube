@@ -56,7 +56,14 @@ class RealTimeChartContainer extends React.Component {
 }
 
 export default connect(props => {
+    const fetchParams = {
+        url: props.endpoint
+    };
+
+    // Refresh the component after refreshMins if provided.
+    if (props.refreshMins) fetchParams.refreshInterval = props.refreshMins * 60 * 1000;
+
     return {
-        dataFetch: { url: props.endpoint, refreshInterval: 300000 }, // 5 min component refresh
+        dataFetch: fetchParams,
     };
 })(RealTimeChartContainer);
