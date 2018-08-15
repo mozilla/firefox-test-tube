@@ -6,7 +6,7 @@ import Paginator from './Paginator';
 import Switch from './Switch';
 import SearchBox from './SearchBox';
 import { getDistinctColors } from '../../lib/utils';
-import RealTimeChartContainer from '../containers/RealTimeChartContainer';
+import MonitoringChartContainer from '../containers/MonitoringChartContainer';
 
 import './css/Experiment.css';
 
@@ -143,24 +143,30 @@ export default class extends React.Component {
                         </section>
                         {maybeAuthors}
                     </section>
-                    <div className="realtime-charts">
-                        <RealTimeChartContainer
+                    <div className="monitoring-charts">
+                        <MonitoringChartContainer
+                            colors={this.populationColors}
+                            endpoint={`${process.env.REACT_APP_API_URL}/experiments/${this.props.slug}/populations/`}
+                            title="Populations"
+                            fullWidth={true}
+                        />
+                        <MonitoringChartContainer
                             colors={this.populationColors}
                             endpoint={`${process.env.REACT_APP_API_URL}/experiments/${this.props.slug}/enrolls/`}
                             title="Enrollments"
                         />
-                        <RealTimeChartContainer
+                        <MonitoringChartContainer
                             colors={this.populationColors}
                             endpoint={`${process.env.REACT_APP_API_URL}/experiments/${this.props.slug}/unenrolls/`}
                             title="Unenrollments"
                         />
-                        <RealTimeChartContainer
+                        <MonitoringChartContainer
                             colors={this.populationColors}
                             endpoint={`${process.env.REACT_APP_API_URL}/experiments/${this.props.slug}/realtime-enrolls/`}
                             title="Enrollments (5min)"
                             refreshMins={5}
                         />
-                        <RealTimeChartContainer
+                        <MonitoringChartContainer
                             colors={this.populationColors}
                             endpoint={`${process.env.REACT_APP_API_URL}/experiments/${this.props.slug}/realtime-unenrolls/`}
                             title="Unenrollments (5min)"
