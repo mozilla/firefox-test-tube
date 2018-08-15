@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-refetch';
 
-import RealTimeChart from '../views/RealTimeChart';
+import MonitoringChart from '../views/MonitoringChart';
 import Error from '../views/Error';
 import Loading from '../views/Loading';
 
 
-class RealTimeChartContainer extends React.Component {
+class MonitoringChartContainer extends React.Component {
     constructor(props) {
         super(props);
 
@@ -42,10 +42,11 @@ class RealTimeChartContainer extends React.Component {
                     });
                 });
                 return (
-                    <RealTimeChart
+                    <MonitoringChart
                         title={this.props.title}
                         colors={this.colors}
                         data={data}
+                        fullWidth={this.props.fullWidth}
                     />
                 );
             } else {
@@ -66,4 +67,4 @@ export default connect(props => {
     return {
         dataFetch: fetchParams,
     };
-})(RealTimeChartContainer);
+})(MonitoringChartContainer);

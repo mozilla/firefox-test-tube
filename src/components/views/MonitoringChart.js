@@ -1,7 +1,7 @@
 import React from 'react';
 import Plot from 'react-plotly.js';
 
-import './css/RealTimeChart.css';
+import './css/MonitoringChart.css';
 
 
 export default props => {
@@ -9,8 +9,8 @@ export default props => {
         <Plot
             data={props.data}
             layout={{
-                width: 600,
-                height: 250,
+                width: props.fullWidth ? 1200 : 600,
+                height: props.fullWidth ? 350 : 250,
                 yaxis: {showline: true},
                 title: props.title
             }}
