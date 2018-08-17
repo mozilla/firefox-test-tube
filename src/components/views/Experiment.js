@@ -146,12 +146,6 @@ export default class extends React.Component {
                     <div className="monitoring-charts">
                         <MonitoringChartContainer
                             colors={this.populationColors}
-                            endpoint={`${process.env.REACT_APP_API_URL}/experiments/${this.props.slug}/populations/`}
-                            title="Populations"
-                            fullWidth={true}
-                        />
-                        <MonitoringChartContainer
-                            colors={this.populationColors}
                             endpoint={`${process.env.REACT_APP_API_URL}/experiments/${this.props.slug}/enrolls/`}
                             title="Enrollments"
                         />
@@ -171,6 +165,12 @@ export default class extends React.Component {
                             endpoint={`${process.env.REACT_APP_API_URL}/experiments/${this.props.slug}/realtime-unenrolls/`}
                             title="Unenrollments (5min)"
                             refreshMins={5}
+                        />
+                        <MonitoringChartContainer
+                            colors={this.populationColors}
+                            endpoint={`${process.env.REACT_APP_API_URL}/experiments/${this.props.slug}/populations/`}
+                            title="Populations"
+                            fullWidth={true}
                         />
                     </div>
                     <aside id="experiment-options">
