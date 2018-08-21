@@ -437,15 +437,21 @@ class TestPopulationApi(TestCase):
         data = response.json()
         self.assertDictEqual(
             data['population']['control'][0],
+            {'window': '2017-12-31', 'count': 0})
+        self.assertDictEqual(
+            data['population']['control'][1],
             {'window': '2018-01-01', 'count': 1})
         self.assertDictEqual(
-            data['population']['control'][3],
+            data['population']['control'][4],
             {'window': '2018-01-04', 'count': 100})
         self.assertDictEqual(
             data['population']['variant'][0],
+            {'window': '2017-12-31', 'count': 0})
+        self.assertDictEqual(
+            data['population']['variant'][1],
             {'window': '2018-01-01', 'count': 0})
         self.assertDictEqual(
-            data['population']['variant'][3],
+            data['population']['variant'][4],
             {'window': '2018-01-04', 'count': 99})
 
 
