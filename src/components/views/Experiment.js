@@ -147,12 +147,12 @@ export default class extends React.Component {
                         <MonitoringChartContainer
                             colors={this.populationColors}
                             endpoint={`${process.env.REACT_APP_API_URL}/experiments/${this.props.slug}/enrolls/`}
-                            title="Enrollments"
+                            title="Enrollments (hourly)"
                         />
                         <MonitoringChartContainer
                             colors={this.populationColors}
                             endpoint={`${process.env.REACT_APP_API_URL}/experiments/${this.props.slug}/unenrolls/`}
-                            title="Unenrollments"
+                            title="Unenrollments (hourly)"
                         />
                         <MonitoringChartContainer
                             colors={this.populationColors}
