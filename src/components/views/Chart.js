@@ -1,5 +1,6 @@
 import React from 'react';
 import { Scatter as ScatterChart, Bar as BarChart } from 'react-chartjs-2';
+import 'chartjs-plugin-annotation';
 
 
 /**
@@ -48,6 +49,10 @@ export default props => {
                             }
                         },
                     },
+                    annotation: {
+                        events: ['mouseover', 'click', 'mouseenter'],
+                        annotations: props.annotations
+                    },
                     elements: {
                         point: {
                             // Hide dots by default but show them upon hover
@@ -57,11 +62,13 @@ export default props => {
                     },
                     scales: {
                         yAxes: [{
+                            id: 'y-axis-0',
                             ticks: {
                                 callback: label => label + '%',
                             },
                         }],
                         xAxes: [{
+                            id: 'x-axis-0',
                             scaleLabel: {
                                 display: true,
                                 labelString: xUnit,

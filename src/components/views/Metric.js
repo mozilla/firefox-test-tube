@@ -69,6 +69,10 @@ export default withRouter(props => {
                     {...props}
                     populationColors={props.populationColors}
                 />
+                <p id={`population-info-${props.id}`} className="population-info">
+                    <span className="label" /> has a mean of <span className="mean" /> with a confidence
+                    of &plusmn;<span className="confidence" />.
+                </p>
             </section>
         );
     }
