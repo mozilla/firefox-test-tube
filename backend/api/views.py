@@ -115,7 +115,14 @@ def experiment_populations(request, exp_slug):
                             .order_by('stamp'))
     for pop in qs:
         if pop.branch not in data['population']:
-            data['population'][pop.branch] = []
+            # Make the first record a zero-based population for charting.
+            # TODO: Ideally the starting date would match the experiment start
+            # date from Experimenter.
+            data['population'][pop.branch] = [{
+                'window': (pop.stamp.date() -
+                           datetime.timedelta(days=1)).isoformat(),
+                'count': 0,
+            }]
 
         data['population'][pop.branch].append({
             'window': pop.stamp.date().isoformat(),
