@@ -25,8 +25,27 @@ def experiments(request):
             'slug': d.slug,
             'name': d.name,
             'enabled': d.enabled,
+            'realtime': False,
             'creationDate': d.created_at.date().isoformat() if d.created_at else None,
         })
+
+    # Include real-time experiments in list until they are fully imported.
+    imported = {d['slug'] for d in data}
+    experiments = list(
+        Enrollment.objects.exclude(experiment__in=imported)
+                          .distinct('experiment')
+                          .values_list('experiment', flat=True)
+    )
+    if experiments:
+        for exp in experiments:
+            data.append({
+                'id': None,
+                'slug': exp,
+                'name': None,
+                'enabled': True,
+                'realtime': True,
+                'creationDate': datetime.date.today().isoformat(),
+            })
 
     return Response({'experiments': data})
 
