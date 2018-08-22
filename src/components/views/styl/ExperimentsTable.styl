@@ -13,4 +13,42 @@
     .experiment-creation-date {
         width: 20%;
     }
+
+    tbody tr:hover {
+        background: linear-gradient(to right, #fff, #0083b0);
+        color: #fff;
+
+        a {
+            color: #0083b0;
+        }
+    }
+
+    // Styling tables is a disaster. This should not be needed (makes the last row the same as the others).
+    tbody tr:last-child {
+        line-height: 46.5px;
+
+        td {
+            padding: 0;
+
+            &:last-child {
+                padding-left: 15px;
+            }
+        }
+    }
+
+    .realtime {
+        a {
+            position: relative;
+
+            &::after {
+                content: "R";
+                font-size: 10px;
+                font-weight: 800;
+                position: absolute;
+                top: -5px;
+                color: #f00;
+                left: 100%;
+            }
+        }
+    }
 }

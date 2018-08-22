@@ -8,6 +8,14 @@ import SearchBox from './SearchBox';
 import './css/ExperimentsTable.css';
 
 
+// Returns a table cell with link to either a regular or realtime details page.
+const getExperimentCell = experiment => {
+    if (experiment.realtime) {
+        return <td><Link to={`/realtime/${experiment.slug}/`}>{experiment.slug}</Link></td>;
+    }
+    return <td><Link to={`/experiments/${experiment.slug}/`}>{experiment.name || experiment.slug}</Link></td>;
+};
+
 export default props => {
     let maybePaginator = null;
     if (!props.searchActive) {
@@ -36,10 +44,8 @@ export default props => {
                 </thead>
                 <tbody>
                     {props.visibleExperiments.map((e, index) => (
-                        <tr key={index}>
-                            <td>
-                                <Link to={`/experiments/${e.slug}/`}>{e.name || e.slug}</Link>
-                            </td>
+                        <tr key={index} className={e.realtime ? 'realtime' : ''}>
+                            {getExperimentCell(e)}
                             <td>{e.creationDate && dateFormat(e.creationDate, 'longDate', true)}</td>
                         </tr>
                     ))}

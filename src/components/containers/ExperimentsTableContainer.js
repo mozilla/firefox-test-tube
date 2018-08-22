@@ -55,7 +55,10 @@ export default class extends React.Component {
             visibleExperiments = this.props.experiments.filter((_, index) => matchedIndices.includes(index));
             searchActive = true;
         } else {
-            const sortedExperiments = reverseSortedByProperty(this.props.experiments, 'creationDate');
+            // Sort visible experiments by 'creationDate' first then by 'realtime'.
+            let sortedExperiments = reverseSortedByProperty(this.props.experiments, 'creationDate');
+            sortedExperiments = reverseSortedByProperty(sortedExperiments, 'realtime');
+
             visibleExperiments = visiblePaginatorMembers(sortedExperiments, this.itemsPerPage, this.state.pageNumber);
         }
 

@@ -14,8 +14,8 @@ export default props => {
             <Plot
                 data={props.data}
                 layout={{
-                    width: props.fullWidth ? 1200 : 600,
-                    height: props.fullWidth ? 350 : 250,
+                    width: props.size.width,
+                    height: props.size.height,
                     yaxis: {
                         showline: true,
                         title: 'Clients',
