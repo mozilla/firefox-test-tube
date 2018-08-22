@@ -31,8 +31,11 @@ def experiments(request):
 
     # Include real-time experiments in list until they are fully imported.
     imported = {d['slug'] for d in data}
+    yesterday = timezone.now() - datetime.timedelta(days=1)
     experiments = list(
         Enrollment.objects.exclude(experiment__in=imported)
+                          .filter(window_start__gte=yesterday)
+                          .filter(branch__isnull=False)
                           .distinct('experiment')
                           .values_list('experiment', flat=True)
     )
@@ -164,7 +167,7 @@ def realtime_experiment_enrolls(request, exp_slug):
                           .values_list('branch', flat=True)
     )
 
-    start_time = datetime.datetime.now() - datetime.timedelta(hours=24)
+    start_time = timezone.now() - datetime.timedelta(hours=24)
     data = {'population': {}}
     for branch in branches:
         data['population'][branch] = []
@@ -197,7 +200,7 @@ def realtime_experiment_unenrolls(request, exp_slug):
                           .values_list('branch', flat=True)
     )
 
-    start_time = datetime.datetime.now() - datetime.timedelta(hours=24)
+    start_time = timezone.now() - datetime.timedelta(hours=24)
     data = {'population': {}}
     for branch in branches:
         data['population'][branch] = []
