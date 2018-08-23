@@ -7,6 +7,7 @@ import Switch from './Switch';
 import SearchBox from './SearchBox';
 import { getDistinctColors } from '../../lib/utils';
 import MonitoringChartContainer from '../containers/MonitoringChartContainer';
+import ClipBox from './ClipBox';
 
 import './css/Experiment.css';
 
@@ -126,7 +127,10 @@ export default class extends React.Component {
         return (
             <div>
                 <article id="experiment">
-                    <h2>{this.props.name || this.props.slug}</h2>
+                    <header className="experiment-primary-header">
+                        <h2>{this.props.name || this.props.slug}</h2>
+                        <ClipBox label="slug" textValue={this.props.slug} />
+                    </header>
                     <section id="experiment-details">
                         <h3>Details</h3>
                         {maybeDescription}

@@ -1,0 +1,52 @@
+$box-height = 25px;
+$border-radius = 4px;
+
+.clipbox {
+  display: inline-block;
+
+  label {
+    position: relative;
+    font-size: 14px;
+    display: inline-block;
+  }
+
+  input {
+    margin: 0 0 0 7px;
+    height: $box-height;
+    max-width: 150px;
+    border: 1px solid #fff;
+    border-radius: $border-radius;
+    background: linear-gradient(to left, rgba(#8e9eab, 0.2), #fff);
+    box-shadow: 0px 1px 2px 1px rgba(#2c5364, 0.4) inset;
+    color: #444c52;
+
+    &:focus {
+      border: 1px solid #2c5364;
+    }
+  }
+
+  .btn-copy {
+    width: 25px;
+    height: $box-height;
+    border-radius: 0 $border-radius $border-radius 0;
+    background: #fff linear-gradient(to top, rgba(#8e9eab, 0.2), #fff);
+    border: 1px solid #8e9eab;
+    position: absolute;
+    right: 0;
+    z-index: 10;
+    cursor: pointer;
+    top: 1px;
+    text-indent: -999999%;
+
+    &::after {
+      width: 28px;
+      background: url(/icons/clipboard.png) 5px 50% no-repeat;
+      height: $box-height;
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      background-size: 17px 17px;
+    }
+  }
+}
