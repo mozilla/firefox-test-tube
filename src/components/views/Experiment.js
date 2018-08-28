@@ -23,6 +23,9 @@ export default class extends React.Component {
         // some metrics have more populations than others.
         this.populationColors = getDistinctColors(Object.keys(props.populations).length);
 
+        // Monitoring chart sizes.
+        this.monitorChartSize = {width: 600, height: 250};
+
         this.state = {
             showOutliers: props.showOutliers,
         };
@@ -150,28 +153,33 @@ export default class extends React.Component {
                     <div className="monitoring-charts">
                         <MonitoringChartContainer
                             colors={this.populationColors}
+                            size={this.monitorChartSize}
                             endpoint={`${process.env.REACT_APP_API_URL}/experiments/${this.props.slug}/enrolls/`}
                             title="Enrollments (hourly)"
                         />
                         <MonitoringChartContainer
                             colors={this.populationColors}
+                            size={this.monitorChartSize}
                             endpoint={`${process.env.REACT_APP_API_URL}/experiments/${this.props.slug}/unenrolls/`}
                             title="Unenrollments (hourly)"
                         />
                         <MonitoringChartContainer
                             colors={this.populationColors}
+                            size={this.monitorChartSize}
                             endpoint={`${process.env.REACT_APP_API_URL}/experiments/${this.props.slug}/realtime-enrolls/`}
                             title="Enrollments (5min)"
                             refreshMins={5}
                         />
                         <MonitoringChartContainer
                             colors={this.populationColors}
+                            size={this.monitorChartSize}
                             endpoint={`${process.env.REACT_APP_API_URL}/experiments/${this.props.slug}/realtime-unenrolls/`}
                             title="Unenrollments (5min)"
                             refreshMins={5}
                         />
                         <MonitoringChartContainer
                             colors={this.populationColors}
+                            size={{width: 1200, height: 350}}
                             endpoint={`${process.env.REACT_APP_API_URL}/experiments/${this.props.slug}/populations/`}
                             title="Populations"
                             fullWidth={true}

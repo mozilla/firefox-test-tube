@@ -9,10 +9,13 @@ import Loading from '../views/Loading';
 class MonitoringChartContainer extends React.Component {
     constructor(props) {
         super(props);
+        this.colors = [];
 
-        this.colors = props.colors.map(color => {
-            return `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
-        });
+        if (props.colors) {
+            this.colors = props.colors.map(color => {
+                return `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+            });
+        }
     }
 
     render() {
@@ -32,21 +35,23 @@ class MonitoringChartContainer extends React.Component {
 
             if (!emptyDataFound) {
                 Object.keys(dataFetch.value.population).forEach((cohort, i) => {
-                    data.push({
+                    const dataLine = {
                         x: dataFetch.value.population[cohort].map(item => new Date(item.window)),
                         y: dataFetch.value.population[cohort].map(item => item.count),
                         type: 'scatter',
                         mode: 'lines+points',
-                        name: cohort,
-                        line: {color: this.colors[i]}
-                    });
+                        name: cohort
+                    };
+
+                    if (this.colors.length) dataLine['line'] = {color: this.colors[i]};
+                    data.push(dataLine);
                 });
                 return (
                     <MonitoringChart
                         title={this.props.title}
-                        colors={this.colors}
                         data={data}
                         fullWidth={this.props.fullWidth}
+                        size={this.props.size}
                     />
                 );
             } else {
