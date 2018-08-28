@@ -67,38 +67,6 @@ class TestExperiments(DataTestCase):
         self.assertEqual(data['experiments'][0]['id'], self.dataset.id)
         self.assertEqual(data['experiments'][1]['id'], self.dataset_older.id)
 
-    def test_realtime_experiment(self):
-        # Test that a real-time experiment shows up in this API.
-        we = timezone.now()
-        ws = we - datetime.timedelta(minutes=5)
-        # Include 2 records with different branches to verify DISTINCT.
-        Enrollment.objects.create(experiment='realtime', branch='control',
-                                  window_start=ws, window_end=we,
-                                  enroll_count=5, unenroll_count=3)
-        Enrollment.objects.create(experiment='realtime', branch='variant',
-                                  window_start=ws, window_end=we,
-                                  enroll_count=5, unenroll_count=3)
-        # Include a None branch to test they get filtered.
-        Enrollment.objects.create(experiment='null-branch', branch=None,
-                                  window_start=ws, window_end=we,
-                                  enroll_count=5, unenroll_count=3)
-        # Include an older record to test they get filtered.
-        Enrollment.objects.create(experiment='old-experiment', branch='control',
-                                  window_start=ws - datetime.timedelta(days=5),
-                                  window_end=we - datetime.timedelta(days=5),
-                                  enroll_count=5, unenroll_count=3)
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
-        data = response.json()
-        experiments = [e for e in data['experiments']
-                       if e['slug'] == 'realtime']
-        self.assertEqual(experiments[0]['slug'], 'realtime')
-        self.assertEqual(experiments[0]['realtime'], True)
-        self.assertEqual(experiments[0]['creationDate'],
-                         datetime.date.today().isoformat())
-        # Make sure we are getting a distinct list of real time experiments.
-        self.assertEqual(len(experiments), 1)
-
 
 class TestExperimentBySlug(DataTestCase):
 
