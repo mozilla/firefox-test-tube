@@ -113,7 +113,7 @@ def experiment_populations(request, exp_slug):
 
     data = {'population': {}}
     qs = (Population.objects.filter(experiment=exp_slug)
-                            .order_by('stamp'))
+                            .order_by('stamp', 'branch'))
     for pop in qs:
         if pop.branch not in data['population']:
             # Make the first record a zero-based population for charting.

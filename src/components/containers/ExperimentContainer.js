@@ -7,7 +7,7 @@ import Experiment from '../views/Experiment';
 import Loading from '../views/Loading';
 import Error from '../views/Error';
 import URLManager from '../../lib/URLManager';
-import { visiblePaginatorMembers, debounce } from '../../lib/utils';
+import { visiblePaginatorMembers, debounce, prependControlToPopulations } from '../../lib/utils';
 
 
 class ExperimentContainer extends React.Component {
@@ -95,7 +95,7 @@ class ExperimentContainer extends React.Component {
                     slug={this.props.match.params.experimentSlug}
                     description={experimentFetch.value.description}
                     authors={experimentFetch.value.authors}
-                    populations={experimentFetch.value.populations}
+                    populations={prependControlToPopulations(experimentFetch.value.populations)}
                     showOutliers={this.defaultShowOutliers}
                     selectedMetricId={Number(this.urlManager.getQueryParameter('chart'))}
 

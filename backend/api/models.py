@@ -52,7 +52,8 @@ class DataSet(models.Model):
         populations = (
             Collection.objects.filter(dataset=self)
                               .distinct('population')
-                              .values_list('population', flat=True))
+                              .values_list('population', flat=True)
+                              .order_by('population'))
 
         stats = (
             Stats.objects.filter(dataset=self)
