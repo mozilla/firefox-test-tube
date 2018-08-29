@@ -4,6 +4,7 @@ import { connect } from 'react-refetch';
 import MonitoringChart from '../views/MonitoringChart';
 import Error from '../views/Error';
 import Loading from '../views/Loading';
+import { prependControlToPopulations } from '../../lib/utils';
 
 
 class MonitoringChartContainer extends React.Component {
@@ -34,10 +35,12 @@ class MonitoringChartContainer extends React.Component {
             });
 
             if (!emptyDataFound) {
-                Object.keys(dataFetch.value.population).forEach((cohort, i) => {
+                const populations = prependControlToPopulations(dataFetch.value.population);
+
+                Object.keys(populations).forEach((cohort, i) => {
                     const dataLine = {
-                        x: dataFetch.value.population[cohort].map(item => new Date(item.window)),
-                        y: dataFetch.value.population[cohort].map(item => item.count),
+                        x: populations[cohort].map(item => new Date(item.window)),
+                        y: populations[cohort].map(item => item.count),
                         type: 'scatter',
                         mode: 'lines+points',
                         name: cohort

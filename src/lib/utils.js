@@ -110,3 +110,17 @@ export function getDistinctColors(numColors) {
 
     return distinctColors;
 }
+
+// 'Sorts' the population object so the 'control' population is always first.
+export function prependControlToPopulations(populations) {
+    const controlPopulationKey = Object.keys(populations).find(pop => pop.toLowerCase() === 'control');
+    const result = {};
+
+    if (controlPopulationKey) {
+        result[controlPopulationKey] = populations[controlPopulationKey];
+        delete populations[controlPopulationKey];
+        return Object.assign(result, populations);
+    }
+
+    return populations;
+};

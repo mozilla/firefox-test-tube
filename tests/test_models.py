@@ -22,7 +22,8 @@ class TestDataSet(DataTestCase):
         pops = list(
             Collection.objects.filter(dataset=self.dataset)
                               .distinct('population')
-                              .values_list('population', flat=True))
+                              .values_list('population', flat=True)
+                              .order_by('population'))
         stats = (
             Stats.objects.filter(dataset=self.dataset)
                          .values_list('population', 'key', 'value'))
