@@ -29,6 +29,12 @@ export default class extends React.Component {
         this._setSearchPhrase(e.target.value);
     }
 
+    handleTableRowClick = e => {
+        if (e.target.parentNode.nodeName === 'TR') {
+            e.target.parentNode.querySelector('a').click();
+        }
+    }
+
     /**
      * This method is needed to make the debounce function work without the
      * event expiring.
@@ -72,6 +78,7 @@ export default class extends React.Component {
                 itemsPerPage={this.itemsPerPage}
                 numItems={this.props.experiments.length}
                 searchActive={searchActive}
+                doTableRowClick={this.handleTableRowClick}
             />
         );
     }
