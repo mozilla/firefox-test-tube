@@ -44,7 +44,9 @@ export default props => {
                 </thead>
                 <tbody>
                     {props.visibleExperiments.map((e, index) => (
-                        <tr key={index} className={e.realtime ? 'realtime' : ''}>
+                        <tr key={index}
+                            onClick={props.doTableRowClick}
+                            className={e.realtime ? 'realtime' : ''}>
                             {getExperimentCell(e)}
                             <td>{e.creationDate && dateFormat(e.creationDate, 'longDate', true)}</td>
                         </tr>
