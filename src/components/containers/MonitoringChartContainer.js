@@ -4,6 +4,7 @@ import { connect } from 'react-refetch';
 import MonitoringChart from '../views/MonitoringChart';
 import Error from '../views/Error';
 import Loading from '../views/Loading';
+import ChartTotals from '../views/ChartTotals';
 import { prependControlToPopulations } from '../../lib/utils';
 
 
@@ -17,6 +18,8 @@ class MonitoringChartContainer extends React.Component {
                 return `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
             });
         }
+
+        this.populationTotals = {};
     }
 
     render() {
@@ -36,29 +39,56 @@ class MonitoringChartContainer extends React.Component {
 
             if (!emptyDataFound) {
                 const populations = prependControlToPopulations(dataFetch.value.population);
+                let grandTotal = 0;
 
                 Object.keys(populations).forEach((cohort, i) => {
                     const dataLine = {
                         x: populations[cohort].map(item => new Date(item.window)),
-                        y: populations[cohort].map(item => item.count),
+                        y: populations[cohort].map((item, index) => {
+
+                            // We'll hijack this iterator to count the chart totals.
+                            // This only applies to non-realtime charts.
+                            if (!this.props.refreshMins) { // Not a realtime chart.
+                                // If this is a new iteration start the total with item.count.
+                                if (index === 0) {
+                                    this.populationTotals[cohort] = item.count;
+                                } else { // Add item.count to existing total.
+                                    this.populationTotals[cohort] += item.count;
+                                }
+                            }
+
+                            return item.count;
+                        }),
                         type: 'scatter',
                         mode: 'lines+points',
                         name: cohort
                     };
 
+                    // Add up the totals of every cohort.
+                    grandTotal += this.populationTotals[cohort];
+
                     if (this.colors.length) dataLine['line'] = {color: this.colors[i]};
                     data.push(dataLine);
                 });
+
                 return (
-                    <MonitoringChart
-                        title={this.props.title}
-                        data={data}
-                        fullWidth={this.props.fullWidth}
-                        size={this.props.size}
-                    />
+                    <div className="monitoring-chart-container">
+                        <MonitoringChart
+                            title={this.props.title}
+                            data={data}
+                            fullWidth={this.props.fullWidth}
+                            size={this.props.size}
+                        />
+                        <ChartTotals
+                            totals={this.populationTotals}
+                            grandTotal={grandTotal}
+                            fullWidth={this.props.fullWidth}
+                            colors={this.colors}
+                        />
+                    </div>
                 );
             } else {
-                return <Error message="Real-time experiment data returned was empty." />;
+                return <Error message="Experiment monitoring chart contains empty data." />;
             }
         }
     }
