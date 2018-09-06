@@ -2,6 +2,7 @@ import datetime
 import json
 import pytz
 
+import requests_mock
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.utils import timezone
@@ -9,10 +10,12 @@ from rest_framework.reverse import reverse
 
 from backend.api import factories
 from backend.api.models import Enrollment, Population
+from backend.api.views import NORMANDY_URL, _get_active_normandy_experiments
 
 from . import DataTestCase
 
 
+@requests_mock.Mocker()
 class TestExperiments(DataTestCase):
 
     def setUp(self):
@@ -22,7 +25,13 @@ class TestExperiments(DataTestCase):
         self.client.login(username='testuser', password='password')
         self.url = reverse('v2-experiments')
 
-    def test_basic(self):
+        self.normandy_resp = [{
+            'action': 'something-not-allowed',
+            'enabled': False,
+        }]
+
+    def test_basic(self, mock):
+        mock.register_uri('GET', NORMANDY_URL, json=self.normandy_resp)
         response = self.client.get(self.url)
         expected = {
             'experiments': [
@@ -46,26 +55,109 @@ class TestExperiments(DataTestCase):
         }
         self.assertEqual(response.json(), expected)
 
-    def test_null_ordering(self):
+    def test_null_ordering(self, mock):
         # Sometimes the `created_at` field can be NULL.
         self.dataset.created_at = None
         self.dataset.save()
 
+        mock.register_uri('GET', NORMANDY_URL, json=self.normandy_resp)
         response = self.client.get(self.url)
         data = response.json()
         self.assertEqual(len(data['experiments']), 2)
         self.assertEqual(data['experiments'][0]['id'], self.dataset_older.id)
 
-    def test_display(self):
+    def test_display(self, mock):
         # Test that a newer experiment with display=False isn't returned.
         factories.DataSetFactory(display=False)
 
+        mock.register_uri('GET', NORMANDY_URL, json=self.normandy_resp)
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         data = response.json()
         self.assertEqual(len(data['experiments']), 2)
         self.assertEqual(data['experiments'][0]['id'], self.dataset.id)
         self.assertEqual(data['experiments'][1]['id'], self.dataset_older.id)
+
+    def test_realtime_experiment(self, mock):
+        # Test that a real-time experiment shows up in this API.
+        we = timezone.now()
+        ws = we - datetime.timedelta(minutes=5)
+        # Include 2 records with different branches to verify DISTINCT.
+        Enrollment.objects.create(experiment='realtime', branch='control',
+                                  window_start=ws, window_end=we,
+                                  enroll_count=5, unenroll_count=3)
+        Enrollment.objects.create(experiment='realtime', branch='variant',
+                                  window_start=ws, window_end=we,
+                                  enroll_count=5, unenroll_count=3)
+        # Include a None branch to test they get filtered.
+        Enrollment.objects.create(experiment='null-branch', branch=None,
+                                  window_start=ws, window_end=we,
+                                  enroll_count=5, unenroll_count=3)
+        # Include an inactive record to test they get filtered.
+        Enrollment.objects.create(experiment='inactive', branch='control',
+                                  window_start=ws, window_end=we,
+                                  enroll_count=5, unenroll_count=3)
+
+        normandy_resp = [{
+            'action': 'preference-experiment',
+            'enabled': True,
+            'arguments': {
+                'slug': 'realtime'
+            },
+        }]
+        mock.register_uri('GET', NORMANDY_URL, json=normandy_resp)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        experiments = [e for e in data['experiments']
+                       if e['realtime'] is True]
+        self.assertEqual(experiments[0]['slug'], 'realtime')
+        self.assertEqual(experiments[0]['realtime'], True)
+        self.assertEqual(experiments[0]['creationDate'],
+                         datetime.date.today().isoformat())
+        # Make sure we are getting a distinct list of real time experiments.
+        self.assertEqual(len(data['experiments']), 3)
+        self.assertEqual(len(experiments), 1)
+
+    def test_experiment_filtering(self, mock):
+        # Test an experiment that should be returned.
+        normandy_resp = [{
+            'action': 'preference-experiment',
+            'enabled': True,
+            'arguments': {
+                'slug': 'true-test-1'
+            },
+        }, {
+            'action': 'opt-out-study',
+            'enabled': True,
+            'arguments': {
+                'name': 'true-test-2'  # Also testing `name` vs `slug`.
+            },
+        }, {
+            'action': 'bad-action',
+            'enabled': True,
+            'arguments': {
+                'slug': 'bad-action-test'
+            },
+        }, {
+            'action': 'preference-experiment',
+            'enabled': False,
+            'arguments': {
+                'slug': 'not-enabled-test'
+            },
+        }, {
+            'action': 'preference-experiment',
+            'enabled': True,
+            'arguments': {
+                'isHighVolume': True,
+                'slug': 'high-volume-test'
+            },
+        }]
+        mock.register_uri('GET', NORMANDY_URL, json=normandy_resp)
+        self.assertEqual(
+            _get_active_normandy_experiments(),
+            ['true-test-1', 'true-test-2']
+        )
 
 
 class TestExperimentBySlug(DataTestCase):
