@@ -9,7 +9,7 @@ dockerflow==2018.4.0
 factory_boy==2.11.1
 gunicorn==19.8.1
 josepy==1.1.0
-mozilla-django-oidc==1.1.1
+mozilla-django-oidc==1.1.2
 psycopg2==2.7.5
 python-decouple==3.1
 raven==6.8.0
