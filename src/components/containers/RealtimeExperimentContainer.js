@@ -5,7 +5,7 @@ import MonitoringChartContainer from '../containers/MonitoringChartContainer';
 
 
 function RealtimeExperimentContainer(props) {
-    const slug = this.props.match.params.experimentSlug;
+    const slug = props.match.params.experimentSlug;
     const size = {width: 900, height: 400};
 
     return (
