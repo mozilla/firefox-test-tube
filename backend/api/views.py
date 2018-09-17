@@ -1,5 +1,6 @@
 import datetime
 
+import requests
 from django.db import connection
 from django.db.models import F, Sum
 from django.db.models.functions import TruncHour
@@ -10,6 +11,25 @@ from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 
 from .models import Collection, DataSet, Enrollment, Metric, Population, Stats
+
+
+NORMANDY_URL = "https://normandy.services.mozilla.com/api/v1/recipe/?format=json&enabled=true"
+
+
+def _get_active_normandy_experiments():
+    active = []
+
+    resp = requests.get(NORMANDY_URL)
+    if resp.status_code == 200:
+        for exp in resp.json():
+            if (exp['action'] in ('preference-experiment', 'opt-out-study') and
+                    exp['arguments'].get('isHighVolume', False) is False and
+                    exp['enabled'] is True):
+                active.append(
+                    exp['arguments'].get('slug',
+                                         exp['arguments'].get('name')))
+
+    return active
 
 
 @api_view(['GET'])
@@ -28,6 +48,33 @@ def experiments(request):
             'realtime': False,
             'creationDate': d.created_at.date().isoformat() if d.created_at else None,
         })
+
+    # Get the list of active experiments from Normandy.
+    active = _get_active_normandy_experiments()
+
+    # Take away the experiments we have already imported.
+    realtime = set(active) - set([d['slug'] for d in data])
+
+    # Query the remaining set of active experiments from the real-time list.
+    yesterday = timezone.now() - datetime.timedelta(days=1)
+    experiments = list(
+        Enrollment.objects.filter(experiment__in=realtime)
+                          .filter(window_start__gte=yesterday)
+                          .filter(branch__isnull=False)
+                          .distinct('experiment')
+                          .values_list('experiment', flat=True)
+    )
+
+    if experiments:
+        for exp in experiments:
+            data.append({
+                'id': None,
+                'slug': exp,
+                'name': None,
+                'enabled': True,
+                'realtime': True,
+                'creationDate': datetime.date.today().isoformat(),
+            })
 
     return Response({'experiments': data})
 
