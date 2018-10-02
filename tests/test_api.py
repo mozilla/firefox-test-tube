@@ -12,11 +12,11 @@ from backend.api import factories
 from backend.api.models import Enrollment, Population
 from backend.api.views import NORMANDY_URL, _get_active_normandy_experiments
 
-from . import DataTestCase
+from . import DataTestCase, TestAuthMixin
 
 
 @requests_mock.Mocker()
-class TestExperiments(DataTestCase):
+class TestExperiments(DataTestCase, TestAuthMixin):
 
     def setUp(self):
         User.objects.create_user(username='testuser',
@@ -160,7 +160,7 @@ class TestExperiments(DataTestCase):
         )
 
 
-class TestExperimentBySlug(DataTestCase):
+class TestExperimentBySlug(DataTestCase, TestAuthMixin):
 
     def setUp(self):
         User.objects.create_user(username='testuser',
@@ -194,7 +194,7 @@ class TestExperimentBySlug(DataTestCase):
         assert response.status_code == 404
 
 
-class TestMetricById(DataTestCase):
+class TestMetricById(DataTestCase, TestAuthMixin):
 
     def setUp(self):
         User.objects.create_user(username='testuser',
@@ -244,7 +244,7 @@ class TestMetricById(DataTestCase):
 
 
 # This is separated to create a more custom set of data for testing.
-class TestScalarMetric(TestCase):
+class TestScalarMetric(TestCase, TestAuthMixin):
 
     @classmethod
     def setUpTestData(cls):
@@ -367,6 +367,12 @@ class TestEnrollmentIngestionApi(TestCase):
 
 class EnrollmentBaseTestCase(TestCase):
 
+    def setUp(self):
+        User.objects.create_user(username='testuser',
+                                 email='example@mozilla.com',
+                                 password='password')
+        self.client.login(username='testuser', password='password')
+
     def create_data(self):
         now = timezone.now()
         # Create data that cross an hour time barrier since some views
@@ -446,9 +452,10 @@ class EnrollmentBaseTestCase(TestCase):
         )
 
 
-class TestRealtimePopulationApi(EnrollmentBaseTestCase):
+class TestRealtimePopulationApi(EnrollmentBaseTestCase, TestAuthMixin):
 
     def setUp(self):
+        super().setUp()
         self.url = reverse('v2-experiment-realtime-populations',
                            args=['pref-flip-1'])
         self.create_data()
@@ -496,9 +503,13 @@ class TestRealtimePopulationApi(EnrollmentBaseTestCase):
         )
 
 
-class TestPopulationApi(TestCase):
+class TestPopulationApi(TestCase, TestAuthMixin):
 
     def setUp(self):
+        User.objects.create_user(username='testuser',
+                                 email='example@mozilla.com',
+                                 password='password')
+        self.client.login(username='testuser', password='password')
         self.experiment = 'pref-flip-1'
         self.url = reverse('v2-experiment-populations', args=[self.experiment])
         Population.objects.bulk_create([
@@ -549,9 +560,10 @@ class TestPopulationApi(TestCase):
             {'window': '2018-01-04', 'count': 99})
 
 
-class TestRealtimeEnrollmentCountsApi(EnrollmentBaseTestCase):
+class TestRealtimeEnrollmentCountsApi(EnrollmentBaseTestCase, TestAuthMixin):
 
     def setUp(self):
+        super().setUp()
         self.url = reverse('v2-experiment-realtime-enrolls', args=['pref-flip-1'])
         self.create_data()
 
@@ -590,9 +602,10 @@ class TestRealtimeEnrollmentCountsApi(EnrollmentBaseTestCase):
         )
 
 
-class TestRealtimeUnenrollmentCountsApi(EnrollmentBaseTestCase):
+class TestRealtimeUnenrollmentCountsApi(EnrollmentBaseTestCase, TestAuthMixin):
 
     def setUp(self):
+        super().setUp()
         self.url = reverse('v2-experiment-realtime-unenrolls', args=['pref-flip-1'])
         self.create_data()
 
@@ -623,9 +636,10 @@ class TestRealtimeUnenrollmentCountsApi(EnrollmentBaseTestCase):
         )
 
 
-class TestEnrollmentCountsApi(EnrollmentBaseTestCase):
+class TestEnrollmentCountsApi(EnrollmentBaseTestCase, TestAuthMixin):
 
     def setUp(self):
+        super().setUp()
         self.url = reverse('v2-experiment-enrolls', args=['pref-flip-1'])
         self.create_data()
 
@@ -661,9 +675,10 @@ class TestEnrollmentCountsApi(EnrollmentBaseTestCase):
         )
 
 
-class TestUnenrollmentCountsApi(EnrollmentBaseTestCase):
+class TestUnenrollmentCountsApi(EnrollmentBaseTestCase, TestAuthMixin):
 
     def setUp(self):
+        super().setUp()
         self.url = reverse('v2-experiment-unenrolls', args=['pref-flip-1'])
         self.create_data()
 

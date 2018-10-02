@@ -6,8 +6,9 @@ from django.db.models import F, Sum
 from django.db.models.functions import TruncHour
 from django.utils import timezone
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import NotFound
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from .models import Collection, DataSet, Enrollment, Metric, Population, Stats
@@ -357,6 +358,7 @@ def metric_by_id(request, exp_id, metric_id):
 
 
 @api_view(['POST'])
+@permission_classes((AllowAny,))
 def enrollment(request):
     """
     Take a JSON payload from telemetry streaming to record experiment enrollment.
