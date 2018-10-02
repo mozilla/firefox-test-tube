@@ -76,3 +76,12 @@ class DataTestCase(TestCase):
         cls.dataset_hidden = dataset_hidden
         cls.flag_metric = flag_metric
         cls.count_metric = count_metric
+
+
+class TestAuthMixin:
+
+    def test_403(self, *args, **kwargs):
+        if hasattr(self, 'url'):
+            self.client.logout()
+            response = self.client.get(self.url)
+            self.assertEqual(response.status_code, 403)
