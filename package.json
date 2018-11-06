@@ -25,7 +25,7 @@
     "react-chartjs-2": "2.7.4",
     "react-dom": "16.5.2",
     "react-fa": "5.0.0",
-    "react-paginate": "5.2.4",
+    "react-paginate": "5.3.1",
     "react-plotly.js": "2.2.0",
     "react-refetch": "2.0.0",
     "react-router-dom": "4.3.1",
