@@ -14,7 +14,7 @@
     "postinstall": "npm run build"
   },
   "dependencies": {
-    "chart.js": "2.7.2",
+    "chart.js": "2.7.3",
     "dateformat": "3.0.3",
     "distinct-colors": "1.0.4",
     "gravatar": "1.6.0",
