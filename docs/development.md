@@ -15,6 +15,12 @@
 
 # Working with Test Tube
 
+## Create React App
+
+The Test Tube front-end uses create-react-app. See the [create-react-app
+documentation](https://facebook.github.io/create-react-app/docs/getting-started)
+for more information.
+
 ## Use production data locally
 
 It can be useful to use production data locally. To do this, we make a backup of

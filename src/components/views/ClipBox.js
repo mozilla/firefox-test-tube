@@ -26,7 +26,7 @@ class ClipBox extends Component {
                 <label>
                     {this.props.label}
                     <input type="text" onFocus={this.handleInputFocus} readOnly value={this.props.textValue} />
-                    <a onClick={this.handleCopyClick} className="btn-copy">copy to clipboard</a>
+                    <button onClick={this.handleCopyClick} className="btn-copy">copy to clipboard</button>
                 </label>
             </div>
         );

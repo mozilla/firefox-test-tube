@@ -56,7 +56,7 @@ export default withRouter(props => {
 
                     {/* There might be a better icon for this in the future */}
                     {/* https://github.com/FortAwesome/Font-Awesome/issues/1797 */}
-                    <a className="chart-button-link" title="JSON" href={props.chartDataURL} target="_blank"><Icon className="chart-button" name="file-code-o" /></a>
+                    <a className="chart-button-link" title="JSON" href={props.chartDataURL} target="_blank" rel="noopener noreferrer"><Icon className="chart-button" name="file-code-o" /></a>
 
                     <Icon className="chart-button" name="arrows-alt" title="Fullscreen" onClick={() => um.setQueryParameter('chart', props.id)} />
                 </div>

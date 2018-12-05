@@ -32,5 +32,11 @@
     "react-scripts": "2.1.1",
     "sifter": "0.5.3",
     "stylus": "0.54.5"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
