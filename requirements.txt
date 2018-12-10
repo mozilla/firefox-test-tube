@@ -15,7 +15,7 @@ python-decouple==3.1
 raven==6.8.0
 requests==2.20.0
 simplejson==3.16.0
-six==1.11.0
+six==1.12.0
 whitenoise==3.3.1
 
 # For linting and testing.
