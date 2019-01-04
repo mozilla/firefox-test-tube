@@ -1,6 +1,6 @@
 # Django 2.1 requires an update to mozilla-django-oidc.
 # See: https://github.com/mozilla/mozilla-django-oidc/issues/266
-Django==2.1.4
+Django==2.1.5
 PyOpenSSL==18.0.0
 contextlib2==0.5.5
 djangorestframework==3.9.0
