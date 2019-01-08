@@ -2,7 +2,7 @@ import datetime
 
 import requests
 from django.db import connection
-from django.db.models import F, Sum
+from django.db.models import Max, Sum
 from django.db.models.functions import TruncHour
 from django.utils import timezone
 from rest_framework import status
@@ -11,7 +11,7 @@ from rest_framework.exceptions import NotFound
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from .models import Collection, DataSet, Enrollment, Metric, Population, Stats
+from .models import Collection, Enrollment, Metric, Population, Stats
 
 
 NORMANDY_URL = "https://normandy.services.mozilla.com/api/v1/recipe/?format=json&enabled=true"
@@ -36,18 +36,19 @@ def _get_active_normandy_experiments():
 @api_view(['GET'])
 def experiments(request):
     datasets = (
-        DataSet.objects.visible()
-                       .order_by(F('created_at').desc(nulls_last=True))
+        Population.objects.values('experiment')
+                          .annotate(stamp=Max('stamp'))
+                          .order_by('-stamp')
     )
     data = []
     for d in datasets:
         data.append({
-            'id': d.id,
-            'slug': d.slug,
-            'name': d.name,
-            'enabled': d.enabled,
+            'id': None,
+            'slug': d['experiment'],
+            'name': None,
+            'enabled': True,
             'realtime': False,
-            'creationDate': d.created_at.date().isoformat() if d.created_at else None,
+            'creationDate': d['stamp'].date().isoformat(),
         })
 
     # Get the list of active experiments from Normandy.
@@ -82,19 +83,20 @@ def experiments(request):
 
 @api_view(['GET'])
 def experiment_by_slug(request, exp_slug):
-    try:
-        dataset = DataSet.objects.visible().get(slug=exp_slug)
-    except DataSet.DoesNotExist:
+    dataset = Population.objects.filter(experiment=exp_slug)
+    if not dataset:
         raise NotFound('No experiment with given slug found.')
 
+    dataset = dataset.first()
+
     data = {
-        'id': dataset.id,
-        'name': dataset.name,
-        'description': '',  # TODO
+        'id': None,
+        'name': dataset.experiment,
+        'description': '',
         'authors': [],
-        'populations': dataset.get_populations(),
-        'subgroups': dataset.get_subgroups(),
-        'metrics': dataset.get_metrics(),
+        'populations': [],
+        'subgroups': [],
+        'metrics': [],
     }
     return Response(data)
 
