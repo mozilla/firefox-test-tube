@@ -9,6 +9,7 @@ import ujson
 from psycopg2.extras import LoggingConnection
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import countDistinct
+from pyspark.sql.utils import AnalysisException
 
 
 BUCKET = environ.get('bucket', 'telemetry-parquet')
@@ -113,12 +114,12 @@ process_date = environ.get('date')
 if not process_date:
     # If no date in environment, assume we are running manually and use
     # yesterday's date.
-    process_date = (datetime.date.today() -
-                    datetime.timedelta(days=1)).strftime('%Y%m%d')
+    process_date = (
+        datetime.date.today() - datetime.timedelta(days=1)).strftime('%Y%m%d')
 
 print('Querying data for date: %s' % process_date)
 
-sparkSession = SparkSession.builder.appName('experiments-viewer').getOrCreate()
+spark = SparkSession.builder.appName('experiments-viewer').getOrCreate()
 
 # Get database connection and initialize logging.
 conn = get_database_connection()
@@ -130,7 +131,10 @@ for exp in get_experiments():
 
     # Update experiment populations.
     path = '%sexperiment_id=%s/' % (PATH, exp)
-    df2 = sparkSession.read.parquet(path)
+    try:
+        df2 = spark.read.parquet(path)
+    except AnalysisException:
+        continue
 
     rows = (df2.select('submission_date', 'experiment_branch', 'client_id')
                .groupBy('submission_date', 'experiment_branch')
