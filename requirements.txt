@@ -20,7 +20,7 @@ whitenoise==3.3.1
 
 # For linting and testing.
 configparser==3.5.0
-flake8==3.5.0
+flake8==3.7.2
 mccabe==0.6.1
 pycodestyle==2.3.1
 pyflakes==2.0.0
