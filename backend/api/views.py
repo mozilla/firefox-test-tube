@@ -11,7 +11,7 @@ from rest_framework.exceptions import NotFound
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from .models import Collection, Enrollment, Metric, Population, Stats
+from .models import Enrollment, Population
 
 
 NORMANDY_URL = "https://normandy.services.mozilla.com/api/v1/recipe/?format=json&enabled=true"
@@ -301,60 +301,6 @@ def experiment_unenrolls(request, exp_slug):
             'window': unenroll['period'].isoformat(),
             'count': unenroll['counts'],
         })
-
-    return Response(data)
-
-
-@api_view(['GET'])
-def metric_by_id(request, exp_id, metric_id):
-    metric = Metric.objects.get(id=metric_id)
-    # TODO: Add subgroups.
-    pops = Collection.objects.filter(dataset=exp_id,
-                                     metric=metric_id,
-                                     subgroup='All').order_by('population')
-    stats = {}
-    for s in Stats.objects.filter(dataset=exp_id, metric=metric_id):
-        stats[s.population] = {
-            'mean': {
-                'value': s.value,
-                'confidence_low': s.confidence_low,
-                'confidence_high': s.confidence_high,
-                'confidence_level': s.confidence_level,
-            }
-        }
-
-    populations = []
-    for p in pops:
-        if metric.type == 'UintScalar':
-            populations.append({
-                'name': p.population,
-                'n': p.num_observations,
-                'data': [
-                    dict(x=d.bucket,
-                         y=round(d.proportion, 16),
-                         count=d.count) for d in p.hdr()
-                ],
-                'stats': stats.get(p.population),
-            })
-        else:
-            populations.append({
-                'name': p.population,
-                'n': p.num_observations,
-                'data': [
-                    dict(x=d.bucket,
-                         y=round(d.proportion, 16),
-                         count=d.count) for d in p.points()],
-                'stats': stats.get(p.population),
-            })
-
-    data = {
-        'id': metric.id,
-        'name': metric.name,
-        'description': metric.description,
-        'type': metric.type,
-        'units': {'x': metric.units},
-        'populations': populations,
-    }
 
     return Response(data)
 
