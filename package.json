@@ -2,7 +2,6 @@
   "name": "firefox-test-tube",
   "private": true,
   "proxy": "http://localhost:8000",
-  "heroku-run-build-script": true,
   "scripts": {
     "build": "npm-run-all --parallel build:*",
     "build:js": "react-scripts build",
