@@ -146,3 +146,5 @@ for exp in get_experiments():
 
     for row in [r.asDict() for r in rows]:
         create_population(cursor, exp, row)
+
+    conn.commit()
