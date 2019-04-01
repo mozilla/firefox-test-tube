@@ -23,9 +23,9 @@ def _get_active_normandy_experiments():
     resp = requests.get(NORMANDY_URL)
     if resp.status_code == 200:
         for exp in resp.json():
-            if (exp['action'] in ('preference-experiment', 'opt-out-study') and
-                    exp['arguments'].get('isHighVolume', False) is False and
-                    exp['enabled'] is True):
+            if (exp['action'] in ('preference-experiment', 'opt-out-study')
+                    and exp['arguments'].get('isHighVolume', False) is False
+                    and exp['enabled'] is True):
                 active.append(
                     exp['arguments'].get('slug',
                                          exp['arguments'].get('name')))
@@ -170,8 +170,8 @@ def experiment_populations(request, exp_slug):
             # TODO: Ideally the starting date would match the experiment start
             # date from Experimenter.
             data['population'][pop.branch] = [{
-                'window': (pop.stamp.date() -
-                           datetime.timedelta(days=1)).isoformat(),
+                'window': (pop.stamp.date()
+                           - datetime.timedelta(days=1)).isoformat(),
                 'count': 0,
             }]
 
