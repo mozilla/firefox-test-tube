@@ -21,7 +21,7 @@
     "plotly.js": "1.44.4",
     "query-string": "5.1.1",
     "react": "16.5.2",
-    "react-chartjs-2": "2.7.4",
+    "react-chartjs-2": "2.7.6",
     "react-dom": "16.5.2",
     "react-fa": "5.0.0",
     "react-paginate": "5.2.4",
