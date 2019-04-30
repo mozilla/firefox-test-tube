@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
 
     # 3rd party
     'mozilla_django_oidc',
@@ -131,16 +130,6 @@ USE_I18N = False
 USE_L10N = False
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
-
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(ROOT_DIR, 'build', 'static'),
-]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_files')
 
 
 # HTTP Security settings
