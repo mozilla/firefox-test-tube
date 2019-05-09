@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
 
     # 3rd party
-    'mozilla_django_oidc',
     'dockerflow.django',
     'rest_framework',
 
@@ -168,7 +167,6 @@ REST_FRAMEWORK = {
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'mozilla_django_oidc.auth.OIDCAuthenticationBackend',
 )
 
 # Auth0
