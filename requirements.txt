@@ -6,7 +6,7 @@ contextlib2==0.5.5
 djangorestframework==3.9.2
 dj-database-url==0.5.0
 dockerflow==2018.4.0
-factory_boy==2.11.1
+factory_boy==2.12.0
 gunicorn==19.9.0
 josepy==1.1.0
 mozilla-django-oidc==1.2.1
