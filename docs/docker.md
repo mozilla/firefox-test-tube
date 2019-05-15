@@ -17,9 +17,7 @@ already. See the [Docker documentation][docker-docs] for help.
   `make up`
 
   Running `docker-compose up` from the root directory starts the database and
-  web server. The frontend build step (see [frontend docs](../docs/frontend.md))
-  builds the static files on the host machine. The host machine and web server
-  container share a volume.
+  web server. The host machine and web server container share a volume.
 
 Testing
 =======
@@ -29,11 +27,6 @@ Syntax & unit tests must pass for Pull Requests to be accepted on GitHub.
 * To run all tests:
 
   `make test`
-
-* To run only backend or frontend tests:
-
-  `make test-backend` or `make test-frontend`
-
 
 Tips & Tricks
 =============
