@@ -9,6 +9,11 @@ class Enrollment(models.Model):
     window_end = models.DateTimeField()
     enroll_count = models.IntegerField()
     unenroll_count = models.IntegerField()
+    graduate_count = models.IntegerField(blank=True, null=True)
+    update_count = models.IntegerField(blank=True, null=True)
+    enroll_failed_count = models.IntegerField(blank=True, null=True)
+    unenroll_failed_count = models.IntegerField(blank=True, null=True)
+    update_failed_count = models.IntegerField(blank=True, null=True)
 
 
 class Population(models.Model):
