@@ -39,6 +39,11 @@ def enrollment(request):
             window_end=window_end,
             enroll_count=data['enroll_count'],
             unenroll_count=data['unenroll_count'],
+            graduate_count=data.get('graduate_count'),
+            update_count=data.get('update_count'),
+            enroll_failed_count=data.get('enroll_failed_count'),
+            unenroll_failed_count=data.get('unenroll_failed_count'),
+            update_failed_count=data.get('update_failed_count'),
         )
 
     return Response('ok')
